@@ -1,17 +1,13 @@
-var webpack = require('webpack')
-var path = require('path');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-var extractPlugin = new ExtractTextPlugin({
+const extractPlugin = new ExtractTextPlugin({
   filename: 'main.css',
 });
-var hmrPlugin = new webpack.HotModuleReplacementPlugin();
 
 module.exports = {
   entry: [
     'react-hot-loader/patch',
-    'webpack-dev-server/client?http://0.0.0.0:8080', // WebpackDevServer host and port
-    'webpack/hot/only-dev-server',
     './src/index.js',
   ],
   output: {
@@ -22,6 +18,7 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'public'),
     hot: true,
+    port: 3000,
   },
   devtool: 'inline-source-map',
   module: {
@@ -37,18 +34,17 @@ module.exports = {
               plugins: ['react-hot-loader/babel'],
             },
           },
-        ]
+        ],
       },
       {
         test: /\.scss$/,
         use: extractPlugin.extract({
-          use: ['css-loader', 'sass-loader']
-        })
-      }
-    ]
+          use: ['css-loader', 'sass-loader'],
+        }),
+      },
+    ],
   },
   plugins: [
     extractPlugin,
-    hmrPlugin,
-  ]
-}
+  ],
+};

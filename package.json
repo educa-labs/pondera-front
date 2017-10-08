@@ -6,7 +6,7 @@
   "author": "Educalabs",
   "license": "MIT",
   "scripts": {
-    "dev": "webpack-dev-server"
+    "dev": "webpack-dev-server --open --hot"
   },
   "dependencies": {
     "react": "^16.0.0",
