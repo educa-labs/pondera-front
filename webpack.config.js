@@ -16,7 +16,7 @@ module.exports = {
     publicPath: '/dist',
   },
   devServer: {
-    contentBase: path.join(__dirname, 'public'),
+    contentBase: path.resolve(__dirname, 'public'),
     hot: true,
     port: 3000,
   },
