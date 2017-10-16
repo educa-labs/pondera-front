@@ -1,6 +1,5 @@
 import React from 'react';
 import Container from 'muicss/lib/react/container';
-import '../styles/index.scss';
 
 const App = () => (
   <Container>
