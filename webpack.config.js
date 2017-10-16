@@ -3,6 +3,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const extractPlugin = new ExtractTextPlugin({
   filename: 'main.css',
+  disable: process.env.NODE_ENV === 'development',
 });
 
 module.exports = {
@@ -40,6 +41,7 @@ module.exports = {
         test: /\.scss$/,
         use: extractPlugin.extract({
           use: ['css-loader', 'sass-loader'],
+          fallback: 'style-loader',
         }),
       },
     ],
