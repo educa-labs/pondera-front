@@ -1,10 +1,11 @@
 import React from 'react';
-import Container from 'muicss/lib/react/container';
+import { Switch, Route } from 'react-router-dom';
+import Home from './Home';
 
 const App = () => (
-  <Container>
-    <h1 className="mui--text-display1">Pondera Boilerplate</h1>
-  </Container>
+  <Switch>
+    <Route exact path="/" component={Home} />
+  </Switch>
 );
 
 export default App;
