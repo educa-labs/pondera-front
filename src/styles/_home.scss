@@ -1,4 +1,21 @@
+#hero-landing {
+  background-color: $mui-primary-color;
+  height: 25rem;
+  color: white;
+  text-align: center;
+  padding-top: 48px;
+  #swift {
+    height: 20rem;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: relative;
+    top: -5.5rem;
+  }
+}
+
 .car-photo {
   height: 48px;
   margin: 10px 0;
 }
+
