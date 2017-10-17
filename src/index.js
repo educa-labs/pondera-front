@@ -4,17 +4,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
+import { HashRouter } from 'react-router-dom';
 import App from './containers/App';
 import configureStore from './config/configureStore';
 import './styles/index.scss';
 
 const render = (Component) => {
   ReactDOM.render(
-    <Provider store={configureStore()}>
-      <AppContainer>
-        <Component />
-      </AppContainer>
-    </Provider>,
+    <AppContainer>
+      <Provider store={configureStore()}>
+        <HashRouter>
+          <Component />
+        </HashRouter>
+      </Provider>
+    </AppContainer>,
     document.getElementById('root'),
   );
 };
