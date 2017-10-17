@@ -20,6 +20,7 @@ module.exports = {
     contentBase: path.resolve(__dirname, 'public'),
     hot: true,
     port: 3000,
+    overlay: true,
   },
   devtool: 'inline-source-map',
   module: {
