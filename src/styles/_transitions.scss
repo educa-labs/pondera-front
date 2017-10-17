@@ -1,0 +1,25 @@
+@keyframes fromLeft {
+  0% {
+    transform: translateX(-100vw);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes fromRight {
+  0% {
+    transform: translateX(100vw);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.from-left {
+  animation: fromLeft 0.5s ease-in;
+}
+
+.from-right {
+  animation: fromRight 0.5s ease-in;
+}
