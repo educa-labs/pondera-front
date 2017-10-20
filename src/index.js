@@ -6,13 +6,13 @@ import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';
 import App from './containers/App';
-import configureStore from './config/configureStore';
+import store from './config/configureStore';
 import './styles/index.scss';
 
 const render = (Component) => {
   ReactDOM.render(
     <AppContainer>
-      <Provider store={configureStore()}>
+      <Provider store={store}>
         <HashRouter>
           <Component />
         </HashRouter>
