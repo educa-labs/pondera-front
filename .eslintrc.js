@@ -7,6 +7,6 @@ module.exports = {
     ],
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-        "jsx-a11y/anchor-is-valid": false,
+        "jsx-a11y/anchor-is-valid": 0,
     }
 };
