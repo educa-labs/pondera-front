@@ -1,8 +1,8 @@
 @import "node_modules/muicss/lib/sass/mui-colors.scss";
 
-$mui-primary-color:       mui-color('amber', '700');
-$mui-primary-color-dark:  mui-color('amber', '500');
-$mui-primary-color-light: mui-color('amber', '900');
+$mui-primary-color:       mui-color('orange', '700');
+$mui-primary-color-dark:  mui-color('orange', '500');
+$mui-primary-color-light: mui-color('orange', '900');
 
 $mui-accent-color:        mui-color('green', 'A200');
 $mui-accent-color-dark:   mui-color('green', 'A100');
@@ -28,3 +28,4 @@ $white:                   mui-color('white');
 
 @import "transitions";
 @import "home";
+@import "forms";

@@ -1,16 +1,21 @@
 #hero-landing {
   background-color: $mui-primary-color;
-  height: 25rem;
+  height: 27rem;
   color: white;
   text-align: center;
   padding-top: 48px;
   #swift {
-    height: 20rem;
+    height: 18rem;
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
     position: relative;
-    top: -5.5rem;
+    top: -5rem;
+  }
+  .hero-title {
+    position: relative;
+    top: -5rem;
+    color: black;
   }
 }
 
