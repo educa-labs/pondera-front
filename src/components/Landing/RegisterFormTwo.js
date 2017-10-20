@@ -5,6 +5,7 @@ import is from 'is_js';
 import Form from 'muicss/lib/react/form';
 import _Input from 'muicss/lib/react/input';
 import Button from 'muicss/lib/react/button';
+import Checkbox from 'muicss/lib/react/checkbox';
 import WithError from '../../hoc/EnhanceInput';
 import wrapCard from '../../hoc/wrapCard';
 import { checkEmpty } from '../../helpers';
@@ -13,18 +14,17 @@ import { FIELD_REQUIRED } from '../../strings';
 
 const Input = WithError(_Input);
 
-class RegisterForm extends Component {
+class StepTwoFrom extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      email: '',
-      password: '',
+      rut: '',
+      phone: '',
+      city: null,
+      accept: false,
       error: {},
     };
-    this.onSubmit = this.onSubmit.bind(this);
   }
-
 
   onSubmit(ev) {
     ev.preventDefault();
@@ -36,73 +36,68 @@ class RegisterForm extends Component {
     }
   }
 
+  validateForm() {
+    const { rut, phone, city } = this.state;
+    const error = {};
+
+    if (checkEmpty(rut)) error.rut = FIELD_REQUIRED;
+    if (checkEmpty(phone)) error.phone = FIELD_REQUIRED;
+    if (checkEmpty(city)) error.city = FIELD_REQUIRED;
+
+    return error;
+  }
+
   logValue(field) {
     return ev => this.setState({
-      [field]: ev.target.value,
+      [field]: ev.target.value || ev.target.cheked,
       error: Object.assign(this.state.error, {
         [field]: undefined,
       }),
     });
   }
 
-  validateForm() {
-    const { name, email, password } = this.state;
-    const error = {};
-
-    if (checkEmpty(name)) error.name = FIELD_REQUIRED;
-    if (checkEmpty(email)) error.email = FIELD_REQUIRED;
-    if (checkEmpty(password)) error.password = FIELD_REQUIRED;
-
-    return error;
-  }
-
   render() {
     const { error } = this.state;
+    const label = (
+      <span>
+        Acepto los <Link to="/terms">términos y condiciones</Link>
+      </span>
+    );
     return (
       <Form onSubmit={this.onSubmit}>
-        <legend>Regístrate</legend>
-        <div className="mui--text-subhead">
-          <span>o </span>
-          <Link to="login">inicia sesión en tu cuenta</Link>
-        </div>
+        <legend>Registro</legend>
+        <div className="mui--text-subhead">completa tus datos</div>
         <br />
         <Input
-          label="Nombre y apellido"
+          label="RUT"
           floatingLabel
-          onChange={this.logValue('name')}
-          value={this.state.name}
-          errorText={error.name}
+          onChange={this.logValue('rut')}
+          value={this.state.rut}
+          errorText={error.rut}
         />
         <Input
-          label="Correo electrónico"
+          label="Número telefónico"
           floatingLabel
-          onChange={this.logValue('email')}
-          value={this.state.email}
-          errorText={error.email}
+          onChange={this.logValue('phone')}
+          value={this.state.phone}
+          errorText={error.phone}
         />
-        <Input
-          label="Contraseña"
-          floatingLabel
-          onChange={this.logValue('password')}
-          value={this.state.password}
-          type="password"
-          errorText={error.password}
+        <Checkbox
+          label={label}
+          checked={this.state.accept}
+          onChange={this.logValue('accept')}
         />
+        
         <Button
           color="primary"
           type="submit"
           className="btn--fullwidth"
         >
-          Registrarse
+          Finalizar
         </Button>
       </Form>
     );
   }
 }
 
-RegisterForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-};
-
-export default wrapCard(RegisterForm);
-
+export default wrapCard(StepTwoFrom);

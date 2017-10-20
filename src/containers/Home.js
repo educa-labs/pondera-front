@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { setFormValues } from '../reducers/register';
 import RegisterForm from '../components/Landing/RegisterForm';
 import Hero from '../components/Landing/Hero';
-
 
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
       frame: 0,
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -25,22 +25,31 @@ class Home extends Component {
     }));
   }
 
-  handleSubmit() {
-    console.log(...this.state);
+  handleSubmit(values) {
+    this.props.setFormValues(values);
+    this.props.history.push('/step-two');
   }
 
   render() {
     return (
       <div className="page">
-        <Hero frame={this.state.frame} />
-        <RegisterForm
-          email={this.state.email}
-          password={this.state.password}
-          onSubmit={this.handleSubmit}
-        />
+        <div className="orange-banner orange-banner--large" />
+        <div className="page-content">
+          <Hero frame={this.state.frame} />
+          <RegisterForm
+            style={{ transform: 'translateY(-2rem)' }}
+            handleSubmit={this.handleSubmit}
+          />
+        </div>
       </div>
     );
   }
-}  
+}
 
-export default Home;
+Home.propTypes = {
+  setFormValues: PropTypes.func.isRequired,
+};
+
+export default connect(null, {
+  setFormValues,
+})(Home);

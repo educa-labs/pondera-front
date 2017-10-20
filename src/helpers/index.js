@@ -1,1 +1,3 @@
-export const checkEmpty = string => string === '';
+export const checkEmpty = string => (
+  string === '' || string === null
+);
