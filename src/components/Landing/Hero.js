@@ -9,6 +9,7 @@ const Hero = ({ frame }) => (
       className={frame === 1 ? 'from-right' : ''}
       style={frame === 1 ? { backgroundImage: `url(${swift})` } : null}
     />
+    <div className="hero-title mui--text-title">Y participa por un auto 0km.</div>
   </section>
 );
 
