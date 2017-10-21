@@ -16,7 +16,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    setTimeout(this.getNextFrame.bind(this), 1000);
+    setTimeout(this.getNextFrame.bind(this), 600);
   }
 
   getNextFrame() {

@@ -3,15 +3,12 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import is from 'is_js';
 import Form from 'muicss/lib/react/form';
-import _Input from 'muicss/lib/react/input';
 import Button from 'muicss/lib/react/button';
-import WithError from '../../hoc/EnhanceInput';
+import TextInput from '../Inputs/TextInput';
 import wrapCard from '../../hoc/wrapCard';
 import { checkEmpty } from '../../helpers';
 import { FIELD_REQUIRED } from '../../strings';
 
-
-const Input = WithError(_Input);
 
 class RegisterForm extends Component {
   constructor(props) {
@@ -66,21 +63,21 @@ class RegisterForm extends Component {
           <Link to="login">inicia sesión en tu cuenta</Link>
         </div>
         <br />
-        <Input
+        <TextInput
           label="Nombre y apellido"
           floatingLabel
           onChange={this.logValue('name')}
           value={this.state.name}
           errorText={error.name}
         />
-        <Input
+        <TextInput
           label="Correo electrónico"
           floatingLabel
           onChange={this.logValue('email')}
           value={this.state.email}
           errorText={error.email}
         />
-        <Input
+        <TextInput
           label="Contraseña"
           floatingLabel
           onChange={this.logValue('password')}
@@ -92,6 +89,7 @@ class RegisterForm extends Component {
           color="primary"
           type="submit"
           className="btn--fullwidth"
+          variant="raised"
         >
           Registrarse
         </Button>

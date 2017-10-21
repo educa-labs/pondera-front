@@ -3,16 +3,19 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import is from 'is_js';
 import Form from 'muicss/lib/react/form';
-import _Input from 'muicss/lib/react/input';
 import Button from 'muicss/lib/react/button';
 import Checkbox from 'muicss/lib/react/checkbox';
-import WithError from '../../hoc/EnhanceInput';
+import TextInput from '../Inputs/TextInput';
+import SelectInput from '../Inputs/SelectInput';
 import wrapCard from '../../hoc/wrapCard';
 import { checkEmpty } from '../../helpers';
 import { FIELD_REQUIRED } from '../../strings';
 
 
-const Input = WithError(_Input);
+const options = [
+  { value: 1, label: 'Santiago' },
+  { value: 2, label: 'La Serena' },
+];
 
 class StepTwoFrom extends Component {
   constructor(props) {
@@ -20,10 +23,11 @@ class StepTwoFrom extends Component {
     this.state = {
       rut: '',
       phone: '',
-      city: null,
+      city: '',
       accept: false,
       error: {},
     };
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   onSubmit(ev) {
@@ -68,30 +72,36 @@ class StepTwoFrom extends Component {
         <legend>Registro</legend>
         <div className="mui--text-subhead">completa tus datos</div>
         <br />
-        <Input
+        <TextInput
           label="RUT"
           floatingLabel
           onChange={this.logValue('rut')}
           value={this.state.rut}
           errorText={error.rut}
         />
-        <Input
+        <TextInput
           label="Número telefónico"
           floatingLabel
           onChange={this.logValue('phone')}
           value={this.state.phone}
           errorText={error.phone}
         />
+        <SelectInput
+          label="Comuna"
+          value={this.state.city}
+          onChange={this.logValue('city')}
+          options={options}
+        />
         <Checkbox
           label={label}
           checked={this.state.accept}
           onChange={this.logValue('accept')}
         />
-        
         <Button
           color="primary"
           type="submit"
           className="btn--fullwidth"
+          variant="raised"
         >
           Finalizar
         </Button>
