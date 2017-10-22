@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import ScrollScreen from '../components/Layout/ScrollScreen';
+import Pondera from './Pondera';
+import Results from './Results';
 
 class Simula extends Component {
   constructor(props) {
@@ -27,12 +29,8 @@ class Simula extends Component {
       <ScrollScreen
         index={this.state.currentScreen}
       >
-        <div className="mui--bg-primary">
-          <button onClick={this.goNext}>Go down</button>
-        </div>
-        <div className="mui--bg-accent">
-          <button onClick={this.goBack}>Go up</button>
-        </div>
+        <Pondera goNext={this.goNext} />
+        <Results goBack={this.goBack} />
       </ScrollScreen>
     );
   }
