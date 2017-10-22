@@ -21,28 +21,9 @@ $white:                   mui-color('white');
   }
 }
 
-.page {
-  min-height: 100vh;
-  overflow-x: hidden;
-}
 
-.page-content {
-  margin-top: 48px;
-}
-
-.orange-banner {
-  background-color: $mui-primary-color;
-  position: absolute;
-  left: 0;
-  right: 0;
-  z-index: -1;
-  height: 20rem;
-}
-
-.orange-banner--large {
-  height: 30rem;
-}
 
 @import "transitions";
 @import "home";
 @import "forms";
+@import "layout";
