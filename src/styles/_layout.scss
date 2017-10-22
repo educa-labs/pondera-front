@@ -22,10 +22,11 @@
 
 /* SCROLL SCREEN */
 
-.scroll-screen {
-  height: 100vh;
-  overflow: hidden;
-  .screen {
-    height: 100vh;
-  }
+
+.overlay-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
 }
