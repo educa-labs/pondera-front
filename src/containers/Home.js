@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { setFormValues } from '../reducers/register';
 import RegisterForm from '../components/Landing/RegisterForm';
 import Hero from '../components/Landing/Hero';
+import NavigationBar from '../components/NavigationBar/NavigationBar';
 
 
 class Home extends Component {
@@ -33,6 +34,7 @@ class Home extends Component {
   render() {
     return (
       <div className="page">
+        <NavigationBar />
         <div className="orange-banner orange-banner--large" />
         <div className="page-content">
           <Hero frame={this.state.frame} />

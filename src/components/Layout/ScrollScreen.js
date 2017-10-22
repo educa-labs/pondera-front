@@ -23,10 +23,6 @@ const ScrollScreen = ({ index, children }) => {
 
 ScrollScreen.propTypes = {
   index: PropTypes.number.isRequired,
-  children: PropTypes.oneOf([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
 };
 
 export default ScrollScreen;
