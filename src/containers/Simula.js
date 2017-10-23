@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import OverlayScreen from '../components/Layout/OverlayScreen';
+import ScrollScreen from '../components/Layout/ScrollScreen';
 import NavigationBar from '../components/NavigationBar/NavigationBar';
+import Pondera from './Pondera';
 import Results from './Results';
 
 class Simula extends Component {
@@ -8,13 +10,22 @@ class Simula extends Component {
     super(props);
     this.state = {
       active: false,
+      currentScreen: 0,
     };
     this.toggleActive = this.toggleActive.bind(this);
+    this.goBack = this.goBack.bind(this);
+    this.goNext = this.goNext.bind(this);
   }
 
   toggleActive() {
     this.setState(prevState => ({
       active: !prevState.active,
+    }));
+  }
+
+  goNext() {
+    this.setState(prevState => ({
+      currentScreen: prevState.currentScreen + 1,
     }));
   }
 
@@ -24,23 +35,15 @@ class Simula extends Component {
     }));
   }
   render() {
-    return ([
-      <OverlayScreen
-        key="0"
-        active={this.state.active}
-        onRequestClose={this.toggleActive}
+    return (
+      <ScrollScreen
+        index={this.state.currentScreen}
+        goBack={this.goBack}
       >
-        <Results goBack={this.toggleActive} />
-      </OverlayScreen>,
-      <div key="1" className="page">
-        <NavigationBar />
-        <div className="orange-banner" />
-        <div className="page-content">
-          Acá va el formulario
-          <button onClick={this.toggleActive}>Bajar</button>
-        </div>
-      </div>,
-    ]);
+        <Pondera goNext={this.goNext} />
+        <Results goBack={this.goBack} />
+      </ScrollScreen>
+    );
   }
 }
 
