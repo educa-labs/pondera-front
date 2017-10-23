@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import NavigationBar from '../components/NavigationBar/NavigationBar';
-import Form from '../components/Pondera/Form';
+import PonderaForm from '../components/Pondera/PonderaForm';
 
 class Pondera extends Component {
   constructor(props) {
@@ -16,6 +16,7 @@ class Pondera extends Component {
     this.getValue = this.getValue.bind(this);
     this.logChange = this.logChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.generateInputList = this.generateInputList.bind(this);
   }
 
   onSubmit(ev) {
@@ -32,10 +33,25 @@ class Pondera extends Component {
 
   logChange(field) {
     return (ev) => {
-      this.setState({ [field]: ev.target.value });
+      console.log(ev.target);
+      this.setState(prevState => ({
+        ...prevState,
+        [field]: ev,
+      }));
     };
   }
 
+  generateInputList() {
+    const fields = [
+      { label: 'NEM', value: 'nem' },
+    ];
+    return fields.map(({ label, value }) => ({
+      label,
+      key: value,
+      onChange: (ev) => { this.setState({ [value]: ev.target.value }); },
+      value: this.state[value],
+    }));
+  }
 
 
   render() {
@@ -44,12 +60,9 @@ class Pondera extends Component {
         <NavigationBar />
         <div className="orange-banner" />
         <div className="page-content">
-          <Form
+          <PonderaForm
             onSubmit={this.onSubmit}
-            logNamChange={this.logChange('nem')}
-            nem={this.state.nem}
-            logChange={this.logChange}
-            getValue={this.getValue}
+            inputList={this.generateInputList()}
           />
         </div>
       </div>

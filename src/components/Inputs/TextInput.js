@@ -1,8 +1,6 @@
 import Input from 'muicss/lib/react/input';
 import WithError from '../../hoc/EnhanceInput';
 
-function TextInput() {
-  return WithError(Input);
-}
+const TextInput = WithError(Input);
 
-export default TextInput();
+export default TextInput;
