@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { setFormValues } from '../reducers/register';
 import RegisterForm from '../components/Landing/RegisterForm';
 import Hero from '../components/Landing/Hero';
 import NavigationBar from '../components/NavigationBar/NavigationBar';
@@ -26,8 +24,7 @@ class Landing extends Component {
     }));
   }
 
-  handleSubmit(values) {
-    this.props.setFormValues(values);
+  handleSubmit() {
     this.props.history.push('/step-two');
   }
 
@@ -40,7 +37,7 @@ class Landing extends Component {
           <Hero frame={this.state.frame} />
           <RegisterForm
             style={{ transform: 'translateY(-2rem)' }}
-            handleSubmit={this.handleSubmit}
+            onSubmit={this.handleSubmit}
           />
         </div>
       </div>
@@ -48,10 +45,5 @@ class Landing extends Component {
   }
 }
 
-Landing.propTypes = {
-  setFormValues: PropTypes.func.isRequired,
-};
 
-export default connect(null, {
-  setFormValues,
-})(Landing);
+export default Landing;
