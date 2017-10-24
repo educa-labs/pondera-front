@@ -7,11 +7,14 @@ import { logChange, validFormSelector, submitForm } from '../redux/forms';
 */
 
 export default function (Component, formName, validator, fields) {
-  const mapStateToProps = state => ({
-    values: state[formName].values,
-    errors: state[formName].errors,
-    isValidForm: validFormSelector(state[formName]),
-  });
+  const mapStateToProps = (state) => {
+    if (state[formName] === undefined) throw new Error(`There is no reducer named: ${formName}`);
+    return ({
+      values: state[formName].values,
+      errors: state[formName].errors,
+      isValidForm: validFormSelector(state[formName]),
+    });
+  }
   const mapDispatchToProps = dispatch => ({
     logChange: field => (
       ev => dispatch(logChange(formName, field, ev.target.value))
