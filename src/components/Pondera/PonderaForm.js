@@ -5,7 +5,6 @@ import is from 'is_js';
 import Form from 'muicss/lib/react/form';
 import Button from 'muicss/lib/react/button';
 import Row from 'muicss/lib/react/row';
-import Input from 'muicss/lib/react/input';
 import Col from 'muicss/lib/react/col';
 import Container from 'muicss/lib/react/container';
 import TextInput from '../Inputs/TextInput';
@@ -28,9 +27,10 @@ class PonderaForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      nem: 'h',
+      nem: '',
     };
     this.onChange = this.onChange.bind(this);
+    this.logValue = this.logValue.bind(this);
   }
 
   onChange(ev) {
@@ -38,25 +38,34 @@ class PonderaForm extends Component {
     this.setState({ nem: ev.target.value });
   }
 
+  logValue(field) {
+    return (ev) => {
+      this.setState({ [field]: ev.target.value });
+    }
+  }
+
   render() {
     return (
       <Form onSubmit={this.props.onSubmit}>
         <legend>Ponderar</legend>
+        <input
+          type="text"
+          value={this.state.nem}
+          onChange={ev => this.setState({ nem: ev.target.value })}
+        />
         <div className="mui--text-subhead">
           Ingresa tus puntajes y carrera
         </div>
+        
         <Container>
           <Row>
-            <Col xs={6}>
-              <input
-                type="text"
-                name="nem"
-                onChange={this.onChange}
+            <Col>
+              <TextInput
+                label="Nombre y apellido"
+                floatingLabel
+                onChange={this.logValue('nem')}
                 value={this.state.nem}
               />
-            </Col>
-            <Col xs={6}>
-              Hola
             </Col>
           </Row>
         </Container>
