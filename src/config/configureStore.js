@@ -10,7 +10,7 @@ function configureStore() {
     composeWithDevTools(applyMiddleware(thunkMiddleware)),
   );
   if (module.hot) {
-    module.hot.accept('../reducers', () => {
+    module.hot.accept('../redux', () => {
       const nextRootReducer = require('../redux');
       store.replaceReducer(nextRootReducer);
     });
