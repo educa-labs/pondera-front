@@ -29,6 +29,7 @@ const getErrors = state => state.errors;
 const getValues = state => state.values;
 
 const isValidForm = (errors) => {
+  if (is.empty(errors)) return true;
   let valid = true;
   Object.keys(errors).forEach((field) => {
     if (is.not.null(errors[field])) {
@@ -47,9 +48,11 @@ export const submitForm = (formName, onSubmit, validator, fields) => (
   (dispatch, getState) => {
     const { values } = getState()[formName];
     const errors = {};
-    fields.forEach((field) => {
-      errors[field] = validator(values[field]);
-    });
+    if (is.existy(validator)) {
+      fields.forEach((field) => {
+        errors[field] = validator(values[field]);
+      });
+    }
     if (isValidForm(errors)) {
       onSubmit(values);
     } else {
