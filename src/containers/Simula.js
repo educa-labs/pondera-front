@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import OverlayScreen from '../components/Layout/OverlayScreen';
 import ScrollScreen from '../components/Layout/ScrollScreen';
-import NavigationBar from '../components/NavigationBar/NavigationBar';
 import Pondera from './Pondera';
 import Results from './Results';
 
@@ -9,18 +7,10 @@ class Simula extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: false,
       currentScreen: 0,
     };
-    this.toggleActive = this.toggleActive.bind(this);
     this.goBack = this.goBack.bind(this);
     this.goNext = this.goNext.bind(this);
-  }
-
-  toggleActive() {
-    this.setState(prevState => ({
-      active: !prevState.active,
-    }));
   }
 
   goNext() {

@@ -9,7 +9,7 @@ function wrapCard(Component) {
   const Card = ({ style, ...props }) => (
     <Container fluid style={style}>
       <Row>
-        <Col xs={12} md={4} md-offset={4}>
+        <Col xs={12} sm={6} sm-offset={3} lg={4} lg-offset={4}>
           <Panel>
             <Component {...props} />
           </Panel>

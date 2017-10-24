@@ -7,7 +7,7 @@ import Hero from '../components/Landing/Hero';
 import NavigationBar from '../components/NavigationBar/NavigationBar';
 
 
-class Home extends Component {
+class Landing extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -48,10 +48,10 @@ class Home extends Component {
   }
 }
 
-Home.propTypes = {
+Landing.propTypes = {
   setFormValues: PropTypes.func.isRequired,
 };
 
 export default connect(null, {
   setFormValues,
-})(Home);
+})(Landing);
