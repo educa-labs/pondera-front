@@ -8,7 +8,7 @@ import TextInput from '../Inputs/TextInput';
 import SelectInput from '../Inputs/SelectInput';
 import wrapCard from '../../hoc/wrapCard';
 import connectForm from '../../hoc/connectForm';
-import { formValidator } from '../../helpers';
+import { emptyValidator } from '../../helpers';
 
 
 const options = [
@@ -81,6 +81,6 @@ RegisterFormTwo.propTypes = {
 export default wrapCard(connectForm(
   RegisterFormTwo,
   'signupForm',
-  formValidator,
+  emptyValidator,
   ['rut', 'phone', 'accept', 'city'],
 ));

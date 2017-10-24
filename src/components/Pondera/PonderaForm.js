@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import is from 'is_js';
 import Form from 'muicss/lib/react/form';
 import Button from 'muicss/lib/react/button';
 import Row from 'muicss/lib/react/row';
@@ -10,100 +8,120 @@ import Container from 'muicss/lib/react/container';
 import TextInput from '../Inputs/TextInput';
 import SelectInput from '../Inputs/SelectInput';
 import wrapCard from '../../hoc/wrapCard';
+import connectForm from '../../hoc/connectForm';
+import { scoreValidator } from '../../helpers';
 
 const options = [
   { value: 1, label: 'Santiago' },
   { value: 2, label: 'La Serena' },
 ];
 
-const renderInput = props => (
-  <Input
-    {...props}
-  />
+
+const PonderaForm = ({
+  logChange,
+  values,
+  errors,
+  submitHandler,
+  onSubmit,
+}) => (
+  <Form onSubmit={submitHandler(onSubmit)}>
+    <legend>Ponderar</legend>
+    <div className="mui--text-subhead">
+      Ingresa tus puntajes y carrera
+    </div>
+    <Container>
+      <Row>
+        <Col xs={6}>
+          <TextInput
+            label="NEM"
+            floatingLabel
+            type="number"
+            onChange={logChange('nem')}
+            value={values.nem}
+            errorText={errors.nem}
+          />
+          <TextInput
+            label="Leng"
+            floatingLabel
+            type="number"
+            onChange={logChange('language')}
+            value={values.language}
+            errorText={errors.language}
+          />
+          <TextInput
+            label="Hist"
+            floatingLabel
+            type="number"
+            onChange={logChange('history')}
+            value={values.history}
+            errorText={errors.history}
+          />
+        </Col>
+        <Col xs={6}>
+          <TextInput
+            label="Rank"
+            floatingLabel
+            type="number"
+            onChange={logChange('ranking')}
+            value={values.ranking}
+            errorText={errors.ranking}
+          />
+          <TextInput
+            label="Mate"
+            floatingLabel
+            type="number"
+            onChange={logChange('math')}
+            value={values.math}
+            errorText={errors.math}
+          />
+          <TextInput
+            label="Cien"
+            floatingLabel
+            type="number"
+            onChange={logChange('science')}
+            value={values.science}
+            errorText={errors.science}
+          />
+        </Col>
+      </Row>
+    </Container>
+    <SelectInput
+      label="Comuna"
+      options={options}
+    />
+    <SelectInput
+      label="Comuna"
+      options={options}
+    />
+    <Row>
+      <Col xs={6}>
+        <Button
+          color="primary"
+          type="button"
+          className="btn--fullwidth"
+          variant="flat"
+        >
+          Reestablecer
+        </Button>
+      </Col>
+      <Col xs={6}>
+        <Button
+          color="primary"
+          type="submit"
+          className="btn--fullwidth"
+          variant="raised"
+        >
+          Calcular
+        </Button>
+      </Col>
+    </Row>
+  </Form>
 );
 
 
-class PonderaForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      nem: '',
-    };
-    this.onChange = this.onChange.bind(this);
-    this.logValue = this.logValue.bind(this);
-  }
-
-  onChange(ev) {
-    console.log(ev);
-    this.setState({ nem: ev.target.value });
-  }
-
-  logValue(field) {
-    return (ev) => {
-      this.setState({ [field]: ev.target.value });
-    }
-  }
-
-  render() {
-    return (
-      <Form onSubmit={this.props.onSubmit}>
-        <legend>Ponderar</legend>
-        <input
-          type="text"
-          value={this.state.nem}
-          onChange={ev => this.setState({ nem: ev.target.value })}
-        />
-        <div className="mui--text-subhead">
-          Ingresa tus puntajes y carrera
-        </div>
-        
-        <Container>
-          <Row>
-            <Col>
-              <TextInput
-                label="Nombre y apellido"
-                floatingLabel
-                onChange={this.logValue('nem')}
-                value={this.state.nem}
-              />
-            </Col>
-          </Row>
-        </Container>
-        <SelectInput
-          label="Comuna"
-          options={options}
-        />
-        <SelectInput
-          label="Comuna"
-          options={options}
-        />
-        <Row>
-          <Col xs={6}>
-            <Button
-              color="primary"
-              type="button"
-              className="btn--fullwidth"
-              variant="flat"
-            >
-              Reestablecer
-            </Button>
-          </Col>
-          <Col xs={6}>
-            <Button
-              color="primary"
-              type="submit"
-              className="btn--fullwidth"
-              variant="raised"
-            >
-              Calcular
-            </Button>
-          </Col>
-        </Row>
-      </Form>
-    );
-  }
-}  
-  
-
-
-export default wrapCard(PonderaForm);
+export default wrapCard(connectForm(
+  PonderaForm,
+  'ponderaForm',
+  // scoreValidator,
+  // ['nem', 'ranking', 'language', 'math', 'history', 'science'],
+));

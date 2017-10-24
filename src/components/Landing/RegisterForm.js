@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import is from 'is_js';
 import Form from 'muicss/lib/react/form';
 import Button from 'muicss/lib/react/button';
 import TextInput from '../Inputs/TextInput';
 import wrapCard from '../../hoc/wrapCard';
 import connectForm from '../../hoc/connectForm';
-import { formValidator } from '../../helpers';
+import { emptyValidator } from '../../helpers';
 
 
 const RegisterForm = ({
@@ -68,7 +66,7 @@ RegisterForm.propTypes = {
 export default wrapCard(connectForm(
   RegisterForm,
   'signupForm',
-  formValidator,
+  emptyValidator,
   [
     'name',
     'email',
