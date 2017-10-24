@@ -59,6 +59,7 @@ class ScrollScreen extends Component {
             <DraggableCore
               onStart={this.handleStart}
               onDrag={this.handleDrag}
+              cancel=".mui-form"
             >
               <div className="scroll-screen" style={{ transform: `translateY(${-y}px)` }}>
                 {this.props.children[0]}
