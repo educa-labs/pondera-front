@@ -50,6 +50,7 @@ export const submitForm = (formName, onSubmit, validator, fields) => (
     const errors = {};
     if (is.existy(validator)) {
       fields.forEach((field) => {
+        validator(values[field]);
         errors[field] = validator(values[field]);
       });
     }

@@ -12,7 +12,17 @@ const signupForm = createForm('signupForm', [
   'accept',
 ]);
 
+const ponderaForm = createForm('ponderaForm', [
+  'nem',
+  'ranking',
+  'language',
+  'math',
+  'science',
+  'history',
+]);
+
 export default combineReducers({
   user,
   signupForm,
+  ponderaForm,
 });

@@ -14,7 +14,7 @@ export default function (Component, formName, validator, fields) {
       errors: state[formName].errors,
       isValidForm: validFormSelector(state[formName]),
     });
-  }
+  };
   const mapDispatchToProps = dispatch => ({
     logChange: field => (
       ev => dispatch(logChange(formName, field, ev.target.value))
