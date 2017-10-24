@@ -1,31 +1,122 @@
-const SET_FORM_VALUE = 'SET_FORM_VALUE';
+import { createSelector } from 'reselect';
+import { combineReducers } from 'redux';
+import { assignWith } from 'lodash';
+import is from 'is_js';
 
-export const logChange = (form, field, value) => ({
+/* TYPES */
+
+const SET_FORM_VALUE = 'SET_FORM_VALUE';
+const SUBMIT_FAILURE = 'SUBMIT_FAILURE';
+
+/* ACTION CREATORS */
+
+export const submitFailure = (formName, errors) => ({
+  type: SUBMIT_FAILURE,
+  formName,
+  errors,
+});
+
+export const logChange = (formName, field, value) => ({
   type: SET_FORM_VALUE,
-  form,
+  formName,
   field,
   value,
 });
 
-const createForm = (name, fields) => {
-  const initalState = {};
-  fields.forEach((field) => {
-    initalState[field] = '';
+/* SELECTORS */
+
+const getErrors = state => state.errors;
+const getValues = state => state.values;
+
+const isValidForm = (errors) => {
+  let valid = true;
+  Object.keys(errors).forEach((field) => {
+    if (is.not.null(errors[field])) {
+      valid = false;
+    }
   });
-  return (state = initalState, action) => {
+  return valid;
+};
+
+export const validFormSelector = createSelector(getErrors, getValues, isValidForm);
+
+
+/* SIDE EFFECTS */
+
+export const submitForm = (formName, onSubmit, validator, fields) => (
+  (dispatch, getState) => {
+    const { values } = getState()[formName];
+    const errors = {};
+    fields.forEach((field) => {
+      errors[field] = validator(values[field]);
+    });
+    if (isValidForm(errors)) {
+      onSubmit(values);
+    } else {
+      dispatch(submitFailure(formName, errors));
+    }
+  }
+);
+
+
+/* REDUCERS */
+
+
+const removeError = (state, action) => {
+  if (is.not.null(state[action.field])) {
+    return Object.assign({}, state, {
+      [action.field]: null,
+    });
+  }
+  return state;
+};
+
+const createFormReducer = (formName, fields) => {
+  const initialValues = {};
+  const initialErrors = {};
+  fields.forEach((field) => {
+    initialValues[field] = '';
+    initialErrors[field] = null;
+  });
+
+  const valuesReducer = (state = initialValues, action) => {
     switch (action.type) {
       case SET_FORM_VALUE:
-        if (action.form === name) {
-          return Object.assign({}, state, {
-            [action.field]: action.value,
-          });
-        }
-        return state;
+        return {
+          ...state,
+          [action.field]: action.value,
+        };
       default:
         return state;
     }
   };
+
+  const errorsReducer = (state = initialErrors, action) => {
+    switch (action.type) {
+      case SET_FORM_VALUE:
+        return removeError(state, action);
+      case SUBMIT_FAILURE:
+        return Object.assign({}, state, action.errors);
+      default:
+        return state;
+    }
+  };
+
+  const initialState = {
+    values: initialValues,
+    errors: initialErrors,
+  };
+
+  const formReducer = (state = initialState, action) => {
+    if (formName !== action.formName) return state;
+    return combineReducers({
+      values: valuesReducer,
+      errors: errorsReducer,
+    })(state, action);
+  };
+  return formReducer;
 };
 
-export default createForm;
+
+export default createFormReducer;
 
