@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ScrollScreen from '../components/Layout/ScrollScreen';
 import Pondera from './Pondera';
-import Results from './Results';
+import Result from './Result';
 
 class Simula extends Component {
   constructor(props) {
@@ -31,7 +31,7 @@ class Simula extends Component {
         goBack={this.goBack}
       >
         <Pondera goNext={this.goNext} />
-        <Results goBack={this.goBack} />
+        <Result goBack={this.goBack} />
       </ScrollScreen>
     );
   }
