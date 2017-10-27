@@ -93,3 +93,4 @@ Temporary Items
 
 # Production
 /dist
+.env

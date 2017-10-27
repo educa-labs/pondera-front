@@ -9,7 +9,8 @@
     "dev": "webpack-dev-server --hot",
     "test": "jest",
     "build": "webpack -p --config webpack.prod.js",
-    "prod": "node production.js"
+    "prod": "node production.js",
+    "deploy:beta": "./deploy-beta.sh"
   },
   "dependencies": {
     "babel-jest": "^21.2.0",
