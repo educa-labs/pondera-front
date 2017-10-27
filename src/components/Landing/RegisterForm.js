@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Form from 'muicss/lib/react/form';
 import Button from 'muicss/lib/react/button';
+import { Link } from 'react-router-dom';
 import TextInput from '../Inputs/TextInput';
 import wrapCard from '../../hoc/wrapCard';
 import connectForm from '../../hoc/connectForm';
