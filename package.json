@@ -6,10 +6,10 @@
   "author": "Educalabs",
   "license": "MIT",
   "scripts": {
-    "dev": "webpack-dev-server --hot",
+    "run:dev": "webpack-dev-server --hot",
     "test": "jest",
     "build": "webpack -p --config webpack.prod.js",
-    "prod": "node production.js",
+    "run:prod": "node production.js",
     "deploy:beta": "./deploy-beta.sh"
   },
   "dependencies": {
