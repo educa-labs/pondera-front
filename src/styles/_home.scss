@@ -1,4 +1,19 @@
-.car-photo {
-  height: 48px;
-  margin: 10px 0;
+#hero-landing {
+  color: white;
+  text-align: center;
+  #swift {
+    height: 15rem;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: relative;
+    top: -5rem;
+  }
+  .hero-title {
+    color: black;
+    position: relative;
+    top: -5rem;
+  }
 }
+
+

@@ -1,0 +1,71 @@
+.result-header {
+  background-color: $mui-primary-color;
+  padding: 7px 15px;
+  color: white;
+  width: 100%;
+}
+
+.result-header-gray {
+  padding: 7px 15px;
+  color: $mui-text-dark;
+  background-color: #F5F5F5;
+}
+
+.result-weights {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+
+  .result-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    padding: 1rem 0;
+    .result-item-label {
+      font-size: 12px;
+      color: $mui-text-dark;
+    }
+    .result-item-value {
+      font-size: 14px;
+      color: $mui-text-dark-secondary;
+    }
+  }
+}
+
+.result-body {
+  color: $mui-text-dark-secondary;
+  padding: 1rem 15px;
+  .mui-row {
+    margin-bottom: 10px;
+  }
+  .mui-row:nth-last-child(1) {
+    margin-bottom: 0;
+  }
+
+  .result-body-values {
+    color: $mui-text-dark;
+    text-align: center;
+  }
+  .pondera-link {
+    color: $mui-primary-color;
+    cursor: pointer;
+    text-align: center;
+  }
+}
+
+.result-footer {
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  background-color: #F5F5F5;
+  padding-bottom: 3rem;
+  color: $mui-primary-color;
+  flex-direction: column;
+  button {
+    color: $mui-primary-color;
+  }
+}

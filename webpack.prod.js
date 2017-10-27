@@ -1,28 +1,21 @@
 const path = require('path');
+const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const extractPlugin = new ExtractTextPlugin({
   filename: 'main.css',
-  disable: process.env.NODE_ENV === 'development',
 });
 
 module.exports = {
-  entry: [
-    'react-hot-loader/patch',
-    './src/index.js',
-  ],
+  entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/dist',
   },
-  devServer: {
-    contentBase: path.resolve(__dirname, 'public'),
-    hot: true,
-    port: 3000,
-    overlay: true,
-  },
-  devtool: 'inline-source-map',
   module: {
     rules: [
       {
@@ -32,19 +25,16 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
-              presets: ['react', 'env', 'stage-2', 'flow'],
-              plugins: ['react-hot-loader/babel'],
+              presets: ['react', 'env', 'stage-2'],
             },
           },
         ],
       },
       {
         test: /\.scss$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader',
-        ],
+        use: ExtractTextPlugin.extract({
+          use: ['css-loader', 'sass-loader'],
+        }),
       },
       {
         test: /\.png$/,
@@ -62,6 +52,9 @@ module.exports = {
         use: [
           {
             loader: 'babel-loader',
+            options: {
+              presets: ['react', 'env', 'stage-2'],
+            },
           },
           {
             loader: 'react-svg-loader',
@@ -76,6 +69,32 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.html$/,
+        use: [{
+          loader: 'html-loader',
+        }],
+      },
     ],
   },
+  devtool: 'source-map',
+  plugins: [
+    extractPlugin,
+    new HtmlWebpackPlugin({
+      hash: true,
+      template: './public/index.html',
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production'),
+      },
+    }),
+    new CleanWebpackPlugin(['dist']),
+    new UglifyJSPlugin({
+      sourceMap: true,
+    }),
+    new CopyWebpackPlugin([
+      './public/manifest.json',
+    ]),
+  ],
 };

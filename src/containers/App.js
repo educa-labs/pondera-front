@@ -1,10 +1,14 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Home from './Home';
+import Landing from './Landing';
+import StepTwo from './StepTwo';
+import Simula from './Simula';
 
 const App = () => (
-  <Switch>
-    <Route exact path="/" component={Home} />
+  <Switch key="1">
+    <Route exact path="/" component={Landing} />
+    <Route path="/step-two" component={StepTwo} />
+    <Route path="/simula" component={Simula} />
   </Switch>
 );
 

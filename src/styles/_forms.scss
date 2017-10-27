@@ -1,0 +1,26 @@
+.mui-form {
+  legend {
+    margin-bottom: 0;
+  }
+  .mui-textfield--with-error {
+    margin-bottom: 0;
+  }
+  .mui-textfield--error-text {
+    color: $mui-text-danger;
+    margin: 5px 0;
+    font-size: 12px;
+    min-height: 17px;
+  }
+
+  .mui-textfield:first-of-type {
+    margin-top: 10px;
+  }
+
+  .mui-btn {
+    font-size: 12px;
+  }
+}
+
+.btn--fullwidth {
+  width: 100%;
+}

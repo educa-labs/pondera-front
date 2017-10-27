@@ -5,8 +5,9 @@ Bienvenidos al repo de pondera frontend, lo mejor que Educalabas alguna vez haya
 Para ejecutar la aplicación encesitas tener installado **Node 8.4.0** en adelante. Para manejar los paquetes y scripts usamos **Yarn** (npm ya paso al olvido :cry:). 
 
 ### Development
-Antes de hacer cualquier cosa, debemos instalar las dependencias
+Antes de hacer cualquier cosa, nos debemos cambiar a la rama de desarrollo e instalar las dependencias
 ```
+git checkoout dev
 yarn
 ```
 Ahora para correr la aplicación en local ejecutamos
