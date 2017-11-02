@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import RegisterForm from '../components/Landing/RegisterForm';
 import Hero from '../components/Landing/Hero';
 import NavigationBar from '../components/NavigationBar/NavigationBar';

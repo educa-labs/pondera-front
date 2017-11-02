@@ -21,8 +21,14 @@ const ponderaForm = createForm('ponderaForm', [
   'history',
 ]);
 
+const loginForm = createForm('loginForm', [
+  'email',
+  'password',
+]);
+
 export default combineReducers({
   user,
   signupForm,
   ponderaForm,
+  loginForm,
 });
