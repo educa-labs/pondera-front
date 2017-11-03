@@ -8,7 +8,7 @@ const NavigationBar = props => (
   <nav>
     <section className="nav-left">
       {props.back ? (
-        <button onClick={() => props.history.goBack()}>
+        <button className="icon-button" onClick={() => props.history.goBack()}>
           <i className="material-icons">arrow_back</i>
         </button>
       ) : <Logo width={80} height={35} />}
