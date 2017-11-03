@@ -8,6 +8,7 @@ const extractPlugin = new ExtractTextPlugin({
 
 module.exports = {
   entry: [
+    'babel-polyfill',
     'react-hot-loader/patch',
     './src/index.js',
   ],
@@ -32,7 +33,7 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
-              presets: ['react', 'env', 'stage-2', 'flow'],
+              presets: ['react', 'env', 'stage-2'],
               plugins: ['react-hot-loader/babel'],
             },
           },
