@@ -7,7 +7,12 @@ import MenuItem from '../Menu/MenuItem';
 const NavigationBar = props => (
   <nav>
     <section className="nav-left">
-      <Logo width={80} height={35} />
+      {props.back ? (
+        <button onClick={() => props.history.goBack()}>
+          <i className="material-icons">arrow_back</i>
+        </button>
+      ) : <Logo width={80} height={35} />}
+      
     </section>
     {props.pondera ? (
       <section className="nav-right">
