@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import RegisterForm from '../components/Landing/RegisterForm';
+import Page from '../components/Layout/Page';
 import Hero from '../components/Landing/Hero';
 import NavigationBar from '../components/NavigationBar/NavigationBar';
 
@@ -28,19 +29,16 @@ class Landing extends Component {
   }
 
   render() {
-    return (
-      <div className="page">
-        <NavigationBar />
-        <div className="orange-banner orange-banner--large" />
-        <div className="page-content">
-          <Hero frame={this.state.frame} />
-          <RegisterForm
-            style={{ transform: 'translateY(-2rem)' }}
-            onSubmit={this.handleSubmit}
-          />
-        </div>
-      </div>
-    );
+    return ([
+      <NavigationBar key="0" />,
+      <Page largeBanner key="1">
+        <Hero frame={this.state.frame} />
+        <RegisterForm
+          style={{ transform: 'translateY(-2rem)' }}
+          onSubmit={this.handleSubmit}
+        />
+      </Page>,
+    ]);
   }
 }
 

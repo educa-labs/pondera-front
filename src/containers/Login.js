@@ -1,4 +1,5 @@
 import React from 'react';
+import Page from '../components/Layout/Page';
 import LoginForm from '../components/Login/LoginForm';
 
 const Login = (props) => {
@@ -6,14 +7,11 @@ const Login = (props) => {
     props.history.push('/simula');
   }
   return (
-    <div className="page">
-      <div className="orange-banner" />
-      <div className="page-content">
-        <LoginForm
-          onSubmit={handleSubmit}
-        />
-      </div>
-    </div>
+    <Page>
+      <LoginForm
+        onSubmit={handleSubmit}
+      />
+    </Page>
   );
 };
 

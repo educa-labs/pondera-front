@@ -26,6 +26,20 @@ $white:                   mui-color('white');
   min-width: auto;
 }
 
+.mui-panel {
+  legend {
+    margin-bottom: 10px;
+    font-size: 21px;
+    color: rgba(0, 0, 0, 0.87);
+    border: 0;
+  }
+}
+
+button::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
 @import "transitions";
 @import "home";
 @import "forms";
