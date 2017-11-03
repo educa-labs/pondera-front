@@ -9,7 +9,7 @@ const Pondera = (props) => {
 
   return (
     <div className="page">
-      <NavigationBar />
+      <NavigationBar pondera />
       <div className="orange-banner" />
       <div className="page-content">
         <PonderaForm

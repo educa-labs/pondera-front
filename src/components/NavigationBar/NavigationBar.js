@@ -1,10 +1,24 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import Logo from '../../assets/svg/logo-pondera.svg';
+import Menu from '../Menu/Menu';
+import MenuItem from '../Menu/MenuItem';
 
-const NavigationBar = () => (
+const NavigationBar = props => (
   <nav>
-    <Logo width={80} height={35} />
+    <section className="nav-left">
+      <Logo width={80} height={35} />
+    </section>
+    {props.pondera ? (
+      <section className="nav-right">
+        <Menu>
+          <MenuItem onSelect={() => props.history.push('/terms')}>Bases</MenuItem>
+          <MenuItem onSelect={() => props.history.push('/contacto')}>Contacto</MenuItem>
+          <MenuItem onSelect={() => props.history.push('/')}>Cerrar Sesión</MenuItem>
+        </Menu>
+      </section>
+    ) : null}
   </nav>
 );
 
-export default NavigationBar;
+export default withRouter(NavigationBar);
