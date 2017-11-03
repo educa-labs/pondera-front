@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import user from './user';
+import session from './session';
 import createForm from './forms';
 
 const signupForm = createForm('signupForm', [
@@ -27,7 +27,7 @@ const loginForm = createForm('loginForm', [
 ]);
 
 export default combineReducers({
-  user,
+  session,
   signupForm,
   ponderaForm,
   loginForm,
