@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect';
 import { combineReducers } from 'redux';
-import { assignWith } from 'lodash';
 import is from 'is_js';
 
 /* TYPES */
