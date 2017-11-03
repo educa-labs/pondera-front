@@ -35,10 +35,6 @@ $white:                   mui-color('white');
   }
 }
 
-button::-moz-focus-inner {
-  border: 0;
-  padding: 0;
-}
 
 @import "transitions";
 @import "home";
@@ -47,3 +43,4 @@ button::-moz-focus-inner {
 @import "navbar";
 @import "result";
 @import "menu";
+@import "buttons";

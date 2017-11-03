@@ -7,5 +7,13 @@ button.icon-button {
   align-items: center;
   justify-content: center;
   background-color: transparent;
+  border: 1px transparent solid;
+}
+
+button.icon-button:active {
   border: none;
+}
+
+button.icon-button:focus {
+  outline: none;
 }

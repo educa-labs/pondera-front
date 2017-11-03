@@ -41,7 +41,7 @@ class Menu extends Component {
     const className = 'menu-items mui-dropdown__menu mui-dropdown__menu--right';
     return (
       <div className="mui-dropdown">
-        <button onClick={this.onClick} ref={(ref) => { this.button = ref; }}>
+        <button className="icon-button" onClick={this.onClick} ref={(ref) => { this.button = ref; }}>
           <i className="material-icons">more_vert</i>
         </button>
         <ReactCSSTransitionGroup
