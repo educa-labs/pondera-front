@@ -21,7 +21,10 @@ $white:                   mui-color('white');
   }
 }
 
-
+.mui-dropdown__menu {
+  top: 0;
+  min-width: auto;
+}
 
 @import "transitions";
 @import "home";
@@ -29,3 +32,4 @@ $white:                   mui-color('white');
 @import "layout";
 @import "navbar";
 @import "result";
+@import "menu";
