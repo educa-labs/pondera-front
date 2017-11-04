@@ -15,13 +15,7 @@ class Landing extends Component {
   }
 
   componentDidMount() {
-    setTimeout(this.getNextFrame.bind(this), 600);
-  }
-
-  getNextFrame() {
-    this.setState(prevState => ({
-      frame: prevState.frame + 1,
-    }));
+    setTimeout(() => this.setState({ frame: 1 }), 600);
   }
 
   handleSubmit() {
@@ -31,8 +25,8 @@ class Landing extends Component {
   render() {
     return ([
       <NavigationBar key="0" />,
-      <Hero frame={this.state.frame} />,
-      <Page largeBanner key="1">
+      <Hero key="1" frame={this.state.frame} />,
+      <Page key="2" largeBanner >
         <RegisterForm
           style={{ marginTop: '20rem' }}
           onSubmit={this.handleSubmit}

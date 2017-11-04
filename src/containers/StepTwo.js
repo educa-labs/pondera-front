@@ -8,9 +8,7 @@ const StepTwo = (props) => {
   }
   return (
     <Page>
-      <RegisterFormTwo
-        onSubmit={handleSubmit}
-      />
+      <RegisterFormTwo onSubmit={handleSubmit} />
     </Page>
   );
 };

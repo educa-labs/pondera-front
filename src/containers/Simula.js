@@ -9,29 +9,24 @@ class Simula extends Component {
     this.state = {
       currentScreen: 0,
     };
-    this.goBack = this.goBack.bind(this);
-    this.goNext = this.goNext.bind(this);
+    this.setScreen = this.setScreen.bind(this);
   }
 
-  goNext() {
-    this.setState(prevState => ({
-      currentScreen: prevState.currentScreen + 1,
-    }));
+  setScreen(index) {
+    this.setState({ currentScreen: index });
   }
 
-  goBack() {
-    this.setState(prevState => ({
-      currentScreen: prevState.currentScreen - 1,
-    }));
-  }
   render() {
     return (
       <ScrollScreen
         index={this.state.currentScreen}
-        goBack={this.goBack}
+        goNext={() => this.setScreen(1)}
+        goBack={() => this.setScreen(0)}
       >
-        <Pondera goNext={this.goNext} />
-        <Result goBack={this.goBack} />
+        {props => ([
+          <Pondera key="0" {...props} />,
+          <Result key="1" {...props} />,
+        ])}
       </ScrollScreen>
     );
   }
