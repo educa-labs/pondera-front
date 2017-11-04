@@ -25,10 +25,10 @@ class Landing extends Component {
   render() {
     return ([
       <NavigationBar key="0" />,
-      <Hero key="1" frame={this.state.frame} />,
-      <Page key="2" largeBanner >
+      <Page largeBanner key="1">
+        <Hero frame={this.state.frame} />
         <RegisterForm
-          style={{ marginTop: '20rem' }}
+          style={{ transform: 'translateY(-2rem)' }}
           onSubmit={this.handleSubmit}
         />
       </Page>,
