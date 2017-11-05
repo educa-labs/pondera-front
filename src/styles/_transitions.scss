@@ -63,7 +63,7 @@
   z-index: 10;
   border-radius: 50%;
   transform: scale(0);
-  transition: transform 200ms ease-out;
+  transition: transform 300ms ease-out;
   
   &.bubble-exiting {
     transform: scale(35);

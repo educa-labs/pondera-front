@@ -13,8 +13,7 @@ class StepTwo extends React.Component {
   }
   handleSubmit(values) {
     this.setState({ trigger: !this.state.true });
-    setTimeout(() => this.props.history.push('/simula'), 200)
-    
+    setTimeout(() => this.props.history.push('/simula'), 300); 
   }
 
   render() {

@@ -4,7 +4,7 @@ import { Transition } from 'react-transition-group';
 const Bubble = ({ show, onExit }) => (
   <Transition
     in={show}
-    timeout={300}
+    timeout={400}
     appear
     enter={false}
     unmountOnExit
