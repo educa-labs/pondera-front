@@ -6,6 +6,7 @@ import api from './api';
 const LOG_USER_REQUEST = 'LOG_USER_REQUEST';
 const LOG_USER_FAILURE = 'LOG_USER_FAILURE';
 const LOG_USER_SUCCESS = 'LOG_USER_SUCCESS';
+const LOGOUT_USER = 'LOGOUT_USER';
 
 /* ACTION CREATORS */
 
@@ -21,6 +22,10 @@ const logUserFailure = error => ({
 const logUserSucces = user => ({
   type: LOG_USER_SUCCESS,
   user,
+});
+
+export const logOut = () => ({
+  type: LOGOUT_USER,
 });
 
 /* SELECTORS */
@@ -68,6 +73,8 @@ const error = (state = null, action) => {
 
 const user = (state = null, action) => {
   switch (action.type) {
+    case LOGOUT_USER:
+      return null;
     case LOG_USER_SUCCESS:
       return action.user;
     default:
