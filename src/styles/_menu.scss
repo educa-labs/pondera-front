@@ -18,6 +18,29 @@
   transition: opacity 200ms ease-in;
 }
 
-.menu-items {
+
+.menu {
   display: block;
+  transform-origin: top right;
+  transition: all 200ms ease-in;
+  overflow: hidden;
+  opacity: 0;
+
+  &.menu-entering {
+    transform: scale(0);
+  }
+  
+  &.menu-entered {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  &.menu-exiting {
+    opacity: 1;
+  }
+
+  &.menu-exited {
+    transform: scale(0);
+    opacity: 0;
+  }
 }

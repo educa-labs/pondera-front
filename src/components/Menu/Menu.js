@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import { Transition, CSSTransition } from 'react-transition-group';
 
 class Menu extends Component {
   constructor(props) {
@@ -29,6 +29,7 @@ class Menu extends Component {
 
   onClick(ev) {
     ev.stopPropagation();
+    console.log('Hola');
     this.setState({ open: true });
   }
 
@@ -36,25 +37,23 @@ class Menu extends Component {
   render() {
     const { children } = this.props;
     const { open } = this.state;
-    const className = 'menu-items mui-dropdown__menu mui-dropdown__menu--right';
+    const className = 'mui-dropdown__menu mui-dropdown__menu--right';
     return (
       <div className="mui-dropdown">
         <button className="icon-button" onClick={this.onClick} ref={(ref) => { this.button = ref; }}>
           <i className="material-icons">more_vert</i>
         </button>
-        <ReactCSSTransitionGroup
-          transitionName="slide"
-          transitionAppear
-          transitionAppearTimeout={500}
-          transitionEnterTimeout={150}
-          transitionLeaveTimeout={200}
+        <Transition
+          classNames="menu"
+          timeout={500}
+          in={open}
         >
-          {open ? (
-            <ul className={className}>
+          {status => (
+            <ul className={`menu menu-${status} ${className}`}>
               {this.props.children}
             </ul>
-          ) : null}
-        </ReactCSSTransitionGroup>
+          )}
+        </Transition>
       </div>
     );
   }
