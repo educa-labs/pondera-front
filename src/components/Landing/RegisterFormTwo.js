@@ -23,7 +23,7 @@ const RegisterFormTwo = ({
   errors,
   submitHandler,
   onSubmit,
-  trigger,
+  triggerAnimation,
 }) => {
   const label = (
     <span>
@@ -60,7 +60,7 @@ const RegisterFormTwo = ({
         checked={values.accept}
         onChange={logChange('accept')}
       />
-      <BubbleWarpper trigger={trigger}>
+      <BubbleWarpper trigger={triggerAnimation}>
         <Button
           color="primary"
           type="submit"
@@ -79,6 +79,7 @@ RegisterFormTwo.propTypes = {
   submitHandler: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   logChange: PropTypes.func.isRequired,
+  triggerAnimation: PropTypes.bool.isRequired,
 };
 
 

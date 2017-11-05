@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Form from 'muicss/lib/react/form';
 import Button from 'muicss/lib/react/button';
-import Checkbox from 'muicss/lib/react/checkbox';
 import TextInput from '../Inputs/TextInput';
-import SelectInput from '../Inputs/SelectInput';
 import wrapCard from '../../hoc/wrapCard';
 import connectForm from '../../hoc/connectForm';
 import { emptyValidator } from '../../helpers';
+import BubbleWarpper from '../Other/BubbleWrapper';
 
 const Loginform = ({
   logChange,
@@ -16,34 +15,44 @@ const Loginform = ({
   errors,
   submitHandler,
   onSubmit,
-}) => (
-  <Form onSubmit={submitHandler(onSubmit)}>
-    <legend>Ingresa</legend>
-    <TextInput
-      label="Correo electrónico"
-      floatingLabel
-      onChange={logChange('email')}
-      value={values.email}
-      errorText={errors.email}
-    />
-    <TextInput
-      label="Contraseña"
-      type="password"
-      floatingLabel
-      onChange={logChange('password')}
-      value={values.password}
-      errorText={errors.password}
-    />
-    <Button
-      color="primary"
-      type="submit"
-      className="btn--fullwidth"
-      variant="raised"
-    >
-      Finalizar
-    </Button>
-  </Form>
-);
+  triggerAnimation,
+}) => {
+  return (
+    <Form onSubmit={submitHandler(onSubmit)}>
+      <legend>Ingresa</legend>
+      <div className="mui--text-subhead">
+        <span>o </span>
+        <Link to="/">regístrate para ponderar</Link>
+      </div>
+      <br />
+      <TextInput
+        label="Correo electrónico"
+        floatingLabel
+        onChange={logChange('email')}
+        value={values.email}
+        errorText={errors.email}
+      />
+      <TextInput
+        label="Contraseña"
+        type="password"
+        floatingLabel
+        onChange={logChange('password')}
+        value={values.password}
+        errorText={errors.password}
+      />
+      <BubbleWarpper trigger={triggerAnimation}>
+        <Button
+          color="primary"
+          type="submit"
+          className="btn--fullwidth"
+          variant="raised"
+        >
+          Acceder
+        </Button>
+      </BubbleWarpper>
+    </Form>
+  );
+};
 
 export default wrapCard(connectForm(
   Loginform,

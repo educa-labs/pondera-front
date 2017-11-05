@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import RegisterFormTwo from './RegisterFormTwo';
 import Page from '../Layout/Page';
 import NavigationBar from '../NavigationBar/NavigationBar';
@@ -6,27 +7,32 @@ import NavigationBar from '../NavigationBar/NavigationBar';
 class StepTwo extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      trigger: false,
-    };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
   handleSubmit(values) {
-    this.setState({ trigger: !this.state.true });
-    setTimeout(() => this.props.history.push('/simula'), 300); 
+    console.log(values);
+    this.props.registerUser(values.email, values.password);
   }
 
   render() {
+    const { history, isLogged } = this.props;
     return (
       <Page>
-        <NavigationBar back onBackClick={() => this.props.history.goBack()} />
+        <NavigationBar back onBackClick={() => history.goBack()} />
         <RegisterFormTwo
           onSubmit={this.handleSubmit}
-          trigger={this.state.trigger}
+          triggerAnimation={isLogged}
         />
       </Page>
     );
   }
 }
+
+
+StepTwo.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  isLogged: PropTypes.bool.isRequired,
+};
 
 export default StepTwo;
