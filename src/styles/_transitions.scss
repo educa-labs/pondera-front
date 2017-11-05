@@ -35,10 +35,6 @@
   width: 200vw;
 }
 
-.box {
-  height: 10rem;
-  width: 100vw;
-}
 
 .fade {
   transform: translateX(0);
@@ -53,3 +49,23 @@
   }
 }
 
+.bubble-wrapper {
+  position: relative;
+}
+
+.bubble {
+  height: 3rem;
+  width: 3rem;
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  background-color: $mui-primary-color;
+  z-index: 10;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: transform 200ms ease-out;
+  
+  &.bubble-exiting {
+    transform: scale(35);
+  }
+}

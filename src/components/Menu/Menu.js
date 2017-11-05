@@ -29,7 +29,6 @@ class Menu extends Component {
 
   onClick(ev) {
     ev.stopPropagation();
-    console.log('Hola');
     this.setState({ open: true });
   }
 

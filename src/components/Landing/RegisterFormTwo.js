@@ -8,6 +8,7 @@ import TextInput from '../Inputs/TextInput';
 import SelectInput from '../Inputs/SelectInput';
 import wrapCard from '../../hoc/wrapCard';
 import connectForm from '../../hoc/connectForm';
+import BubbleWarpper from '../Other/BubbleWrapper';
 import { emptyValidator } from '../../helpers';
 
 
@@ -22,6 +23,7 @@ const RegisterFormTwo = ({
   errors,
   submitHandler,
   onSubmit,
+  trigger,
 }) => {
   const label = (
     <span>
@@ -58,14 +60,16 @@ const RegisterFormTwo = ({
         checked={values.accept}
         onChange={logChange('accept')}
       />
-      <Button
-        color="primary"
-        type="submit"
-        className="btn--fullwidth"
-        variant="raised"
-      >
-        Finalizar
-      </Button>
+      <BubbleWarpper trigger={trigger}>
+        <Button
+          color="primary"
+          type="submit"
+          className="btn--fullwidth"
+          variant="raised"
+        >
+          Finalizar
+        </Button>
+      </BubbleWarpper>
     </Form>
   );
 };
