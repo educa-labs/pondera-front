@@ -4,19 +4,12 @@ import { connect } from 'react-redux';
 import Page from '../components/Layout/Page';
 import LoginForm from '../components/Login/LoginForm';
 import { logUser, isLogged } from '../redux/session';
+import NavigationBar from '../components/NavigationBar/NavigationBar';
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.isLogged !== this.props.isLogged) {
-      if (nextProps.isLogged) {
-        nextProps.history.push('/simula');
-      }
-    }
   }
 
   handleSubmit(values) {
@@ -26,9 +19,14 @@ class Login extends Component {
   }
 
   render() {
+    const { history, isLogged } = this.props;
     return (
       <Page>
-        <LoginForm onSubmit={this.handleSubmit} />
+        <NavigationBar back onBackClick={() => history.goBack()} />
+        <LoginForm
+          onSubmit={this.handleSubmit}
+          triggerAnimation={isLogged}
+        />
       </Page>
     );
   }
