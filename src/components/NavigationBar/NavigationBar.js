@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Logo from '../../assets/svg/logo-pondera.svg';
 import Menu from '../Menu/Menu';
 import MenuItem from '../Menu/MenuItem';
@@ -22,9 +22,11 @@ const NavigationBar = (props) => {
       {props.pondera ? (
         <section className="nav-right">
           <Menu>
-            <MenuItem onSelect={() => props.history.push('/terms')}>Bases</MenuItem>
-            <MenuItem onSelect={() => props.history.push('/contacto')}>Contacto</MenuItem>
-            <MenuItem onSelect={() => props.history.push('/')}>Cerrar Sesión</MenuItem>
+            <MenuItem><Link to="/bases">Bases</Link></MenuItem>
+            <MenuItem><Link to="/contacto">Contacto</Link></MenuItem>
+            <MenuItem>
+              <a onClick={props.logOut}>Cerrar sesión</a>
+            </MenuItem>
           </Menu>
         </section>
       ) : null}
