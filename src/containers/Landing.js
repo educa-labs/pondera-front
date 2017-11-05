@@ -6,25 +6,34 @@ import StepOne from '../components/Landing/StepOne';
 import StepTwo from '../components/Landing/StepTwo';
 import { logUser, isLogged } from '../redux/session';
 
-const Landing = (props) => {
-  const currentPage = props.location.pathname;
-  return (
-    <PageTransition
-      currentPage={currentPage}
-      pathOne="/one"
-      pathTwo="/two"
-      defaultPath="/"
-      isLogged={props.isLogged}
-      delay={props.delay}
-    >
-      <StepOne />
-      <StepTwo
-        isLogged={props.isLogged}
-        registerUser={props.logUser}
-      />
-    </PageTransition>
-  );
-};
+class Landing extends React.Component {
+  componentDidMount() {
+    if (this.props.isLogged) {
+      this.props.history.replace('/simula');
+    }
+  }
+
+  render() {
+    const { isLogged, logUser, delay } = this.props;
+    const currentPage = this.props.location.pathname;
+    return (
+      <PageTransition
+        currentPage={currentPage}
+        pathOne="/one"
+        pathTwo="/two"
+        defaultPath="/"
+        isLogged={isLogged}
+        delay={delay}
+      >
+        <StepOne />
+        <StepTwo
+          isLogged={isLogged}
+          registerUser={logUser}
+        />
+      </PageTransition>
+    );
+  }
+}
 
 Landing.propTypes = {
   logUser: PropTypes.func.isRequired,

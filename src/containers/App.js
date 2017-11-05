@@ -43,7 +43,7 @@ class App extends React.Component {
           <Route path="/test" component={Test} />
           <Route path="/terms" component={Terms} />
           <Route path="/contacto" component={Contacto} />
-          <Route
+          <ProtectedRoute
             path="/"
             component={Landing}
             isLogged={isLogged}
