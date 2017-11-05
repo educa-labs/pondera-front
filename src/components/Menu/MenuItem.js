@@ -6,7 +6,7 @@ const delay = func => (
 
 const MenuItem = ({ children, onSelect }) => (
   <li onClick={delay(onSelect)}>
-    <a>{children}</a>
+    {children}
   </li>
 );
 
