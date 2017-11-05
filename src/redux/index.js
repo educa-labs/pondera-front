@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import session from './session';
 import createForm from './forms';
+import delayAnimation from './delay';
 
 const signupForm = createForm('signupForm', [
   'name',
@@ -31,4 +32,5 @@ export default combineReducers({
   signupForm,
   ponderaForm,
   loginForm,
+  delayAnimation,
 });

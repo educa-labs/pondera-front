@@ -1,5 +1,8 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Switch, Route, withRouter } from 'react-router-dom';
+import ProtectedRoute from '../hoc/ProtectedRoute';
+import { isLogged } from '../redux/session';
 import Landing from './Landing';
 import Simula from './Simula';
 import Login from './Login';
@@ -8,19 +11,56 @@ import Contacto from '../components/Terms/Contacto';
 import Background from '../components/Layout/BackGround';
 import Test from './Test';
 
+class App extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.delay !== this.props.delay) {
+      if (nextProps.delay) return false;
+    }
+    return true;
+  }
 
-const App = () => (
-  <div>
-    <Background />
-    <Switch>
-      <Route path="/simula" component={Simula} />
-      <Route path="/test" component={Test} />
-      <Route path="/login" component={Login} />
-      <Route path="/terms" component={Terms} />
-      <Route path="/contacto" component={Contacto} />
-      <Route path="/" component={Landing} />
-    </Switch>
-  </div>
-);
+  render() {
+    const { isLogged, delay } = this.props;
+    return (
+      <div>
+        <Background />
+        <Switch>
+          <ProtectedRoute
+            path="/simula"
+            component={Simula}
+            isLogged={isLogged}
+            requireUser
+            redirectTo="/"
+          />
+          <ProtectedRoute
+            path="/login"
+            component={Login}
+            isLogged={isLogged}
+            requireUser={false}
+            redirectTo="/simula"
+            delay={delay}
+          />
+          <Route path="/test" component={Test} />
+          <Route path="/terms" component={Terms} />
+          <Route path="/contacto" component={Contacto} />
+          <Route
+            path="/"
+            component={Landing}
+            isLogged={isLogged}
+            requireUser={false}
+            redirectTo="/simula"
+            delay={delay}
+          />
+        </Switch>
+      </div>
+    );
+  }
+}
 
-export default App;
+const connectedApp = connect(state => ({
+  isLogged: isLogged(state),
+  delay: state.delayAnimation,
+}))(App);
+
+// export default App;
+export default withRouter(connectedApp);
