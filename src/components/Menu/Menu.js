@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import { TransitionMotion, spring } from 'react-motion';
-import DropdownItem from 'muicss/lib/react/dropdown-item';
 
 class Menu extends Component {
   constructor(props) {
@@ -45,7 +43,9 @@ class Menu extends Component {
           <i className="material-icons">more_vert</i>
         </button>
         <ReactCSSTransitionGroup
-          transitionName="menu"
+          transitionName="slide"
+          transitionAppear
+          transitionAppearTimeout={500}
           transitionEnterTimeout={150}
           transitionLeaveTimeout={200}
         >
