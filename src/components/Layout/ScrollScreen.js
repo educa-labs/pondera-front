@@ -1,4 +1,4 @@
-import React, { Component, Chi } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Motion, spring } from 'react-motion';
 import { DraggableCore } from 'react-draggable';
@@ -50,7 +50,7 @@ class ScrollScreen extends Component {
 
 
   render() {
-    const { index, children } = this.props;
+    const { index, children, goNext, goBack } = this.props;
     const { posY, innerHeight } = this.state;
     return (
       <div className="screen-wrapper">
@@ -62,7 +62,7 @@ class ScrollScreen extends Component {
               cancel=".mui-form"
             >
               <div className="scroll-screen" style={{ transform: `translateY(${-y}px)` }}>
-                {children(this.props)}
+                {children({ goNext, goBack })}
               </div>
             </DraggableCore>
           )}
