@@ -1,15 +1,10 @@
 .menu-enter {
-  // opacity: 0.01;
-  // max-height: 0;
-  // width: 0;
   transform-origin: top right;
   transform: scale(0);
   overflow: hidden;
 }
 
 .menu-enter.menu-enter-active {
-  // width: 100px;
-  // max-height: 500px;
   transform: scale(1);
   transition: all 150ms ease-in;
 }

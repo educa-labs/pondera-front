@@ -8,12 +8,12 @@ const Pondera = (props) => {
     props.goNext();
   };
 
-  return ([
-    <NavigationBar key="0" pondera />,
+  return (
     <Page>
-      <PonderaForm onSubmit={handleSubmit}/>
-    </Page>,
-  ]);
+      <NavigationBar pondera />
+      <PonderaForm onSubmit={handleSubmit} />
+    </Page>
+  );
 };
 
 export default Pondera;

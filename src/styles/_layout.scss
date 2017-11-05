@@ -1,24 +1,22 @@
 .page {
-  min-height: 100vh;
+  height: 100vh;
+  width: 100vw;
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
 }
 
-.page-content {
-  margin-top: 48px;
+.page-paddingTop {
+  padding-top: 48px;
 }
 
 .orange-banner {
   background-color: $mui-primary-color;
-  position: absolute;
+  position: fixed;
+  top: 0;
   left: 0;
   right: 0;
   z-index: -1;
-  height: 20rem;
-}
-
-.orange-banner--large {
   height: 30rem;
 }
 

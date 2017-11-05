@@ -16,6 +16,7 @@
   justify-content: center;
   position: relative;
   width: 100%;
+  background-color: white;
 
   .result-item {
     display: flex;
@@ -38,6 +39,7 @@
 .result-body {
   color: $mui-text-dark-secondary;
   padding: 1rem 15px;
+  background-color: white;
   .mui-row {
     margin-bottom: 10px;
   }

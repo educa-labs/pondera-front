@@ -28,9 +28,7 @@ class Login extends Component {
   render() {
     return (
       <Page>
-        <LoginForm
-          onSubmit={this.handleSubmit}
-        />
+        <LoginForm onSubmit={this.handleSubmit} />
       </Page>
     );
   }

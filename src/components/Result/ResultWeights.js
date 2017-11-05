@@ -12,8 +12,8 @@ const subjects = [
 ];
 
 const ResultWeights = ({ result }) => {
-  const renderWeight = ({ value, label }) => (
-    <div className="result-item">
+  const renderWeight = ({ value, label }, index) => (
+    <div className="result-item" key={index}>
       <div className="result-item-label">{label}</div>
       <div className="result-item-value">{result[value]}%</div>
     </div>

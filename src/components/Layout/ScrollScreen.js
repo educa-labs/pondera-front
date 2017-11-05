@@ -62,7 +62,8 @@ class ScrollScreen extends Component {
               cancel=".mui-form"
             >
               <div className="scroll-screen" style={{ transform: `translateY(${-y}px)` }}>
-                {children({ goNext, goBack })}
+                {this.props.children[0]}
+                {this.props.children[1]}
               </div>
             </DraggableCore>
           )}

@@ -20,13 +20,10 @@ class Simula extends Component {
     return (
       <ScrollScreen
         index={this.state.currentScreen}
-        goNext={() => this.setScreen(1)}
         goBack={() => this.setScreen(0)}
       >
-        {props => ([
-          <Pondera key="0" {...props} />,
-          <Result key="1" {...props} />,
-        ])}
+        <Pondera goNext={() => this.setScreen(1)} />
+        <Result goBack={() => this.setScreen(0)} />
       </ScrollScreen>
     );
   }

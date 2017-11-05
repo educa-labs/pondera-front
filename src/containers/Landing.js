@@ -1,40 +1,30 @@
 import React, { Component } from 'react';
-import RegisterForm from '../components/Landing/RegisterForm';
-import Page from '../components/Layout/Page';
-import Hero from '../components/Landing/Hero';
-import NavigationBar from '../components/NavigationBar/NavigationBar';
-
+import PageTransition from '../components/Layout/PageTransition';
+import StepOne from '../components/Landing/StepOne';
+import StepTwo from '../components/Landing/StepTwo';
 
 class Landing extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      frame: 0,
+      currentPage: 0,
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentDidMount() {
-    setTimeout(() => this.setState({ frame: 1 }), 600);
-  }
-
-  handleSubmit() {
-    this.props.history.push('/step-two');
   }
 
   render() {
-    return ([
-      <NavigationBar key="0" />,
-      <Page largeBanner key="1">
-        <Hero frame={this.state.frame} />
-        <RegisterForm
-          style={{ transform: 'translateY(-2rem)' }}
-          onSubmit={this.handleSubmit}
-        />
-      </Page>,
-    ]);
+    const currentPage = this.props.location.pathname;
+    return (
+      <PageTransition
+        currentPage={currentPage}
+        pathOne="/one"
+        pathTwo="/two"
+        defaultPath="/"
+      >
+        <StepOne />
+        <StepTwo />
+      </PageTransition>
+    );
   }
 }
-
 
 export default Landing;

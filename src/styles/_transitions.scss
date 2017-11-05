@@ -23,3 +23,33 @@
 .from-right {
   animation: fromRight 0.3s ease-in;
 }
+
+
+
+.page-transition {
+  overflow-x: hidden;
+}
+
+.pages-wrapper {
+  display: flex;
+  width: 200vw;
+}
+
+.box {
+  height: 10rem;
+  width: 100vw;
+}
+
+.fade {
+  transform: translateX(0);
+  transition: transform 500ms ease-in-out;
+
+  &.fade-exiting {
+    transform: translateX(0);
+  }
+  
+  &.fade-exited {
+    transform: translateX(-100vw);
+  }
+}
+

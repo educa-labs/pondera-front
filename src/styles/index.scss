@@ -12,6 +12,13 @@ $white:                   mui-color('white');
 
 @import "node_modules/muicss/lib/sass/mui.scss";
 
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 
 .mui--bg-primary {
   color: $white;
@@ -33,6 +40,12 @@ $white:                   mui-color('white');
     color: rgba(0, 0, 0, 0.87);
     border: 0;
   }
+}
+
+#root {
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 

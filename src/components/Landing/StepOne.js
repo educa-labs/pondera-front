@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import RegisterForm from './RegisterForm';
 import Page from '../Layout/Page';
 import Hero from './Hero';
+import NavigationBar from '../NavigationBar/NavigationBar';
 
 
 class StepOne extends Component {
@@ -23,12 +24,10 @@ class StepOne extends Component {
 
   render() {
     return (
-      <Page largeBanner >
+      <Page>
+        <NavigationBar />
         <Hero frame={this.state.frame} />
-        <RegisterForm
-          style={{ transform: 'translateY(-2rem)' }}
-          onSubmit={this.handleSubmit}
-        />
+        <RegisterForm onSubmit={this.handleSubmit} />
       </Page>
     );
   }

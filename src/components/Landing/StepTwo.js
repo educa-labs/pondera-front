@@ -8,7 +8,8 @@ const StepTwo = (props) => {
     props.history.push('/simula');
   }
   return (
-    <Page largeBanner>
+    <Page>
+      <NavigationBar back onBackClick={() => props.history.goBack()} />
       <RegisterFormTwo onSubmit={handleSubmit} />
     </Page>
   );
