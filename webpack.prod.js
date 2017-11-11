@@ -98,6 +98,9 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       './public/manifest.json',
+      {
+        from: './public/icons', to: 'icons',
+      },
     ]),
   ],
 };
