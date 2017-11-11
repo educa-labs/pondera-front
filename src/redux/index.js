@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import session from './session';
+import results from './results';
 import createForm from './forms';
 import delayAnimation from './delay';
 
@@ -33,4 +34,5 @@ export default combineReducers({
   ponderaForm,
   loginForm,
   delayAnimation,
+  results,
 });

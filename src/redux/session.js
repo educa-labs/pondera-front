@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { createSelector } from 'reselect';
-import api from './api';
+import api from '../helpers/api';
 import { waitDelay } from './delay';
 
 /* TYPES */
