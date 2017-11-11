@@ -1,5 +1,32 @@
 {
   "name": "Pondera",
+  "icons": [
+    {
+      "src": "mdpi.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "hdpi.png",
+      "type": "image/png",
+      "sizes": "72x72"
+    },
+    {
+      "src": "xhdpi.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "xxhdpi.png",
+      "type": "image/png",
+      "sizes": "144x144 "
+    },
+    {
+      "src": "xxxhdpi.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
   "short_name": "Pondera",
   "start_url": "/index.html",
   "scope": ".",
