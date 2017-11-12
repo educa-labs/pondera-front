@@ -1,5 +1,7 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 const extractPlugin = new ExtractTextPlugin({
   filename: 'main.css',
@@ -18,7 +20,7 @@ module.exports = {
     publicPath: '/dist',
   },
   devServer: {
-    contentBase: path.resolve(__dirname, 'public'),
+    contentBase: path.resolve(__dirname, 'dist'),
     hot: true,
     port: 3000,
     overlay: true,
@@ -79,4 +81,13 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+      inject: 'body',
+    }),
+    new ServiceWorkerWebpackPlugin({
+      entry: path.join(__dirname, 'public/sw.js'),
+    }),
+  ],
 };

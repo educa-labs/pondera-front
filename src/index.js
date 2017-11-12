@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';
+import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 import App from './containers/App';
 import store from './config/configureStore';
 import './styles/index.scss';
@@ -24,8 +25,7 @@ const render = (Component) => {
 };
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker
-    .register('/sw.js')
+  runtime.register()
     .then(() => console.log('Service worker registerd!'));
 }
 
