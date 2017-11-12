@@ -1,4 +1,5 @@
 /* global document */
+/* global navigator */
 /* eslint-disable global-require */
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -21,6 +22,12 @@ const render = (Component) => {
     document.getElementById('root'),
   );
 };
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker
+    .register('/sw.js')
+    .then(() => console.log('Service worker registerd!'));
+}
 
 render(App);
 
