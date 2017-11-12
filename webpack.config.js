@@ -1,12 +1,6 @@
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
-
-const extractPlugin = new ExtractTextPlugin({
-  filename: 'main.css',
-  disable: process.env.NODE_ENV === 'development',
-});
 
 module.exports = {
   entry: [
@@ -20,7 +14,7 @@ module.exports = {
     publicPath: '/dist',
   },
   devServer: {
-    contentBase: path.resolve(__dirname, 'dist'),
+    contentBase: path.resolve(__dirname, 'public'),
     hot: true,
     port: 3000,
     overlay: true,
