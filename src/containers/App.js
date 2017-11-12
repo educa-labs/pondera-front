@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import ProtectedRoute from '../hoc/ProtectedRoute';
 import { isLogged } from '../redux/session';
+import { setPromptEvent } from '../redux/promptEvent';
 import Landing from './Landing';
 import Simula from './Simula';
 import Login from './Login';
@@ -12,6 +13,15 @@ import Background from '../components/Layout/BackGround';
 import Test from './Test';
 
 class App extends React.Component {
+  componentDidMount() {
+    window.addEventListener('beforeinstallprompt', async (event) => {
+      console.log('beforeinstallprompt fired');
+      event.preventDefault();
+      this.props.setPromptEvent(event);
+      return false;
+    });
+  }
+
   shouldComponentUpdate(nextProps) {
     if (nextProps.delay !== this.props.delay) {
       if (nextProps.delay) return false;
@@ -60,7 +70,9 @@ class App extends React.Component {
 const connectedApp = connect(state => ({
   isLogged: isLogged(state),
   delay: state.delayAnimation,
-}))(App);
+}), {
+  setPromptEvent,
+})(App);
 
 // export default App;
 export default withRouter(connectedApp);

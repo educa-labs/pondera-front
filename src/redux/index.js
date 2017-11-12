@@ -3,6 +3,7 @@ import session from './session';
 import results from './results';
 import createForm from './forms';
 import delayAnimation from './delay';
+import propmtEvent from './promptEvent';
 
 const signupForm = createForm('signupForm', [
   'name',
@@ -35,4 +36,5 @@ export default combineReducers({
   loginForm,
   delayAnimation,
   results,
+  propmtEvent,
 });
