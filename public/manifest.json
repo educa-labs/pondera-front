@@ -2,27 +2,27 @@
   "name": "Pondera",
   "icons": [
     {
-      "src": "icons/mdpi.png",
+      "src": "/icons/mdpi.png",
       "type": "image/png",
       "sizes": "48x48"
     },
     {
-      "src": "icons/hdpi.png",
+      "src": "/icons/hdpi.png",
       "type": "image/png",
       "sizes": "72x72"
     },
     {
-      "src": "icons/xhdpi.png",
+      "src": "/icons/xhdpi.png",
       "type": "image/png",
       "sizes": "96x96"
     },
     {
-      "src": "icons/xxhdpi.png",
+      "src": "/icons/xxhdpi.png",
       "type": "image/png",
       "sizes": "144x144 "
     },
     {
-      "src": "icons/xxxhdpi.png",
+      "src": "/icons/xxxhdpi.png",
       "type": "image/png",
       "sizes": "192x192"
     }
