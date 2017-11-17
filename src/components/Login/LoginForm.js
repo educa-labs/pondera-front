@@ -54,9 +54,10 @@ const Loginform = ({
   );
 };
 
-export default wrapCard(connectForm(
-  Loginform,
+const form = connectForm(
   'loginForm',
   emptyValidator,
   ['email', 'password'],
-));
+)(Loginform);
+
+export default wrapCard(form);

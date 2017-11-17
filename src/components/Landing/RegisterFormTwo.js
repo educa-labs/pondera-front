@@ -83,9 +83,10 @@ RegisterFormTwo.propTypes = {
 };
 
 
-export default wrapCard(connectForm(
-  RegisterFormTwo,
+const form = connectForm(
   'signupForm',
   emptyValidator,
   ['rut', 'phone', 'accept', 'city'],
-));
+)(RegisterFormTwo);
+
+export default wrapCard(form);

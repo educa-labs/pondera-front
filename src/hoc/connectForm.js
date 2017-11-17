@@ -1,12 +1,17 @@
 import { connect } from 'react-redux';
-import { logChange, validFormSelector, submitForm } from '../redux/forms';
+import {
+  logChange,
+  validFormSelector,
+  submitForm,
+  resetForm,
+} from '../redux/forms';
 
 /*
   handleSubmit: Funcion que recive como parametro una
   funcion que será ejecutada con los valores del formulario
 */
 
-export default function (Component, formName, validator, fields) {
+export default function (formName, validator, fields) {
   const mapStateToProps = (state) => {
     if (state[formName] === undefined) throw new Error(`There is no reducer named: ${formName}`);
     return ({
@@ -16,6 +21,7 @@ export default function (Component, formName, validator, fields) {
     });
   };
   const mapDispatchToProps = dispatch => ({
+    resetForm: () => dispatch(resetForm(formName)),
     logChange: field => (
       ev => dispatch(logChange(formName, field, ev.target.value))
     ),
@@ -27,8 +33,9 @@ export default function (Component, formName, validator, fields) {
     ),
   });
 
+  return Component => connect(mapStateToProps, mapDispatchToProps)(Component);
 
-  const connectForm = connect(mapStateToProps, mapDispatchToProps)(Component);
-  return connectForm;
+  // const connectForm = connect(mapStateToProps, mapDispatchToProps)(Component);
+  // return connectForm;
 }
 

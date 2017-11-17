@@ -23,6 +23,7 @@ const PonderaForm = ({
   errors,
   submitHandler,
   onSubmit,
+  resetForm,
 }) => (
   <Form onSubmit={submitHandler(onSubmit)}>
     <legend>Ponderar</legend>
@@ -86,11 +87,11 @@ const PonderaForm = ({
       </Row>
     </Container>
     <SelectInput
-      label="Comuna"
+      label="Universidad"
       options={options}
     />
     <SelectInput
-      label="Comuna"
+      label="Carrera"
       options={options}
     />
     <Row>
@@ -100,6 +101,7 @@ const PonderaForm = ({
           type="button"
           className="btn--fullwidth"
           variant="flat"
+          onClick={resetForm}
         >
           Reestablecer
         </Button>
@@ -119,9 +121,5 @@ const PonderaForm = ({
 );
 
 
-export default wrapCard(connectForm(
-  PonderaForm,
-  'ponderaForm',
-  // scoreValidator,
-  // ['nem', 'ranking', 'language', 'math', 'history', 'science'],
-));
+const form = connectForm('ponderaForm')(PonderaForm);
+export default wrapCard(form);

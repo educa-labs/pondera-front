@@ -6,6 +6,7 @@ import is from 'is_js';
 
 const SET_FORM_VALUE = 'SET_FORM_VALUE';
 const SUBMIT_FAILURE = 'SUBMIT_FAILURE';
+const RESET_FORM = 'RESET_FORM';
 
 /* ACTION CREATORS */
 
@@ -20,6 +21,11 @@ export const logChange = (formName, field, value) => ({
   formName,
   field,
   value,
+});
+
+export const resetForm = formName => ({
+  type: RESET_FORM,
+  formName,
 });
 
 /* SELECTORS */
@@ -83,18 +89,22 @@ const createFormReducer = (formName, fields) => {
   });
 
   const valuesReducer = (state = initialValues, action) => {
+    if (formName !== action.formName) return state;
     switch (action.type) {
       case SET_FORM_VALUE:
         return {
           ...state,
           [action.field]: action.value,
         };
+      case RESET_FORM:
+        return initialValues;
       default:
         return state;
     }
   };
 
   const errorsReducer = (state = initialErrors, action) => {
+    if (formName !== action.formName) return state;
     switch (action.type) {
       case SET_FORM_VALUE:
         return removeError(state, action);
@@ -105,19 +115,13 @@ const createFormReducer = (formName, fields) => {
     }
   };
 
-  const initialState = {
-    values: initialValues,
-    errors: initialErrors,
-  };
 
-  const formReducer = (state = initialState, action) => {
-    if (formName !== action.formName) return state;
-    return combineReducers({
+  return (state, action) => (
+    combineReducers({
       values: valuesReducer,
       errors: errorsReducer,
-    })(state, action);
-  };
-  return formReducer;
+    })(state, action)
+  );
 };
 
 
