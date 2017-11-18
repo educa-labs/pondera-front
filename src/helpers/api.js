@@ -14,10 +14,10 @@ const fetch = resource => (
     setTimeout(() => {
       resolve({
         data: [
-          { id: 1, title: 'LS' },
+          { id: 1, title: 'La Serena' },
         ],
       });
-    });
+    }, 1000);
   })
 );
 

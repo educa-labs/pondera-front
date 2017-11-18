@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { createSelector } from 'reselect';
 import api from '../helpers/api';
 
 /* TYPES */
@@ -38,6 +39,19 @@ export const fetch = resource => (
     }
   }
 );
+
+/* SELECTORS */
+
+const getResources = state => state.resources;
+const getIsLoading = (resources) => {
+  let res = false;
+  Object.keys(resources).forEach((key) => {
+    if (resources[key].loading) res = true;
+  });
+  return res;
+};
+
+export const isLoading = createSelector(getResources, getIsLoading);
 
 /* REDUCERS */
 

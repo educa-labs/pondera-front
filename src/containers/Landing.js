@@ -5,11 +5,16 @@ import PageTransition from '../components/Layout/PageTransition';
 import StepOne from '../components/Landing/StepOne';
 import StepTwo from '../components/Landing/StepTwo';
 import { logUser, isLogged } from '../redux/session';
+import { isLoading, fetch } from '../redux/fetch';
+import { REGIONS } from '../helpers/constants';
 
 class Landing extends React.Component {
   componentDidMount() {
     if (this.props.isLogged) {
       this.props.history.replace('/simula');
+    }
+    if (this.props.regions === null) {
+      this.props.fetch(REGIONS);
     }
   }
 
@@ -38,12 +43,16 @@ class Landing extends React.Component {
 Landing.propTypes = {
   logUser: PropTypes.func.isRequired,
   isLogged: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 
 export default connect(state => ({
   isLogged: isLogged(state),
+  isLoading: isLoading(state),
   delay: state.delayAnimation,
+  regions: state.resources.regions.data,
 }), {
   logUser,
+  fetch,
 })(Landing);
