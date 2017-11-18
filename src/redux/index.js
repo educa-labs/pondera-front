@@ -4,6 +4,12 @@ import results from './results';
 import createForm from './forms';
 import delayAnimation from './delay';
 import propmtEvent from './promptEvent';
+import fetch from './fetch';
+import {
+  UNIVERSITIES,
+  CAREERS,
+  REGIONS
+} from '../helpers/constants';
 
 const signupForm = createForm('signupForm', [
   'name',
@@ -29,6 +35,12 @@ const loginForm = createForm('loginForm', [
   'password',
 ]);
 
+const resources = combineReducers({
+  univs: fetch(UNIVERSITIES),
+  careers: fetch(CAREERS),
+  regions: fetch(REGIONS),
+});
+
 export default combineReducers({
   session,
   signupForm,
@@ -37,4 +49,5 @@ export default combineReducers({
   delayAnimation,
   results,
   propmtEvent,
+  resources,
 });
