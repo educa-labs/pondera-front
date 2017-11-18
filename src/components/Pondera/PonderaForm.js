@@ -10,6 +10,8 @@ import SelectInput from '../Inputs/SelectInput';
 import wrapCard from '../../hoc/wrapCard';
 import connectForm from '../../hoc/connectForm';
 import LoadingWrapper from '../Other/LoadingWrapper';
+import RadioWrapper from '../Other/RadioWrapper';
+import { HISTORY, SCIENCE } from '../../helpers/constants';
 
 const PonderaForm = ({
   logChange,
@@ -22,6 +24,8 @@ const PonderaForm = ({
   univs,
   isLoading,
   onUnivChange,
+  onSelectTest,
+  selectedTest,
 }) => (
   <Form onSubmit={submitHandler(onSubmit)}>
     <legend>Ponderar</legend>
@@ -30,7 +34,7 @@ const PonderaForm = ({
     </div>
     <Container>
       <Row>
-        <Col xs={6}>
+        <Col xs={6} className="padding-col">
           <TextInput
             label="NEM"
             floatingLabel
@@ -47,16 +51,22 @@ const PonderaForm = ({
             value={values.language}
             errorText={errors.language}
           />
-          <TextInput
-            label="Hist"
-            floatingLabel
-            type="number"
-            onChange={logChange('history')}
-            value={values.history}
-            errorText={errors.history}
-          />
+          <RadioWrapper
+            onSelect={onSelectTest}
+            selected={selectedTest}
+            id={HISTORY}
+          >
+            <TextInput
+              label="Hist"
+              floatingLabel
+              type="number"
+              onChange={logChange('history')}
+              value={values.history}
+              errorText={errors.history}
+            />
+          </RadioWrapper>
         </Col>
-        <Col xs={6}>
+        <Col xs={6} className="padding-col">
           <TextInput
             label="Rank"
             floatingLabel
@@ -73,14 +83,20 @@ const PonderaForm = ({
             value={values.math}
             errorText={errors.math}
           />
-          <TextInput
-            label="Cien"
-            floatingLabel
-            type="number"
-            onChange={logChange('science')}
-            value={values.science}
-            errorText={errors.science}
-          />
+          <RadioWrapper
+            onSelect={onSelectTest}
+            selected={selectedTest}
+            id={SCIENCE}
+          >
+            <TextInput
+              label="Cien"
+              floatingLabel
+              type="number"
+              onChange={logChange('science')}
+              value={values.science}
+              errorText={errors.science}
+            />
+          </RadioWrapper>
         </Col>
       </Row>
     </Container>
@@ -138,6 +154,8 @@ PonderaForm.propTypes = {
   })).isRequired,
   isLoading: PropTypes.bool.isRequired,
   onUnivChange: PropTypes.func.isRequired,
+  onSelectTest: PropTypes.func.isRequired,
+  selectedTest: PropTypes.string.isRequired,
 };
 
 

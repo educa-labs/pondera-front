@@ -5,19 +5,22 @@ import ScrollScreen from '../components/Layout/ScrollScreen';
 import Pondera from '../components/Pondera/Pondera';
 import Result from './Result';
 import { logOut } from '../redux/session';
+import { logChange } from '../redux/forms';
 import { isLoading, fetch } from '../redux/fetch';
-import { UNIVERSITIES, CAREERS } from '../helpers/constants';
+import { UNIVERSITIES, CAREERS, HISTORY, SCIENCE } from '../helpers/constants';
 
 class Simula extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentScreen: 0,
+      selectedTest: HISTORY,
     };
     this.setScreen = this.setScreen.bind(this);
     this.handleLogOut = this.handleLogOut.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onUnivChange = this.onUnivChange.bind(this);
+    this.onSelectTest = this.onSelectTest.bind(this);
   }
 
   componentDidMount() {
@@ -28,6 +31,13 @@ class Simula extends Component {
 
   onUnivChange(ev) {
     this.props.fetch(CAREERS, ev.target.value);
+  }
+
+  onSelectTest(ev) {
+    const selectedTest = ev.target.id;
+    const other = selectedTest === HISTORY ? 'science' : 'history';
+    this.setState({ selectedTest: ev.target.id });
+    this.props.logChange('ponderaForm', other, '');
   }
 
   setScreen(index) {
@@ -57,6 +67,8 @@ class Simula extends Component {
           careers={this.props.careers || []}
           isLoading={this.props.isLoading}
           onUnivChange={this.onUnivChange}
+          onSelectTest={this.onSelectTest}
+          selectedTest={this.state.selectedTest}
         />
         <Result goBack={() => this.setScreen(0)} />
       </ScrollScreen>
@@ -75,5 +87,6 @@ export default connect(state => ({
 }), {
   logOut,
   fetch,
+  logChange,
 })(Simula);
 
