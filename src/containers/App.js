@@ -35,7 +35,7 @@ class App extends React.Component {
       <div>
         <Background />
         <Switch>
-          <ProtectedRoute
+          <Route
             path="/simula"
             component={Simula}
             isLogged={isLogged}

@@ -4,17 +4,16 @@ import NavigationBar from '../NavigationBar/NavigationBar';
 import PonderaForm from '../Pondera/PonderaForm';
 import Page from '../Layout/Page';
 
-const Pondera = ({ logOut, onSubmit }) => (
+const Pondera = ({ logOut, ...rest }) => (
   <Page>
     <NavigationBar pondera logOut={logOut} />
-    <PonderaForm onSubmit={onSubmit} />
+    <PonderaForm {...rest} />
   </Page>
 );
 
 
 Pondera.propTypes = {
   logOut: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
 };
 
 export default Pondera;

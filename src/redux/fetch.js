@@ -28,11 +28,11 @@ const fetchSuccess = (resource, data) => ({
 
 /* SIDE EFFECTS */
 
-export const fetch = resource => (
+export const fetch = (resource, ...args) => (
   async (dispatch) => {
     dispatch(fetchRequest(resource));
     try {
-      const res = await api.fetch(resource);
+      const res = await api.fetch(resource, ...args);
       dispatch(fetchSuccess(resource, res.data));
     } catch (error) {
       dispatch(fetchFailure(resource, error));

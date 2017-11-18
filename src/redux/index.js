@@ -28,6 +28,7 @@ const ponderaForm = createForm('ponderaForm', [
   'math',
   'science',
   'history',
+  'career',
 ]);
 
 const loginForm = createForm('loginForm', [

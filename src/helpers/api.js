@@ -9,18 +9,20 @@ const postSession = (email, password) => (
   })
 );
 
-const fetch = resource => (
-  new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        data: [
-          { id: 1, title: 'La Serena' },
-          { id: 2, title: 'Santiago' },
-        ],
-      });
-    }, 1000);
-  })
-);
+const fetch = (resource, ...args) => {
+  return (
+    new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          data: [
+            { id: 1, title: 'La Serena' },
+            { id: 2, title: 'Santiago' },
+          ],
+        });
+      }, 2000);
+    })
+  );
+};
 
 export default {
   postSession,

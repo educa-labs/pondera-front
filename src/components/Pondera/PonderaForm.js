@@ -9,13 +9,7 @@ import TextInput from '../Inputs/TextInput';
 import SelectInput from '../Inputs/SelectInput';
 import wrapCard from '../../hoc/wrapCard';
 import connectForm from '../../hoc/connectForm';
-import { scoreValidator } from '../../helpers';
-
-const options = [
-  { value: 1, label: 'Santiago' },
-  { value: 2, label: 'La Serena' },
-];
-
+import LoadingWrapper from '../Other/LoadingWrapper';
 
 const PonderaForm = ({
   logChange,
@@ -24,6 +18,10 @@ const PonderaForm = ({
   submitHandler,
   onSubmit,
   resetForm,
+  careers,
+  univs,
+  isLoading,
+  onUnivChange,
 }) => (
   <Form onSubmit={submitHandler(onSubmit)}>
     <legend>Ponderar</legend>
@@ -86,14 +84,26 @@ const PonderaForm = ({
         </Col>
       </Row>
     </Container>
-    <SelectInput
-      label="Universidad"
-      options={options}
-    />
-    <SelectInput
-      label="Carrera"
-      options={options}
-    />
+    <LoadingWrapper loading={univs === null}>
+      {() => (
+        <div>
+          <SelectInput
+            label="Universidad"
+            options={univs}
+            onChange={onUnivChange}
+          />
+          <LoadingWrapper loading={isLoading}>
+            {() => (
+              <SelectInput
+                label="Carrera"
+                options={careers}
+                onChange={logChange('career')}
+              />
+            )}
+          </LoadingWrapper>
+        </div>
+      )}
+    </LoadingWrapper>
     <Row>
       <Col xs={6}>
         <Button
@@ -119,6 +129,16 @@ const PonderaForm = ({
     </Row>
   </Form>
 );
+
+PonderaForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  careers: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+  })).isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  onUnivChange: PropTypes.func.isRequired,
+};
 
 
 const form = connectForm('ponderaForm')(PonderaForm);
