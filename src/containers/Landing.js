@@ -19,7 +19,6 @@ class Landing extends React.Component {
   }
 
   render() {
-    const { isLogged, logUser, delay } = this.props;
     const currentPage = this.props.location.pathname;
     return (
       <PageTransition
@@ -27,13 +26,14 @@ class Landing extends React.Component {
         pathOne="/one"
         pathTwo="/two"
         defaultPath="/"
-        isLogged={isLogged}
-        delay={delay}
+        isLogged={this.props.isLogged}
+        delay={this.props.delay}
       >
         <StepOne />
         <StepTwo
-          isLogged={isLogged}
-          registerUser={logUser}
+          isLogged={this.props.isLogged}
+          registerUser={this.props.logUser}
+          regions={this.props.regions}
         />
       </PageTransition>
     );
@@ -44,6 +44,7 @@ Landing.propTypes = {
   logUser: PropTypes.func.isRequired,
   isLogged: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  delay: PropTypes.bool.isRequired,
 };
 
 

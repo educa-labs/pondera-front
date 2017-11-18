@@ -16,23 +16,31 @@ class StepTwo extends React.Component {
   }
 
   render() {
-    const { history, isLogged } = this.props;
+    const { history, isLogged, regions } = this.props;
     return (
       <Page>
         <NavigationBar back onBackClick={() => history.goBack()} />
         <RegisterFormTwo
           onSubmit={this.handleSubmit}
           triggerAnimation={isLogged}
+          regions={regions}
         />
       </Page>
     );
   }
 }
 
+StepTwo.defaultProps = {
+  regions: null,
+};
 
 StepTwo.propTypes = {
   registerUser: PropTypes.func.isRequired,
   isLogged: PropTypes.bool.isRequired,
+  regions: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+  })),
 };
 
 export default StepTwo;

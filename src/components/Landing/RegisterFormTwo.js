@@ -9,13 +9,9 @@ import SelectInput from '../Inputs/SelectInput';
 import wrapCard from '../../hoc/wrapCard';
 import connectForm from '../../hoc/connectForm';
 import BubbleWarpper from '../Other/BubbleWrapper';
+import LoadingWrapper from '../Other/LoadingWrapper';
 import { emptyValidator } from '../../helpers';
 
-
-const options = [
-  { value: 1, label: 'Santiago' },
-  { value: 2, label: 'La Serena' },
-];
 
 const RegisterFormTwo = ({
   logChange,
@@ -24,6 +20,7 @@ const RegisterFormTwo = ({
   submitHandler,
   onSubmit,
   triggerAnimation,
+  regions,
 }) => {
   const label = (
     <span>
@@ -49,12 +46,16 @@ const RegisterFormTwo = ({
         value={values.phone}
         errorText={errors.phone}
       />
-      <SelectInput
-        label="Comuna"
-        onChange={logChange('city')}
-        value={values.city}
-        options={options}
-      />
+      <LoadingWrapper loading={regions === null}>
+        {() => (
+          <SelectInput
+            label="Región"
+            onChange={logChange('region')}
+            value={values.region}
+            options={regions}
+          />
+        )}
+      </LoadingWrapper>
       <Checkbox
         label={label}
         checked={values.accept}
