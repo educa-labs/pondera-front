@@ -9,7 +9,20 @@ const postSession = (email, password) => (
   })
 );
 
+const fetch = resource => (
+  new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        data: [
+          { id: 1, title: 'LS' },
+        ],
+      });
+    });
+  })
+);
+
 export default {
   postSession,
+  fetch,
 };
 
