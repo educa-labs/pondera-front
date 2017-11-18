@@ -15,6 +15,7 @@ const fetch = resource => (
       resolve({
         data: [
           { id: 1, title: 'La Serena' },
+          { id: 2, title: 'Santiago' },
         ],
       });
     }, 1000);
