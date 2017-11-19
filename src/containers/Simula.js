@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ScrollScreen from '../components/Layout/ScrollScreen';
@@ -21,6 +22,8 @@ class Simula extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onUnivChange = this.onUnivChange.bind(this);
     this.onSelectTest = this.onSelectTest.bind(this);
+    this.setHistoryRef = this.setHistoryRef.bind(this);
+    this.setScienceRef = this.setScienceRef.bind(this);
   }
 
   componentDidMount() {
@@ -33,10 +36,18 @@ class Simula extends Component {
     this.props.fetch(CAREERS, ev.target.value);
   }
 
-  onSelectTest(ev) {
+  async onSelectTest(ev) {
     const selectedTest = ev.target.id;
-    const other = selectedTest === HISTORY ? 'science' : 'history';
-    this.setState({ selectedTest: ev.target.id });
+    let other;
+
+    await this.setState({ selectedTest });
+    if (selectedTest === HISTORY) {
+      other = 'science';
+      this.historyEl.controlEl.focus();
+    } else {
+      other = 'history';
+      this.scienceEl.controlEl.focus();
+    }
     this.props.logChange('ponderaForm', other, '');
   }
 
@@ -44,10 +55,21 @@ class Simula extends Component {
     this.setState({ currentScreen: index });
   }
 
+  setHistoryRef(el) {
+    if (el) {
+      this.historyEl = el;
+    }
+  }
+
+  setScienceRef(el) {
+    if (el) {
+      this.scienceEl = el;
+    }
+  }
+
   handleSubmit(values) {
     this.setScreen(1);
   }
-
 
   handleLogOut() {
     this.props.logOut();
@@ -69,6 +91,8 @@ class Simula extends Component {
           onUnivChange={this.onUnivChange}
           onSelectTest={this.onSelectTest}
           selectedTest={this.state.selectedTest}
+          setHistoryRef={this.setHistoryRef}
+          setScienceRef={this.setScienceRef}
         />
         <Result goBack={() => this.setScreen(0)} />
       </ScrollScreen>

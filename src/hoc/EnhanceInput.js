@@ -2,16 +2,21 @@ import React from 'react';
 
 
 const Input = (Component) => {
-  const InputWrapper = ({ errorText, ...props }) => ([
-    <Component
-      key="0"
-      className="mui-textfield--with-error"
-      invalid={errorText}
-      {...props}
-    />,
-    <div key="1" className="mui-textfield--error-text">{errorText}</div>,
-  ]);
-  return InputWrapper;
+  return class InputWrapper extends React.Component {
+    render() {
+      const { errorText, setRef, ...rest } = this.props;
+      return ([
+        <Component
+          key="0"
+          ref={setRef}
+          className="mui-textfield--with-error"
+          invalid={errorText}
+          {...rest}
+        />,
+        <div key="1" className="mui-textfield--error-text">{errorText}</div>,
+      ]);
+    }
+  };
 };
 
 export default Input;

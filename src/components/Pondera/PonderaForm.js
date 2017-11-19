@@ -26,125 +26,133 @@ const PonderaForm = ({
   onUnivChange,
   onSelectTest,
   selectedTest,
-}) => (
-  <Form onSubmit={submitHandler(onSubmit)}>
-    <legend>Ponderar</legend>
-    <div className="mui--text-subhead">
-      Ingresa tus puntajes y carrera
-    </div>
-    <Container>
+  setHistoryRef,
+  setScienceRef,
+}) => {
+  let historyInput = null;
+  let scienceInput = null;
+  return (
+    <Form onSubmit={submitHandler(onSubmit)}>
+      <legend>Ponderar</legend>
+      <div className="mui--text-subhead">
+        Ingresa tus puntajes y carrera
+      </div>
+      <Container>
+        <Row>
+          <Col xs={6} className="padding-col">
+            <TextInput
+              label="NEM"
+              floatingLabel
+              type="number"
+              onChange={logChange('nem')}
+              value={values.nem}
+              errorText={errors.nem}
+            />
+            <TextInput
+              label="Leng"
+              floatingLabel
+              type="number"
+              onChange={logChange('language')}
+              value={values.language}
+              errorText={errors.language}
+            />
+            <RadioWrapper
+              onSelect={onSelectTest}
+              selected={selectedTest}
+              id={HISTORY}
+            >
+              <TextInput
+                label="Hist"
+                floatingLabel
+                type="number"
+                setRef={setHistoryRef}
+                onChange={logChange('history')}
+                value={values.history}
+                errorText={errors.history}
+              />
+            </RadioWrapper>
+          </Col>
+          <Col xs={6} className="padding-col">
+            <TextInput
+              label="Rank"
+              floatingLabel
+              type="number"
+              onChange={logChange('ranking')}
+              value={values.ranking}
+              errorText={errors.ranking}
+            />
+            <TextInput
+              label="Mate"
+              floatingLabel
+              type="number"
+              onChange={logChange('math')}
+              value={values.math}
+              errorText={errors.math}
+            />
+            <RadioWrapper
+              onSelect={onSelectTest}
+              selected={selectedTest}
+              id={SCIENCE}
+            >
+              <TextInput
+                label="Cien"
+                floatingLabel
+                type="number"
+                setRef={setScienceRef}
+                onChange={logChange('science')}
+                value={values.science}
+                errorText={errors.science}
+              />
+            </RadioWrapper>
+          </Col>
+        </Row>
+      </Container>
+      <LoadingWrapper loading={univs === null}>
+        {() => (
+          <div>
+            <SelectInput
+              label="Universidad"
+              options={univs}
+              onChange={onUnivChange}
+            />
+            <LoadingWrapper loading={isLoading}>
+              {() => (
+                <SelectInput
+                  label="Carrera"
+                  options={careers}
+                  onChange={logChange('career')}
+                />
+              )}
+            </LoadingWrapper>
+          </div>
+        )}
+      </LoadingWrapper>
       <Row>
-        <Col xs={6} className="padding-col">
-          <TextInput
-            label="NEM"
-            floatingLabel
-            type="number"
-            onChange={logChange('nem')}
-            value={values.nem}
-            errorText={errors.nem}
-          />
-          <TextInput
-            label="Leng"
-            floatingLabel
-            type="number"
-            onChange={logChange('language')}
-            value={values.language}
-            errorText={errors.language}
-          />
-          <RadioWrapper
-            onSelect={onSelectTest}
-            selected={selectedTest}
-            id={HISTORY}
+        <Col xs={6}>
+          <Button
+            color="primary"
+            type="button"
+            className="btn--fullwidth"
+            variant="flat"
+            onClick={resetForm}
           >
-            <TextInput
-              label="Hist"
-              floatingLabel
-              type="number"
-              onChange={logChange('history')}
-              value={values.history}
-              errorText={errors.history}
-            />
-          </RadioWrapper>
+            Reestablecer
+          </Button>
         </Col>
-        <Col xs={6} className="padding-col">
-          <TextInput
-            label="Rank"
-            floatingLabel
-            type="number"
-            onChange={logChange('ranking')}
-            value={values.ranking}
-            errorText={errors.ranking}
-          />
-          <TextInput
-            label="Mate"
-            floatingLabel
-            type="number"
-            onChange={logChange('math')}
-            value={values.math}
-            errorText={errors.math}
-          />
-          <RadioWrapper
-            onSelect={onSelectTest}
-            selected={selectedTest}
-            id={SCIENCE}
+        <Col xs={6}>
+          <Button
+            color="primary"
+            type="submit"
+            className="btn--fullwidth"
+            variant="raised"
           >
-            <TextInput
-              label="Cien"
-              floatingLabel
-              type="number"
-              onChange={logChange('science')}
-              value={values.science}
-              errorText={errors.science}
-            />
-          </RadioWrapper>
+            Calcular
+          </Button>
         </Col>
       </Row>
-    </Container>
-    <LoadingWrapper loading={univs === null}>
-      {() => (
-        <div>
-          <SelectInput
-            label="Universidad"
-            options={univs}
-            onChange={onUnivChange}
-          />
-          <LoadingWrapper loading={isLoading}>
-            {() => (
-              <SelectInput
-                label="Carrera"
-                options={careers}
-                onChange={logChange('career')}
-              />
-            )}
-          </LoadingWrapper>
-        </div>
-      )}
-    </LoadingWrapper>
-    <Row>
-      <Col xs={6}>
-        <Button
-          color="primary"
-          type="button"
-          className="btn--fullwidth"
-          variant="flat"
-          onClick={resetForm}
-        >
-          Reestablecer
-        </Button>
-      </Col>
-      <Col xs={6}>
-        <Button
-          color="primary"
-          type="submit"
-          className="btn--fullwidth"
-          variant="raised"
-        >
-          Calcular
-        </Button>
-      </Col>
-    </Row>
-  </Form>
-);
+    </Form>
+  );
+};
 
 PonderaForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
