@@ -32,10 +32,7 @@ const RegisterForm = ({
       name="name"
       validator={notEmpty}
     >
-      <TextInput
-        label="Nombre y apellido"
-        floatingLabel
-      />
+      <TextInput label="Nombre y apellido" floatingLabel />
     </Field>
     <TextInput
       label="Correo electrónico"
