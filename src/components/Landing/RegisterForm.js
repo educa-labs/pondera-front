@@ -5,6 +5,7 @@ import Button from 'muicss/lib/react/button';
 import { Link } from 'react-router-dom';
 import TextInput from '../Inputs/TextInput';
 import wrapCard from '../../hoc/wrapCard';
+import Field from '../../hoc/Field';
 import connectForm from '../../hoc/connectForm';
 import { emptyValidator } from '../../helpers';
 
@@ -23,13 +24,13 @@ const RegisterForm = ({
       <Link to="login">inicia sesión en tu cuenta</Link>
     </div>
     <br />
-    <TextInput
-      label="Nombre y apellido"
-      floatingLabel
-      onChange={logChange('name')}
-      value={values.name}
-      errorText={errors.name}
-    />
+    <Field
+      name="name" validator={() => false}>
+      <TextInput
+        label="Nombre y apellido"
+        floatingLabel
+      />
+    </Field>
     <TextInput
       label="Correo electrónico"
       floatingLabel

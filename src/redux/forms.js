@@ -5,51 +5,34 @@ import is from 'is_js';
 /* TYPES */
 
 const SET_FORM_VALUE = 'SET_FORM_VALUE';
+const VALIDATE_FORM_VALUE = 'VALIDATE_FORM_VALUE';
 const SUBMIT_FAILURE = 'SUBMIT_FAILURE';
 const RESET_FORM = 'RESET_FORM';
 
 /* ACTION CREATORS */
 
-export const submitFailure = (formName, errors) => ({
+export const submitFailure = formName => errors => ({
   type: SUBMIT_FAILURE,
   formName,
   errors,
 });
 
-export const logChange = (formName, field, value) => ({
+export const logChange = formName => (field, value) => ({
   type: SET_FORM_VALUE,
   formName,
   field,
   value,
 });
 
-export const resetForm = formName => ({
+export const resetForm = formName => () => ({
   type: RESET_FORM,
   formName,
 });
 
-/* SELECTORS */
-
-const getErrors = state => state.errors;
-const getValues = state => state.values;
-
-const isValidForm = (errors) => {
-  if (is.empty(errors)) return true;
-  let valid = true;
-  Object.keys(errors).forEach((field) => {
-    if (is.not.null(errors[field])) {
-      valid = false;
-    }
-  });
-  return valid;
-};
-
-export const validFormSelector = createSelector(getErrors, getValues, isValidForm);
-
 
 /* SIDE EFFECTS */
 
-export const submitForm = (formName, onSubmit, validator, fields) => (
+export const submitForm = formName => (onSubmit, validator, fields) => (
   (dispatch, getState) => {
     const { values } = getState()[formName];
     const errors = {};
@@ -59,11 +42,8 @@ export const submitForm = (formName, onSubmit, validator, fields) => (
         errors[field] = validator(values[field]);
       });
     }
-    if (isValidForm(errors)) {
-      onSubmit(values);
-    } else {
-      dispatch(submitFailure(formName, errors));
-    }
+
+    onSubmit(values);
   }
 );
 

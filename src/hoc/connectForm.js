@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import {
   logChange,
-  validFormSelector,
   submitForm,
   resetForm,
 } from '../redux/forms';
@@ -17,18 +16,17 @@ export default function (formName, validator, fields) {
     return ({
       values: state[formName].values,
       errors: state[formName].errors,
-      isValidForm: validFormSelector(state[formName]),
     });
   };
   const mapDispatchToProps = dispatch => ({
-    resetForm: () => dispatch(resetForm(formName)),
+    resetForm: () => dispatch(resetForm(formName)()),
     logChange: field => (
-      ev => dispatch(logChange(formName, field, ev.target.value))
+      ev => dispatch(logChange(formName)(field, ev.target.value))
     ),
     submitHandler: handleSubmit => (
       (ev) => {
         ev.preventDefault();
-        dispatch(submitForm(formName, handleSubmit, validator, fields));
+        dispatch(submitForm(formName)(handleSubmit, validator, fields));
       }
     ),
   });
