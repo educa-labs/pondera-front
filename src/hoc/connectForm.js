@@ -1,6 +1,8 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
-  logChange,
+  setFieldValue,
   submitForm,
   resetForm,
 } from '../redux/forms';
@@ -21,7 +23,7 @@ export default function (formName, validator, fields) {
   const mapDispatchToProps = dispatch => ({
     resetForm: () => dispatch(resetForm(formName)()),
     logChange: field => (
-      ev => dispatch(logChange(formName)(field, ev.target.value))
+      ev => dispatch(setFieldValue(formName)(field, ev.target.value))
     ),
     submitHandler: handleSubmit => (
       (ev) => {
@@ -31,9 +33,23 @@ export default function (formName, validator, fields) {
     ),
   });
 
-  return Component => connect(mapStateToProps, mapDispatchToProps)(Component);
+  return (Form) => {
+    class ConnectedForm extends React.Component {
+      getChildContext() {
+        return {
+          formName,
+        };
+      }
+      render() {
+        return <Form {...this.props} />;
+      }
+    }
 
-  // const connectForm = connect(mapStateToProps, mapDispatchToProps)(Component);
-  // return connectForm;
+    ConnectedForm.childContextTypes = {
+      formName: PropTypes.string,
+    };
+
+    return connect(mapStateToProps, mapDispatchToProps)(ConnectedForm);
+  };
 }
 

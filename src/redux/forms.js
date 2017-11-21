@@ -1,13 +1,12 @@
-import { createSelector } from 'reselect';
 import { combineReducers } from 'redux';
 import is from 'is_js';
 
 /* TYPES */
 
 const SET_FORM_VALUE = 'SET_FORM_VALUE';
-const VALIDATE_FORM_VALUE = 'VALIDATE_FORM_VALUE';
 const SUBMIT_FAILURE = 'SUBMIT_FAILURE';
 const RESET_FORM = 'RESET_FORM';
+const VALIDATION_ERROR = 'VALIDATON_ERROR';
 
 /* ACTION CREATORS */
 
@@ -17,7 +16,7 @@ export const submitFailure = formName => errors => ({
   errors,
 });
 
-export const logChange = formName => (field, value) => ({
+export const setFieldValue = formName => (field, value) => ({
   type: SET_FORM_VALUE,
   formName,
   field,
@@ -29,6 +28,11 @@ export const resetForm = formName => () => ({
   formName,
 });
 
+const validationError = formName => error => ({
+  type: VALIDATION_ERROR,
+  formName,
+  error,
+});
 
 /* SIDE EFFECTS */
 
@@ -44,6 +48,17 @@ export const submitForm = formName => (onSubmit, validator, fields) => (
     }
 
     onSubmit(values);
+  }
+);
+
+export const validateField = formName => (validator, fieldName) => (
+  async (dispatch, getState) => {
+    const { values } = getState()[formName];
+    try {
+      await validator(values[fieldName]);
+    } catch (error) {
+      dispatch(validationError(error));
+    }
   }
 );
 

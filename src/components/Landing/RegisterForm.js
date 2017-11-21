@@ -7,8 +7,12 @@ import TextInput from '../Inputs/TextInput';
 import wrapCard from '../../hoc/wrapCard';
 import Field from '../../hoc/Field';
 import connectForm from '../../hoc/connectForm';
-import { emptyValidator } from '../../helpers';
 
+
+const notEmpty = value => new Promise((resolve, reject) => {
+  if (value === '') reject(new Error('Campo obligatorio'));
+  else resolve();
+});
 
 const RegisterForm = ({
   logChange,
@@ -25,7 +29,9 @@ const RegisterForm = ({
     </div>
     <br />
     <Field
-      name="name" validator={() => false}>
+      name="name"
+      validator={notEmpty}
+    >
       <TextInput
         label="Nombre y apellido"
         floatingLabel
@@ -65,15 +71,7 @@ RegisterForm.propTypes = {
 };
 
 
-const form = connectForm(
-  'signupForm',
-  emptyValidator,
-  [
-    'name',
-    'email',
-    'password',
-  ],
-)(RegisterForm);
+const form = connectForm('signupForm')(RegisterForm);
 
 export default wrapCard(form);
 
