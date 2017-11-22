@@ -38,6 +38,8 @@ export default function (formName, validator, fields) {
       getChildContext() {
         return {
           formName,
+          values: this.props.values,
+          errors: this.props.errors,
         };
       }
       render() {
@@ -47,6 +49,8 @@ export default function (formName, validator, fields) {
 
     ConnectedForm.childContextTypes = {
       formName: PropTypes.string,
+      values: PropTypes.object,
+      errors: PropTypes.object,
     };
 
     return connect(mapStateToProps, mapDispatchToProps)(ConnectedForm);

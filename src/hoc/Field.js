@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { validateField, setFieldValue } from '../redux/forms';
 
-const Field = ({ name, validator, ...props }, { formName }) => {
+const Field = ({ name, validator, ...props }, { formName, values, errors }) => {
   const onBlur = () => {
+    console.log('AAA', name);
     props.checkValue(formName)(name, validator);
   };
   const onChange = (ev) => {
@@ -13,15 +14,20 @@ const Field = ({ name, validator, ...props }, { formName }) => {
 
   return (
     React.cloneElement(props.children, {
-      onBlur,
+      onBlur: validator ? onBlur : null,
       onChange,
+      value: values[name],
+      errorText: errors[name],
     })
   );
 };
 
 Field.contextTypes = {
   formName: PropTypes.string,
+  values: PropTypes.object,
+  errors: PropTypes.object,
 };
+
 
 const dispatchToProps = dispatch => ({
   checkValue: formName => (

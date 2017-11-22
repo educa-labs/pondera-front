@@ -23,15 +23,16 @@ export const setFieldValue = formName => (field, value) => ({
   value,
 });
 
+const validationError = formName => (field, error) => ({
+  type: VALIDATION_ERROR,
+  formName,
+  field,
+  error,
+});
+
 export const resetForm = formName => () => ({
   type: RESET_FORM,
   formName,
-});
-
-const validationError = formName => error => ({
-  type: VALIDATION_ERROR,
-  formName,
-  error,
 });
 
 /* SIDE EFFECTS */
@@ -51,13 +52,13 @@ export const submitForm = formName => (onSubmit, validator, fields) => (
   }
 );
 
-export const validateField = formName => (validator, fieldName) => (
+export const validateField = formName => (fieldName, validator) => (
   async (dispatch, getState) => {
     const { values } = getState()[formName];
     try {
       await validator(values[fieldName]);
     } catch (error) {
-      dispatch(validationError(error));
+      dispatch(validationError(formName)(fieldName, error.message));
     }
   }
 );
@@ -103,8 +104,10 @@ const createFormReducer = (formName, fields) => {
     switch (action.type) {
       case SET_FORM_VALUE:
         return removeError(state, action);
-      case SUBMIT_FAILURE:
-        return Object.assign({}, state, action.errors);
+      case VALIDATION_ERROR:
+        return Object.assign({}, state, {
+          [action.field]: action.error,
+        });
       default:
         return state;
     }
