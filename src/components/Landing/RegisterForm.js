@@ -10,14 +10,13 @@ import connectForm from '../../hoc/connectForm';
 
 
 const notEmpty = value => new Promise((resolve, reject) => {
-  if (value === '') reject(new Error('Campo obligatorio'));
-  else resolve();
+  if (value === '') {
+    reject(new Error('Campo obligatorio'));
+  }
+  resolve();
 });
 
 const RegisterForm = ({
-  logChange,
-  values,
-  errors,
   submitHandler,
   onSubmit,
 }) => (
@@ -28,27 +27,15 @@ const RegisterForm = ({
       <Link to="login">inicia sesión en tu cuenta</Link>
     </div>
     <br />
-    <Field
-      name="name"
-      validator={notEmpty}
-    >
+    <Field name="name" validator={notEmpty}>
       <TextInput label="Nombre y apellido" floatingLabel />
     </Field>
-    <TextInput
-      label="Correo electrónico"
-      floatingLabel
-      onChange={logChange('email')}
-      value={values.email}
-      errorText={errors.email}
-    />
-    <TextInput
-      label="Contraseña"
-      floatingLabel
-      onChange={logChange('password')}
-      value={values.password}
-      type="password"
-      errorText={errors.password}
-    />
+    <Field name="email" validator={notEmpty}>
+      <TextInput label="Correo electrónico" floatingLabel />
+    </Field>
+    <Field name="password">
+      <TextInput label="Contraseña" floatingLabel type="password" />
+    </Field>
     <Button
       color="primary"
       type="submit"
