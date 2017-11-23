@@ -13,9 +13,9 @@ import {
 
 export default function (formName) {
   const mapStateToProps = (state) => {
-    if (state[formName] === undefined) throw new Error(`There is no reducer named: ${formName}`);
+    if (state.forms[formName] === undefined) throw new Error(`There is no reducer named: ${formName}`);
     return ({
-      fields: state[formName],
+      fields: state.forms[formName],
     });
   };
   const mapDispatchToProps = dispatch => ({

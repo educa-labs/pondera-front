@@ -69,7 +69,7 @@ export const submitForm = formName => onSubmit => (
 
 export const validateField = formName => (fieldName, validator) => (
   async (dispatch, getState) => {
-    const field = getState()[formName][fieldName];
+    const field = getState().forms[formName][fieldName];
     try {
       await validator(field.value);
     } catch (error) {

@@ -48,7 +48,7 @@ class Simula extends Component {
       other = 'history';
       this.scienceEl.controlEl.focus();
     }
-    this.props.logChange('ponderaForm', other, '');
+    this.props.logChange('ponderaForm')(other, '');
   }
 
   setScreen(index) {

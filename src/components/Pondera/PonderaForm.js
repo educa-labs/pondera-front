@@ -9,15 +9,12 @@ import TextInput from '../Inputs/TextInput';
 import SelectInput from '../Inputs/SelectInput';
 import wrapCard from '../../hoc/wrapCard';
 import connectForm from '../../hoc/connectForm';
+import Field from '../../hoc/Field';
 import LoadingWrapper from '../Other/LoadingWrapper';
 import RadioWrapper from '../Other/RadioWrapper';
 import { HISTORY, SCIENCE } from '../../helpers/constants';
 
 const PonderaForm = ({
-  logChange,
-  values,
-  errors,
-  submitHandler,
   onSubmit,
   resetForm,
   careers,
@@ -29,10 +26,8 @@ const PonderaForm = ({
   setHistoryRef,
   setScienceRef,
 }) => {
-  let historyInput = null;
-  let scienceInput = null;
   return (
-    <Form onSubmit={submitHandler(onSubmit)}>
+    <Form onSubmit={onSubmit}>
       <legend>Ponderar</legend>
       <div className="mui--text-subhead">
         Ingresa tus puntajes y carrera
@@ -40,69 +35,63 @@ const PonderaForm = ({
       <Container>
         <Row>
           <Col xs={6} className="padding-col">
-            <TextInput
-              label="NEM"
-              floatingLabel
-              type="number"
-              onChange={logChange('nem')}
-              value={values.nem}
-              errorText={errors.nem}
-            />
-            <TextInput
-              label="Leng"
-              floatingLabel
-              type="number"
-              onChange={logChange('language')}
-              value={values.language}
-              errorText={errors.language}
-            />
+            <Field name="nem">
+              <TextInput
+                label="NEM"
+                floatingLabel
+                type="number"
+              />
+            </Field>
+            <Field name="language">
+              <TextInput
+                label="Leng"
+                floatingLabel
+                type="number"
+              />
+            </Field>
             <RadioWrapper
               onSelect={onSelectTest}
               selected={selectedTest}
               id={HISTORY}
             >
-              <TextInput
-                label="Hist"
-                floatingLabel
-                type="number"
-                setRef={setHistoryRef}
-                onChange={logChange('history')}
-                value={values.history}
-                errorText={errors.history}
-              />
+              <Field name="history">
+                <TextInput
+                  label="Hist"
+                  floatingLabel
+                  type="number"
+                  setRef={setHistoryRef}
+                />
+              </Field>
             </RadioWrapper>
           </Col>
           <Col xs={6} className="padding-col">
-            <TextInput
-              label="Rank"
-              floatingLabel
-              type="number"
-              onChange={logChange('ranking')}
-              value={values.ranking}
-              errorText={errors.ranking}
-            />
-            <TextInput
-              label="Mate"
-              floatingLabel
-              type="number"
-              onChange={logChange('math')}
-              value={values.math}
-              errorText={errors.math}
-            />
+            <Field name="ranking">
+              <TextInput
+                label="Rank"
+                floatingLabel
+                type="number"
+              />
+            </Field>
+            <Field name="math">
+              <TextInput
+                label="Mate"
+                floatingLabel
+                type="number"
+              />
+            </Field>
             <RadioWrapper
               onSelect={onSelectTest}
               selected={selectedTest}
               id={SCIENCE}
             >
-              <TextInput
-                label="Cien"
-                floatingLabel
-                type="number"
-                setRef={setScienceRef}
-                onChange={logChange('science')}
-                value={values.science}
-                errorText={errors.science}
-              />
+              <Field name="science">
+                <TextInput
+                  label="Cien"
+                  floatingLabel
+                  type="number"
+                  setRef={setScienceRef}
+                />
+              </Field>
             </RadioWrapper>
           </Col>
         </Row>
@@ -120,7 +109,6 @@ const PonderaForm = ({
                 <SelectInput
                   label="Carrera"
                   options={careers}
-                  onChange={logChange('career')}
                 />
               )}
             </LoadingWrapper>

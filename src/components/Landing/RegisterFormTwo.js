@@ -65,6 +65,6 @@ RegisterFormTwo.propTypes = {
 };
 
 
-const form = connectForm('signupForm')(RegisterFormTwo);
+const form = connectForm('registerFormTwo')(RegisterFormTwo);
 
 export default wrapCard(form);
