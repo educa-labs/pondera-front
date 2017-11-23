@@ -23,6 +23,10 @@ $duration: 1.4s;
     colors ($duration*4) ease-in-out infinite;
 }
 
+.path-white {
+  stroke: white;
+}
+
 /*
 @keyframes colors {
 	0% { stroke: #4285F4; }
