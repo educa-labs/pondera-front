@@ -8,7 +8,7 @@ import reducer from '../redux';
 function configureStore() {
   const store = createStore(
     reducer,
-    composeWithDevTools(applyMiddleware(logger, thunkMiddleware)),
+    composeWithDevTools(applyMiddleware(thunkMiddleware, logger)),
   );
   if (module.hot) {
     module.hot.accept('../redux', () => {
