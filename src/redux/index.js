@@ -11,30 +11,30 @@ import {
   REGIONS,
 } from '../helpers/constants';
 
-const signupForm = createForm('signupForm', [
-  'name',
-  'email',
-  'password',
-  'rut',
-  'phone',
-  'region',
-  'accept',
-]);
+const signupForm = createForm('signupForm', {
+  name: { required: true },
+  email: { required: true },
+  password: { required: true },
+  rut: { required: true },
+  phone: { required: true },
+  region: { required: true },
+  accept: { required: true },
+});
 
-const ponderaForm = createForm('ponderaForm', [
-  'nem',
-  'ranking',
-  'language',
-  'math',
-  'science',
-  'history',
-  'career',
-]);
+const ponderaForm = createForm('ponderaForm', {
+  nem: { required: true },
+  ranking: { required: true },
+  language: { required: true },
+  mah: { required: true },
+  science: {},
+  history: {},
+  career: { required: true },
+});
 
-const loginForm = createForm('loginForm', [
-  'email',
-  'password',
-]);
+const loginForm = createForm('loginForm', {
+  email: { required: true },
+  password: { required: true },
+});
 
 const resources = combineReducers({
   univs: fetchReducer(UNIVERSITIES),

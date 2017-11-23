@@ -10,14 +10,10 @@ import wrapCard from '../../hoc/wrapCard';
 import connectForm from '../../hoc/connectForm';
 import BubbleWarpper from '../Other/BubbleWrapper';
 import LoadingWrapper from '../Other/LoadingWrapper';
-import { emptyValidator } from '../../helpers';
+import Field from '../../hoc/Field';
 
 
 const RegisterFormTwo = ({
-  logChange,
-  values,
-  errors,
-  submitHandler,
   onSubmit,
   triggerAnimation,
   regions,
@@ -28,39 +24,26 @@ const RegisterFormTwo = ({
     </span>
   );
   return (
-    <Form onSubmit={submitHandler(onSubmit)}>
+    <Form onSubmit={onSubmit}>
       <legend>Registro</legend>
       <div className="mui--text-subhead">completa tus datos</div>
       <br />
-      <TextInput
-        label="RUT"
-        floatingLabel
-        onChange={logChange('rut')}
-        value={values.rut}
-        errorText={errors.rut}
-      />
-      <TextInput
-        label="Número telefónico"
-        floatingLabel
-        onChange={logChange('phone')}
-        value={values.phone}
-        errorText={errors.phone}
-      />
+      <Field name="rut">
+        <TextInput label="RUT" floatingLabel />
+      </Field>
+      <Field name="phone">
+        <TextInput label="Número telefónico" floatingLabel />
+      </Field>
       <LoadingWrapper loading={regions === null}>
         {() => (
-          <SelectInput
-            label="Región"
-            onChange={logChange('region')}
-            value={values.region}
-            options={regions}
-          />
+          <Field name="region" type="select">
+            <SelectInput label="Región" options={regions} />
+          </Field>
         )}
       </LoadingWrapper>
-      <Checkbox
-        label={label}
-        checked={values.accept}
-        onChange={logChange('accept')}
-      />
+      <Field name="accept" type="checkbox">
+        <Checkbox label={label} />
+      </Field>
       <BubbleWarpper trigger={triggerAnimation}>
         <Button
           color="primary"
@@ -77,17 +60,11 @@ const RegisterFormTwo = ({
 
 
 RegisterFormTwo.propTypes = {
-  submitHandler: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  logChange: PropTypes.func.isRequired,
   triggerAnimation: PropTypes.bool.isRequired,
 };
 
 
-const form = connectForm(
-  'signupForm',
-  emptyValidator,
-  ['rut', 'phone', 'accept', 'region'],
-)(RegisterFormTwo);
+const form = connectForm('signupForm')(RegisterFormTwo);
 
 export default wrapCard(form);

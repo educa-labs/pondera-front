@@ -11,16 +11,13 @@ import connectForm from '../../hoc/connectForm';
 
 const notEmpty = value => new Promise((resolve, reject) => {
   if (value === '') {
-    reject(new Error('Campo obligatorio'));
+    reject(new Error('Tienes que escribir algo'));
   }
   resolve();
 });
 
-const RegisterForm = ({
-  submitHandler,
-  onSubmit,
-}) => (
-  <Form onSubmit={submitHandler(onSubmit)}>
+const RegisterForm = ({ goNext }) => (
+  <Form>
     <legend>Regístrate</legend>
     <div className="mui--text-subhead">
       <span>o </span>
@@ -38,7 +35,8 @@ const RegisterForm = ({
     </Field>
     <Button
       color="primary"
-      type="submit"
+      type="button"
+      onClick={goNext}
       className="btn--fullwidth"
       variant="raised"
     >
@@ -49,9 +47,7 @@ const RegisterForm = ({
 
 
 RegisterForm.propTypes = {
-  submitHandler: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  logChange: PropTypes.func.isRequired,
+  goNext: PropTypes.func.isRequired,
 };
 
 
