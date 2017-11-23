@@ -35,6 +35,7 @@ const Field = ({
   }
   if (type === 'select') {
     extraProps.value = value;
+    extraProps.onBlur = validator ? onBlur : undefined;
   }
   if (type === 'checkbox') {
     extraProps.checked = value;
