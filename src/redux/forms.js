@@ -42,6 +42,7 @@ const getValues = (fields) => {
   Object.keys(fields).forEach((key) => {
     values[key] = fields[key].value;
   });
+  return values;
 };
 
 export const submitForm = formName => onSubmit => (
