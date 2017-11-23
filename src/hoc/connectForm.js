@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
-  setFieldValue,
   submitForm,
   resetForm,
 } from '../redux/forms';
@@ -12,23 +11,19 @@ import {
   funcion que será ejecutada con los valores del formulario
 */
 
-export default function (formName, validator, fields) {
+export default function (formName) {
   const mapStateToProps = (state) => {
     if (state[formName] === undefined) throw new Error(`There is no reducer named: ${formName}`);
     return ({
-      values: state[formName].values,
-      errors: state[formName].errors,
+      fields: state[formName],
     });
   };
   const mapDispatchToProps = dispatch => ({
     resetForm: () => dispatch(resetForm(formName)()),
-    logChange: field => (
-      ev => dispatch(setFieldValue(formName)(field, ev.target.value))
-    ),
-    submitHandler: handleSubmit => (
+    onSubmitWrapper: onSubmit => (
       (ev) => {
         ev.preventDefault();
-        dispatch(submitForm(formName)(handleSubmit, validator, fields));
+        dispatch(submitForm(formName)(onSubmit));
       }
     ),
   });
@@ -38,19 +33,24 @@ export default function (formName, validator, fields) {
       getChildContext() {
         return {
           formName,
-          values: this.props.values,
-          errors: this.props.errors,
+          fields: this.props.fields,
         };
       }
+
       render() {
-        return <Form {...this.props} />;
+        const { onSubmit, onSubmitWrapper, ...rest } = this.props;
+        return (
+          <Form
+            onSubmit={onSubmitWrapper(onSubmit)}
+            {...rest}
+          />
+        );
       }
     }
 
     ConnectedForm.childContextTypes = {
       formName: PropTypes.string,
-      values: PropTypes.object,
-      errors: PropTypes.object,
+      fields: PropTypes.object,
     };
 
     return connect(mapStateToProps, mapDispatchToProps)(ConnectedForm);
