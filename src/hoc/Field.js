@@ -7,34 +7,55 @@ const Field = ({
   name,
   validator,
   type,
+  checkValue,
+  logChange,
   ...props
 }, {
   formName,
   fields,
 }) => {
   const onBlur = () => {
-    props.checkValue(formName)(name, validator);
+    checkValue(formName)(name, validator);
   };
   const onChange = (ev) => {
     const value = type === 'checkbox' ? ev.target.checked : ev.target.value;
-    props.logChange(formName)(name, value);
+    logChange(formName)(name, value);
   };
 
-  const valueKey = type === 'checkbox' ? 'checked' : 'value';
+  const { value } = fields[name];
+
+  const extraProps = {
+    ...props,
+    onChange,
+  };
+  if (type === 'text') {
+    extraProps.value = value;
+    extraProps.errorText = fields[name].error;
+    extraProps.onBlur = validator ? onBlur : undefined;
+  }
+  if (type === 'select') {
+    extraProps.value = value;
+  }
+  if (type === 'checkbox') {
+    extraProps.checked = value;
+  }
 
   return (
-    React.cloneElement(props.children, {
-      onBlur: validator ? onBlur : null,
-      onChange,
-      [valueKey]: fields[name].value,
-      errorText: ['select', 'checkbox'].includes(type) ? undefined : fields[name].error,
-    })
+    React.cloneElement(props.children, extraProps)
   );
 };
 
 Field.contextTypes = {
   formName: PropTypes.string,
   fields: PropTypes.object,
+};
+
+Field.propTypes = {
+  type: PropTypes.string,
+};
+
+Field.defaultProps = {
+  type: 'text',
 };
 
 
