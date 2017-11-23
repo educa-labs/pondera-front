@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
+import PropTypes, { func } from 'prop-types';
 import { connect } from 'react-redux';
 import ScrollScreen from '../components/Layout/ScrollScreen';
 import Pondera from '../components/Pondera/Pondera';
 import Result from './Result';
 import { logOut } from '../redux/session';
-import { logChange } from '../redux/forms';
+import { setFieldValue } from '../redux/forms';
 import { isLoading, fetch } from '../redux/fetch';
 import { UNIVERSITIES, CAREERS, HISTORY, SCIENCE } from '../helpers/constants';
 
@@ -28,12 +27,12 @@ class Simula extends Component {
 
   componentDidMount() {
     if (this.props.univs === null) {
-      this.props.fetch(UNIVERSITIES);
+      this.props.dispatch(fetch(UNIVERSITIES));
     }
   }
 
   onUnivChange(ev) {
-    this.props.fetch(CAREERS, ev.target.value);
+    this.props.dispatch(fetch(CAREERS, ev.target.value));
   }
 
   async onSelectTest(ev) {
@@ -48,7 +47,7 @@ class Simula extends Component {
       other = 'history';
       this.scienceEl.controlEl.focus();
     }
-    this.props.logChange('ponderaForm')(other, '');
+    this.props.dispatch(setFieldValue('ponderaForm')(other, ''));
   }
 
   setScreen(index) {
@@ -72,7 +71,7 @@ class Simula extends Component {
   }
 
   handleLogOut() {
-    this.props.logOut();
+    this.props.dispatch(logOut());
     this.props.history.replace('/');
   }
 
@@ -101,16 +100,13 @@ class Simula extends Component {
 }
 
 Simula.propTypes = {
-  logOut: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
+
 
 export default connect(state => ({
   univs: state.resources.univs.data,
   careers: state.resources.careers.data,
   isLoading: isLoading(state),
-}), {
-  logOut,
-  fetch,
-  logChange,
-})(Simula);
+}))(Simula);
 
