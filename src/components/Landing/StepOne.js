@@ -11,15 +11,10 @@ class StepOne extends Component {
     this.state = {
       frame: 0,
     };
-    this.goNext = this.goNext.bind(this);
   }
 
   componentDidMount() {
     setTimeout(() => this.setState({ frame: 1 }), 600);
-  }
-
-  goNext() {
-    this.props.history.push('/two');
   }
 
   render() {
@@ -27,7 +22,7 @@ class StepOne extends Component {
       <Page>
         <NavigationBar />
         <Hero frame={this.state.frame} />
-        <RegisterForm goNext={this.goNext} />
+        <RegisterForm {...this.props} />
       </Page>
     );
   }

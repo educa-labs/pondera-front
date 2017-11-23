@@ -45,9 +45,17 @@ const getValues = (fields) => {
   return values;
 };
 
-export const submitForm = formName => onSubmit => (
+const getErrors = (fields) => {
+  const errors = {};
+  Object.keys(fields).forEach((key) => {
+    errors[key] = fields[key].error;
+  });
+  return errors;
+};
+
+export const submitForm = formName => (onSubmit, onSubmitError) => (
   (dispatch, getState) => {
-    const fields = getState()[formName];
+    const fields = getState().forms[formName];
     let validForm = true;
     Object.keys(fields).forEach((key) => {
       const field = fields[key];
@@ -61,9 +69,8 @@ export const submitForm = formName => onSubmit => (
       }
     });
     if (validForm) {
-      console.log('No hay problemas');
       onSubmit(getValues(fields));
-    }
+    } else if (onSubmitError) onSubmitError(getErrors(fields));
   }
 );
 

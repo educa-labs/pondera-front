@@ -16,8 +16,8 @@ const notEmpty = value => new Promise((resolve, reject) => {
   resolve();
 });
 
-const RegisterForm = ({ goNext }) => (
-  <Form>
+const RegisterForm = ({ onSubmit }) => (
+  <Form onSubmit={onSubmit}>
     <legend>Regístrate</legend>
     <div className="mui--text-subhead">
       <span>o </span>
@@ -35,8 +35,6 @@ const RegisterForm = ({ goNext }) => (
     </Field>
     <Button
       color="primary"
-      type="button"
-      onClick={goNext}
       className="btn--fullwidth"
       variant="raised"
     >
@@ -47,7 +45,7 @@ const RegisterForm = ({ goNext }) => (
 
 
 RegisterForm.propTypes = {
-  goNext: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 

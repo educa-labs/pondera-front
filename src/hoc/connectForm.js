@@ -20,10 +20,10 @@ export default function (formName) {
   };
   const mapDispatchToProps = dispatch => ({
     resetForm: () => dispatch(resetForm(formName)()),
-    onSubmitWrapper: onSubmit => (
+    onSubmitWrapper: (onSubmit, onSubmitError) => (
       (ev) => {
         ev.preventDefault();
-        dispatch(submitForm(formName)(onSubmit));
+        dispatch(submitForm(formName)(onSubmit, onSubmitError));
       }
     ),
   });
@@ -38,10 +38,10 @@ export default function (formName) {
       }
 
       render() {
-        const { onSubmit, onSubmitWrapper, ...rest } = this.props;
+        const { onSubmit, onSubmitWrapper, onSubmitError, ...rest } = this.props;
         return (
           <Form
-            onSubmit={onSubmitWrapper(onSubmit)}
+            onSubmit={onSubmitWrapper(onSubmit, onSubmitError)}
             {...rest}
           />
         );
@@ -51,6 +51,16 @@ export default function (formName) {
     ConnectedForm.childContextTypes = {
       formName: PropTypes.string,
       fields: PropTypes.object,
+    };
+
+    ConnectedForm.propTypes = {
+      onSubmit: PropTypes.func.isRequired,
+      onSubmitWrapper: PropTypes.func.isRequired,
+      onSubmitError: PropTypes.func,
+    };
+
+    ConnectedForm.defaultProps = {
+      onSubmitError: null,
     };
 
     return connect(mapStateToProps, mapDispatchToProps)(ConnectedForm);

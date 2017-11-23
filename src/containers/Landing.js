@@ -9,12 +9,37 @@ import { isLoading, fetch } from '../redux/fetch';
 import { REGIONS } from '../helpers/constants';
 
 class Landing extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      completed: false,
+    };
+    this.onSubmitFailureOne = this.onSubmitFailureOne.bind(this);
+    this.onSubmitSuccessOne = this.onSubmitSuccessOne.bind(this);
+    this.onSubmitTwo = this.onSubmitTwo.bind(this);
+  }
+
   componentDidMount() {
     if (this.props.isLogged) {
       this.props.history.replace('/simula');
     }
     if (this.props.regions === null) {
       this.props.fetch(REGIONS);
+    }
+  }
+
+  onSubmitSuccessOne() {
+    this.setState({ completed: true });
+    this.props.history.push('/two');
+  }
+
+  onSubmitFailureOne() {
+    this.setState({ completed: false });
+  }
+
+  onSubmitTwo(values) {
+    if (this.state.completed) {
+      this.props.logUser(values.email, values.password);
     }
   }
 
@@ -29,10 +54,13 @@ class Landing extends React.Component {
         isLogged={this.props.isLogged}
         delay={this.props.delay}
       >
-        <StepOne />
+        <StepOne
+          onSubmit={this.onSubmitSuccessOne}
+          onSubmitError={this.onSubmitFailureOne}
+        />
         <StepTwo
+          onSubmit={this.onSubmitTwo}
           isLogged={this.props.isLogged}
-          registerUser={this.props.logUser}
           regions={this.props.regions}
         />
       </PageTransition>
