@@ -1,13 +1,14 @@
-import is from 'is_js';
+export const emptyValidator = value => new Promise((resolve, reject) => {
+  if (value === '') {
+    reject(new Error('Tienes que escribir algo'));
+  }
+  resolve();
+});
 
-export const emptyValidator = (value) => {
-  if (is.empty(value)) return 'Campo requerido';
-  return null;
-};
-
-export const scoreValidator = (value) => {
-  if (is.empty(value)) return 'Campo requerido';
-  if (Number(value) <= 250 || Number(value) >= 850) return 'Puntaje inválido';
-  return null;
-};
-
+export const scoreValidator = value => new Promise((resolve, reject) => {
+  if (value === '') reject(new Error('Corregir'));
+  if (Number(value) <= 250 || Number(value) >= 850) {
+    reject(new Error('Corregir'));
+  }
+  resolve();
+});
