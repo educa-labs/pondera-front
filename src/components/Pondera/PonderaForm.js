@@ -13,6 +13,8 @@ import Field from '../../hoc/Field';
 import LoadingWrapper from '../Other/LoadingWrapper';
 import RadioWrapper from '../Other/RadioWrapper';
 import { HISTORY, SCIENCE } from '../../helpers/constants';
+import { scoreValidator, emptyValidator } from '../../helpers';
+
 
 const PonderaForm = ({
   onSubmit,
@@ -34,14 +36,14 @@ const PonderaForm = ({
     <Container>
       <Row>
         <Col xs={6} className="padding-col">
-          <Field name="nem">
+          <Field name="nem" validator={scoreValidator}>
             <TextInput
               label="NEM"
               floatingLabel
               type="number"
             />
           </Field>
-          <Field name="language">
+          <Field name="language" validator={scoreValidator}>
             <TextInput
               label="Leng"
               floatingLabel
@@ -53,7 +55,7 @@ const PonderaForm = ({
             selected={selectedTest}
             id={HISTORY}
           >
-            <Field name="history">
+            <Field name="history" validator={scoreValidator}>
               <TextInput
                 label="Hist"
                 floatingLabel
@@ -64,14 +66,14 @@ const PonderaForm = ({
           </RadioWrapper>
         </Col>
         <Col xs={6} className="padding-col">
-          <Field name="ranking">
+          <Field name="ranking" validator={scoreValidator}>
             <TextInput
               label="Rank"
               floatingLabel
               type="number"
             />
           </Field>
-          <Field name="math">
+          <Field name="math" validator={scoreValidator}>
             <TextInput
               label="Mate"
               floatingLabel
@@ -83,7 +85,7 @@ const PonderaForm = ({
             selected={selectedTest}
             id={SCIENCE}
           >
-            <Field name="science">
+            <Field name="science" validator={scoreValidator}>
               <TextInput
                 label="Cien"
                 floatingLabel
@@ -102,13 +104,17 @@ const PonderaForm = ({
             label="Universidad"
             options={univs}
             onChange={onUnivChange}
+            placeholder="Escoge una universidad"
           />
           <LoadingWrapper loading={isLoading}>
             {() => (
-              <SelectInput
-                label="Carrera"
-                options={careers}
-              />
+              <Field name="career" type="select" validator={emptyValidator}>
+                <SelectInput
+                  label="Carrera"
+                  options={careers}
+                  placeholder="Elige una carrera"
+                />
+              </Field>
             )}
           </LoadingWrapper>
         </div>

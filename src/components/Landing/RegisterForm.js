@@ -7,14 +7,8 @@ import TextInput from '../Inputs/TextInput';
 import wrapCard from '../../hoc/wrapCard';
 import Field from '../../hoc/Field';
 import connectForm from '../../hoc/connectForm';
+import { emptyValidator } from '../../helpers';
 
-
-const notEmpty = value => new Promise((resolve, reject) => {
-  if (value === '') {
-    reject(new Error('Tienes que escribir algo'));
-  }
-  resolve();
-});
 
 const RegisterForm = ({ onSubmit }) => (
   <Form onSubmit={onSubmit}>
@@ -24,10 +18,10 @@ const RegisterForm = ({ onSubmit }) => (
       <Link to="login">inicia sesión en tu cuenta</Link>
     </div>
     <br />
-    <Field name="name" validator={notEmpty}>
+    <Field name="name" validator={emptyValidator}>
       <TextInput label="Nombre y apellido" floatingLabel />
     </Field>
-    <Field name="email" validator={notEmpty}>
+    <Field name="email" validator={emptyValidator}>
       <TextInput label="Correo electrónico" floatingLabel />
     </Field>
     <Field name="password">
