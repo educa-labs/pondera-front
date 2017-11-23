@@ -33,6 +33,7 @@ const validationError = formName => (fieldName, error) => ({
 export const resetForm = formName => () => ({
   type: RESET_FORM,
   formName,
+  fieldName: 'reset',
 });
 
 /* SIDE EFFECTS */
@@ -135,7 +136,7 @@ const createFormReducer = (formName, fields) => {
     const required = (state = field.required || false) => state;
 
     return (state = createInitalState(field), action) => {
-      if (action.fieldName !== fieldName) return state;
+      if (action.fieldName !== fieldName && action.fieldName !== 'reset') return state;
       return combineReducers({
         value,
         error,
