@@ -3,20 +3,31 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { validateField, setFieldValue } from '../redux/forms';
 
-const Field = ({ name, validator, ...props }, { formName, fields, errors }) => {
+const Field = ({
+  name,
+  validator,
+  type,
+  ...props
+}, {
+  formName,
+  fields,
+}) => {
   const onBlur = () => {
     props.checkValue(formName)(name, validator);
   };
   const onChange = (ev) => {
-    props.logChange(formName)(name, ev.target.value);
+    const value = type === 'checkbox' ? ev.target.checked : ev.target.value;
+    props.logChange(formName)(name, value);
   };
+
+  const valueKey = type === 'checkbox' ? 'checked' : 'value';
 
   return (
     React.cloneElement(props.children, {
       onBlur: validator ? onBlur : null,
       onChange,
-      value: fields[name].value,
-      errorText: fields[name].error,
+      [valueKey]: fields[name].value,
+      errorText: ['select', 'checkbox'].includes(type) ? undefined : fields[name].error,
     })
   );
 };
