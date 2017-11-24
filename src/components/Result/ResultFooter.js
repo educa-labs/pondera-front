@@ -1,12 +1,16 @@
 import React from 'react';
-import Button from 'muicss/lib/react/button';
+import Spinner from '../Other/Spinner';
 
-const ResultFooter = ({ onClick }) => (
+const ResultFooter = ({ onClick, calculating }) => (
   <div className="result-footer">
-    <button className="icon-button" onClick={onClick}>
-      <i className="material-icons">expand_less</i>
-    </button>
-    <div>Sube para calcular nuevamente</div>
+    {calculating ? <Spinner /> : (
+      <div className="footer">
+        <button className="icon-button" onClick={onClick}>
+          <i className="material-icons">expand_less</i>
+        </button>
+        <div>Sube para calcular nuevamente</div>
+      </div>
+    )}
   </div>
 );
 

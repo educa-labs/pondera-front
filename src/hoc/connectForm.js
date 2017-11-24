@@ -1,7 +1,7 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
-  logChange,
-  validFormSelector,
   submitForm,
   resetForm,
 } from '../redux/forms';
@@ -11,31 +11,59 @@ import {
   funcion que será ejecutada con los valores del formulario
 */
 
-export default function (formName, validator, fields) {
+export default function (formName) {
   const mapStateToProps = (state) => {
-    if (state[formName] === undefined) throw new Error(`There is no reducer named: ${formName}`);
+    if (state.forms[formName] === undefined) throw new Error(`There is no reducer named: ${formName}`);
     return ({
-      values: state[formName].values,
-      errors: state[formName].errors,
-      isValidForm: validFormSelector(state[formName]),
+      fields: state.forms[formName],
     });
   };
   const mapDispatchToProps = dispatch => ({
-    resetForm: () => dispatch(resetForm(formName)),
-    logChange: field => (
-      ev => dispatch(logChange(formName, field, ev.target.value))
-    ),
-    submitHandler: handleSubmit => (
+    resetForm: () => dispatch(resetForm(formName)()),
+    onSubmitWrapper: (onSubmit, onSubmitError) => (
       (ev) => {
         ev.preventDefault();
-        dispatch(submitForm(formName, handleSubmit, validator, fields));
+        dispatch(submitForm(formName)(onSubmit, onSubmitError));
       }
     ),
   });
 
-  return Component => connect(mapStateToProps, mapDispatchToProps)(Component);
+  return (Form) => {
+    class ConnectedForm extends React.Component {
+      getChildContext() {
+        return {
+          formName,
+          fields: this.props.fields,
+        };
+      }
 
-  // const connectForm = connect(mapStateToProps, mapDispatchToProps)(Component);
-  // return connectForm;
+      render() {
+        const { onSubmit, onSubmitWrapper, onSubmitError, ...rest } = this.props;
+        return (
+          <Form
+            onSubmit={onSubmitWrapper(onSubmit, onSubmitError)}
+            {...rest}
+          />
+        );
+      }
+    }
+
+    ConnectedForm.childContextTypes = {
+      formName: PropTypes.string,
+      fields: PropTypes.object,
+    };
+
+    ConnectedForm.propTypes = {
+      onSubmit: PropTypes.func.isRequired,
+      onSubmitWrapper: PropTypes.func.isRequired,
+      onSubmitError: PropTypes.func,
+    };
+
+    ConnectedForm.defaultProps = {
+      onSubmitError: null,
+    };
+
+    return connect(mapStateToProps, mapDispatchToProps)(ConnectedForm);
+  };
 }
 

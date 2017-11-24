@@ -11,30 +11,33 @@ import {
   REGIONS,
 } from '../helpers/constants';
 
-const signupForm = createForm('signupForm', [
-  'name',
-  'email',
-  'password',
-  'rut',
-  'phone',
-  'region',
-  'accept',
-]);
+const registerFormOne = createForm('registerFormOne', {
+  name: { required: true },
+  email: { required: true },
+  password: { required: true },
+});
 
-const ponderaForm = createForm('ponderaForm', [
-  'nem',
-  'ranking',
-  'language',
-  'math',
-  'science',
-  'history',
-  'career',
-]);
+const registerFormTwo = createForm('registerFormTwo', {
+  rut: { required: true },
+  phone: { required: true },
+  region: { required: true },
+  accept: { required: true },
+});
 
-const loginForm = createForm('loginForm', [
-  'email',
-  'password',
-]);
+const ponderaForm = createForm('ponderaForm', {
+  nem: { required: true },
+  ranking: { required: true },
+  language: { required: true },
+  math: { required: true },
+  science: {},
+  history: {},
+  career: { required: true },
+});
+
+const loginForm = createForm('loginForm', {
+  email: { required: true },
+  password: { required: true },
+});
 
 const resources = combineReducers({
   univs: fetchReducer(UNIVERSITIES),
@@ -42,11 +45,16 @@ const resources = combineReducers({
   regions: fetchReducer(REGIONS),
 });
 
-export default combineReducers({
-  session,
-  signupForm,
+const forms = combineReducers({
+  registerFormOne,
+  registerFormTwo,
   ponderaForm,
   loginForm,
+});
+
+export default combineReducers({
+  session,
+  forms,
   delayAnimation,
   results,
   propmtEvent,

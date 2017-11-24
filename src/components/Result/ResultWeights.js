@@ -1,7 +1,5 @@
 import React from 'react';
 import Container from 'muicss/lib/react/container';
-import Row from 'muicss/lib/react/row';
-import Col from 'muicss/lib/react/col';
 
 const subjects = [
   { value: 'nem', label: 'NEM' },
@@ -11,11 +9,11 @@ const subjects = [
   { value: 'history', label: 'Hist' },
 ];
 
-const ResultWeights = ({ result }) => {
+const ResultWeights = ({ weights }) => {
   const renderWeight = ({ value, label }, index) => (
     <div className="result-item" key={index}>
       <div className="result-item-label">{label}</div>
-      <div className="result-item-value">{result[value]}%</div>
+      <div className="result-item-value">{weights[value]}%</div>
     </div>
   );
   return (

@@ -5,49 +5,30 @@ import Button from 'muicss/lib/react/button';
 import { Link } from 'react-router-dom';
 import TextInput from '../Inputs/TextInput';
 import wrapCard from '../../hoc/wrapCard';
+import Field from '../../hoc/Field';
 import connectForm from '../../hoc/connectForm';
 import { emptyValidator } from '../../helpers';
 
 
-const RegisterForm = ({
-  logChange,
-  values,
-  errors,
-  submitHandler,
-  onSubmit,
-}) => (
-  <Form onSubmit={submitHandler(onSubmit)}>
+const RegisterForm = ({ onSubmit }) => (
+  <Form onSubmit={onSubmit}>
     <legend>Regístrate</legend>
     <div className="mui--text-subhead">
       <span>o </span>
       <Link to="login">inicia sesión en tu cuenta</Link>
     </div>
     <br />
-    <TextInput
-      label="Nombre y apellido"
-      floatingLabel
-      onChange={logChange('name')}
-      value={values.name}
-      errorText={errors.name}
-    />
-    <TextInput
-      label="Correo electrónico"
-      floatingLabel
-      onChange={logChange('email')}
-      value={values.email}
-      errorText={errors.email}
-    />
-    <TextInput
-      label="Contraseña"
-      floatingLabel
-      onChange={logChange('password')}
-      value={values.password}
-      type="password"
-      errorText={errors.password}
-    />
+    <Field name="name" validator={emptyValidator}>
+      <TextInput label="Nombre y apellido" floatingLabel />
+    </Field>
+    <Field name="email" validator={emptyValidator}>
+      <TextInput label="Correo electrónico" floatingLabel />
+    </Field>
+    <Field name="password">
+      <TextInput label="Contraseña" floatingLabel type="password" />
+    </Field>
     <Button
       color="primary"
-      type="submit"
       className="btn--fullwidth"
       variant="raised"
     >
@@ -58,21 +39,11 @@ const RegisterForm = ({
 
 
 RegisterForm.propTypes = {
-  submitHandler: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  logChange: PropTypes.func.isRequired,
 };
 
 
-const form = connectForm(
-  'signupForm',
-  emptyValidator,
-  [
-    'name',
-    'email',
-    'password',
-  ],
-)(RegisterForm);
+const form = connectForm('registerFormOne')(RegisterForm);
 
 export default wrapCard(form);
 

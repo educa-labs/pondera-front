@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { createSelector } from 'reselect';
-import api from '../helpers/api';
+import { getResource } from '../helpers/api';
 
 /* TYPES */
 const FETCH_REQUEST = 'FETCH_REQUEST';
@@ -32,7 +32,7 @@ export const fetch = (resource, ...args) => (
   async (dispatch) => {
     dispatch(fetchRequest(resource));
     try {
-      const res = await api.fetch(resource, ...args);
+      const res = await getResource(resource, ...args);
       dispatch(fetchSuccess(resource, res.data));
     } catch (error) {
       dispatch(fetchFailure(resource, error));

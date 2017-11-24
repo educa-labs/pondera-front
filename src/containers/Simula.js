@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ScrollScreen from '../components/Layout/ScrollScreen';
 import Pondera from '../components/Pondera/Pondera';
-import Result from './Result';
+import Result from '../components/Result/Result';
 import { logOut } from '../redux/session';
-import { logChange } from '../redux/forms';
+import { setFieldValue, getValues } from '../redux/forms';
 import { isLoading, fetch } from '../redux/fetch';
-import { UNIVERSITIES, CAREERS, HISTORY, SCIENCE } from '../helpers/constants';
+import { calculatePonderation, isCalculating } from '../redux/results';
+import { UNIVERSITIES, CAREERS, HISTORY } from '../helpers/constants';
 
 class Simula extends Component {
   constructor(props) {
@@ -24,16 +24,26 @@ class Simula extends Component {
     this.onSelectTest = this.onSelectTest.bind(this);
     this.setHistoryRef = this.setHistoryRef.bind(this);
     this.setScienceRef = this.setScienceRef.bind(this);
+    this.onSimilarClick = this.onSimilarClick.bind(this);
   }
 
   componentDidMount() {
     if (this.props.univs === null) {
-      this.props.fetch(UNIVERSITIES);
+      this.props.dispatch(fetch(UNIVERSITIES));
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.calculating !== this.props.calculating) {
+      if (!nextProps.calculating) {
+        this.setScreen(1);
+      }
     }
   }
 
   onUnivChange(ev) {
-    this.props.fetch(CAREERS, ev.target.value);
+    this.props.dispatch(fetch(CAREERS, ev.target.value));
+    this.props.dispatch(setFieldValue('ponderaForm')('career', ''));
   }
 
   async onSelectTest(ev) {
@@ -48,17 +58,27 @@ class Simula extends Component {
       other = 'history';
       this.scienceEl.controlEl.focus();
     }
-    this.props.logChange('ponderaForm', other, '');
+    this.props.dispatch(setFieldValue('ponderaForm')(other, ''));
   }
 
-  setScreen(index) {
-    this.setState({ currentScreen: index });
+
+  onSimilarClick(cId) {
+    const { fields, dispatch } = this.props;
+    const values = Object.assign({}, getValues(fields), {
+      cId,
+    });
+    console.log(values);
+    dispatch(calculatePonderation(values));
   }
 
   setHistoryRef(el) {
     if (el) {
       this.historyEl = el;
     }
+  }
+
+  setScreen(index) {
+    this.setState({ currentScreen: index });
   }
 
   setScienceRef(el) {
@@ -68,11 +88,12 @@ class Simula extends Component {
   }
 
   handleSubmit(values) {
-    this.setScreen(1);
+    this.props.dispatch(calculatePonderation(values));
   }
 
+
   handleLogOut() {
-    this.props.logOut();
+    this.props.dispatch(logOut());
     this.props.history.replace('/');
   }
 
@@ -88,29 +109,36 @@ class Simula extends Component {
           univs={this.props.univs}
           careers={this.props.careers || []}
           isLoading={this.props.isLoading}
+          calculating={this.props.calculating}
           onUnivChange={this.onUnivChange}
           onSelectTest={this.onSelectTest}
           selectedTest={this.state.selectedTest}
           setHistoryRef={this.setHistoryRef}
           setScienceRef={this.setScienceRef}
         />
-        <Result goBack={() => this.setScreen(0)} />
+        <Result
+          goBack={() => this.setScreen(0)}
+          result={this.props.result}
+          onSimilarClick={this.onSimilarClick}
+          calculating={this.props.calculating}
+        />
       </ScrollScreen>
     );
   }
 }
 
 Simula.propTypes = {
-  logOut: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  calculating: PropTypes.bool.isRequired,
 };
+
 
 export default connect(state => ({
   univs: state.resources.univs.data,
   careers: state.resources.careers.data,
   isLoading: isLoading(state),
-}), {
-  logOut,
-  fetch,
-  logChange,
-})(Simula);
+  calculating: isCalculating(state),
+  fields: state.forms.ponderaForm,
+  result: state.results.result,
+}))(Simula);
 

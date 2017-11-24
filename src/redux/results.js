@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { createSelector } from 'reselect';
-import api from '../helpers/api';
+import { requestPonderation } from '../helpers/api';
 
 const PONDERA_REQUEST = 'PONDERA_REQUEST';
 const PONDERA_FAILURE = 'PONDERA_FAILURE';
@@ -24,17 +24,22 @@ const ponderaSuccess = result => ({
 
 /* THUNK */
 
-export const makeWeight = values => (
+export const calculatePonderation = values => (
   async (dispatch) => {
     dispatch(ponderaRequest());
     try {
-      const result = await api.getResult(values);
+      const result = await requestPonderation(values);
       dispatch(ponderaSuccess(result));
     } catch (err) {
       dispatch(ponderaFailure(err));
     }
   }
 );
+
+/* SELECTORS */
+
+const getResults = state => state.results;
+export const isCalculating = createSelector(getResults, results => results.loading);
 
 /* REDUCERS */
 
