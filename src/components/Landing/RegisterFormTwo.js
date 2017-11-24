@@ -37,7 +37,7 @@ const RegisterFormTwo = ({
       <LoadingWrapper loading={regions === null}>
         {() => (
           <Field name="region" type="select">
-            <SelectInput label="Región" options={regions} />
+            <SelectInput label="Región" placeholder="Region" options={regions} />
           </Field>
         )}
       </LoadingWrapper>
