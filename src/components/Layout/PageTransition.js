@@ -27,7 +27,7 @@ const PageTransition = ({
 );
 
 PageTransition.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.arrayOf(PropTypes.element).isRequired,
   currentPage: PropTypes.number.isRequired,
 };
 
