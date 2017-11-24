@@ -1,9 +1,9 @@
 import React from 'react';
 import Container from 'muicss/lib/react/container';
 
-const ResultHeader = ({ title }) => (
+const ResultHeader = ({ result }) => (
   <Container className="result-header">
-    { title }
+    { result.title }
   </Container>
 );
 

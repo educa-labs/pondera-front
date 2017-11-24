@@ -2,16 +2,45 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MediaQuery from 'react-responsive';
+import Panel from 'muicss/lib/react/panel';
+import Container from 'muicss/lib/react/container';
+import Row from 'muicss/lib/react/row';
+import Col from 'muicss/lib/react/col';
 import ScrollScreen from '../components/Layout/ScrollScreen';
 import NavigationBar from '../components/NavigationBar/NavigationBar';
 import PonderaForm from '../components/Pondera/PonderaForm';
 import Page from '../components/Layout/Page';
 import Result from '../components/Result/Result';
+import ResultHeader from '../components/Result/ResultHeader';
+import ResultWeights from '../components/Result/ResultWeights';
+import ResultBody from '../components/Result/ResultBody';
+import ResultFooter from '../components/Result/ResultFooter';
+import alignCenter from '../hoc/alignCenter';
 import { logOut } from '../redux/session';
 import { setFieldValue, getValues } from '../redux/forms';
 import { isLoading, fetch } from '../redux/fetch';
 import { calculatePonderation, isCalculating } from '../redux/results';
 import { UNIVERSITIES, CAREERS, HISTORY } from '../helpers/constants';
+
+
+const resultOne = {
+  title: 'Derecho en Universidad Mayor',
+  similar: [
+    { id: 1, title: 'Derecho' },
+    { id: 2, title: 'Ingenieria PUC' },
+    { id: 3, title: 'Ingenieria UCH' },
+  ],
+  score: 655,
+  cut: 444,
+  diff: 655 - 444,
+  weights: {
+    language: 20,
+    math: 20,
+    history: 10,
+    nem: 25,
+    ranking: 25,
+  },
+};
 
 class Simula extends Component {
   constructor(props) {
@@ -115,32 +144,42 @@ class Simula extends Component {
         setScienceRef={this.setScienceRef}
       />
     );
-    const result = (
-      <Result
-        goBack={() => this.setScreen(0)}
-        result={this.props.result}
-        onSimilarClick={this.onSimilarClick}
-        calculating={this.props.calculating}
-      />
-    );
+    const CenterdForm = alignCenter(() => pondera);
+    const { result } = this.props;
     return ([
       <MediaQuery key="0" maxDeviceWidth={1224}>
-        <ScrollScreen
-          index={this.state.currentScreen}
-          goBack={() => this.setScreen(0)}
-        >
+        <ScrollScreen index={this.state.currentScreen}>
           <Page>
             <NavigationBar pondera logOut={logOut} />
-            {pondera}
+            <CenterdForm />
           </Page>
-          {result}
+          <Page>
+            <ResultHeader result={resultOne} />
+            <ResultWeights result={resultOne} />
+            <ResultBody result={resultOne} onSimilarClick={this.onSimilarClick} />
+            <ResultFooter
+              onClick={() => this.setScreen(0)}
+              calculating={this.props.calculating}
+            />
+          </Page>
         </ScrollScreen>
       </MediaQuery>,
       <MediaQuery key="1" minDeviceWidth={1224}>
-        <div>
-          {pondera}
-          {result}
-        </div>
+        <Page>
+          <Container fluid>
+            <Row>
+              <Col xs={12} sm={6} lg={6}>
+                {pondera}
+              </Col>
+              <Col xs={12} sm={6} lg={6}>
+                <Panel>
+                  <legend>Resultado</legend>
+                  <ResultHeader result={resultOne} />
+                </Panel>
+              </Col>
+            </Row>
+          </Container>
+        </Page>
       </MediaQuery>,
     ]);
   }

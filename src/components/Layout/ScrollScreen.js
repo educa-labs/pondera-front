@@ -49,7 +49,7 @@ class ScrollScreen extends Component {
 
 
   render() {
-    const { index, children, goNext, goBack } = this.props;
+    const { index, children } = this.props;
     const { posY, innerHeight } = this.state;
     return (
       <div className="screen-wrapper">

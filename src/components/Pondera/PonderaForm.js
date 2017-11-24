@@ -169,4 +169,4 @@ PonderaForm.propTypes = {
 
 
 const form = connectForm('ponderaForm')(PonderaForm);
-export default alignCenter(wrapCard(form));
+export default wrapCard(form);

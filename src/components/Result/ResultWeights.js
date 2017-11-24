@@ -9,11 +9,12 @@ const subjects = [
   { value: 'history', label: 'Hist' },
 ];
 
-const ResultWeights = ({ weights }) => {
+const ResultWeights = ({ result }) => {
+  if (result === null) return null;
   const renderWeight = ({ value, label }, index) => (
     <div className="result-item" key={index}>
       <div className="result-item-label">{label}</div>
-      <div className="result-item-value">{weights[value]}%</div>
+      <div className="result-item-value">{result.weights[value]}%</div>
     </div>
   );
   return (
