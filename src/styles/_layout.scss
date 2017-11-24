@@ -17,7 +17,7 @@
   left: 0;
   right: 0;
   z-index: -1;
-  height: 30rem;
+  height: 33rem;
 }
 
 /* SCROLL SCREEN */
@@ -36,4 +36,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.panel-result {
+  padding: 15px 0;
+}
+
+.big-logo {
+  height: 22rem;
+  display: flex;
+  padding-top: 2rem;
+  justify-content: center;
+  .logo-wrapper {
+    margin: 3rem;
+  }
+  svg {
+    fill: white;
+  }
 }

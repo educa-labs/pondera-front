@@ -6,6 +6,7 @@ import Panel from 'muicss/lib/react/panel';
 import Container from 'muicss/lib/react/container';
 import Row from 'muicss/lib/react/row';
 import Col from 'muicss/lib/react/col';
+import Logo from '../assets/svg/logo-pondera.svg';
 import ScrollScreen from '../components/Layout/ScrollScreen';
 import NavigationBar from '../components/NavigationBar/NavigationBar';
 import PonderaForm from '../components/Pondera/PonderaForm';
@@ -166,15 +167,23 @@ class Simula extends Component {
       </MediaQuery>,
       <MediaQuery key="1" minDeviceWidth={1224}>
         <Page>
+          <NavigationBar pondera desk logOut={logOut} />
           <Container fluid>
+            <div className="big-logo">
+              <Logo width={400} height={150} />
+            </div>
             <Row>
               <Col xs={12} sm={6} lg={6}>
                 {pondera}
               </Col>
               <Col xs={12} sm={6} lg={6}>
-                <Panel>
-                  <legend>Resultado</legend>
+                <Panel className="panel-result">
+                  <Container>
+                    <legend>Resultado</legend>
+                  </Container>
                   <ResultHeader result={resultOne} />
+                  <ResultWeights result={resultOne} />
+                  <ResultBody result={resultOne} onSimilarClick={this.onSimilarClick} />
                 </Panel>
               </Col>
             </Row>
