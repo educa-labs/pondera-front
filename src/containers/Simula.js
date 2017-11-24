@@ -120,6 +120,7 @@ class Simula extends Component {
           goBack={() => this.setScreen(0)}
           result={this.props.result}
           onSimilarClick={this.onSimilarClick}
+          calculating={this.props.calculating}
         />
       </ScrollScreen>
     );
