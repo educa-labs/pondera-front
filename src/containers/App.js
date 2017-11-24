@@ -17,7 +17,7 @@ class App extends React.Component {
     window.addEventListener('beforeinstallprompt', async (event) => {
       console.log('beforeinstallprompt fired');
       event.preventDefault();
-      this.props.setPromptEvent(event);
+      this.props.dispatch(setPromptEvent(event));
       return false;
     });
   }
@@ -35,32 +35,12 @@ class App extends React.Component {
       <div>
         <Background />
         <Switch>
-          <Route
-            path="/simula"
-            component={Simula}
-            isLogged={isLogged}
-            requireUser
-            redirectTo="/"
-          />
-          <ProtectedRoute
-            path="/login"
-            component={Login}
-            isLogged={isLogged}
-            requireUser={false}
-            redirectTo="/simula"
-            delay={delay}
-          />
-          <Route path="/test" component={Test} />
-          <Route path="/terms" component={Terms} />
-          <Route path="/contacto" component={Contacto} />
-          <ProtectedRoute
-            path="/"
-            component={Landing}
-            isLogged={isLogged}
-            requireUser={false}
-            redirectTo="/simula"
-            delay={delay}
-          />
+          <Route path="/simula"component={Simula}/>
+          <Route path="/login" component={Login}/>
+          <Route path="/test" component={Test}/>
+          <Route path="/terms" component={Terms}/>
+          <Route path="/contacto" component={Contacto}/>
+          <Route path="/" component={Landing}/>
         </Switch>
       </div>
     );
@@ -70,9 +50,7 @@ class App extends React.Component {
 const connectedApp = connect(state => ({
   isLogged: isLogged(state),
   delay: state.delayAnimation,
-}), {
-  setPromptEvent,
-})(App);
+}))(App);
 
 // export default App;
 export default withRouter(connectedApp);
