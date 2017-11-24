@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { createSelector } from 'reselect';
 import { postSession } from '../helpers/api';
-import { waitDelay } from './delay';
+import { wait } from './delay';
 
 /* TYPES */
 const LOG_USER_REQUEST = 'LOG_USER_REQUEST';
@@ -37,6 +37,7 @@ export const isLogged = createSelector(getUser, isNotNull);
 
 /* THUNKS */
 
+
 export const logUser = (email, password) => (
   async (dispatch) => {
     dispatch(logUserRequest());
@@ -44,7 +45,7 @@ export const logUser = (email, password) => (
       const user = await postSession(email, password);
       dispatch(logUserSucces(user));
       /* Esperamos un tiempo para la animacion */
-      dispatch(waitDelay());
+      dispatch(wait(300));
     } catch (err) {
       dispatch(logUserFailure(err));
     }

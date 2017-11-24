@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import session from './session';
 import results from './results';
 import createForm from './forms';
-import delayAnimation from './delay';
+import delay from './delay';
 import propmtEvent from './promptEvent';
 import fetchReducer from './fetch';
 import {
@@ -55,7 +55,7 @@ const forms = combineReducers({
 export default combineReducers({
   session,
   forms,
-  delayAnimation,
+  delay,
   results,
   propmtEvent,
   resources,
