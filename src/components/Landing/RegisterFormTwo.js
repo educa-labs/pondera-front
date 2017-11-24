@@ -7,6 +7,7 @@ import Checkbox from 'muicss/lib/react/checkbox';
 import TextInput from '../Inputs/TextInput';
 import SelectInput from '../Inputs/SelectInput';
 import wrapCard from '../../hoc/wrapCard';
+import alignCenter from '../../hoc/alignCenter';
 import connectForm from '../../hoc/connectForm';
 import BubbleWarpper from '../Other/BubbleWrapper';
 import LoadingWrapper from '../Other/LoadingWrapper';
@@ -79,4 +80,4 @@ RegisterFormTwo.propTypes = {
 
 const form = connectForm('registerFormTwo')(RegisterFormTwo);
 
-export default wrapCard(form);
+export default alignCenter(wrapCard(form));

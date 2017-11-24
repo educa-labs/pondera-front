@@ -5,6 +5,7 @@ import Button from 'muicss/lib/react/button';
 import { Link } from 'react-router-dom';
 import TextInput from '../Inputs/TextInput';
 import wrapCard from '../../hoc/wrapCard';
+import alignCenter from '../../hoc/alignCenter';
 import Field from '../../hoc/Field';
 import connectForm from '../../hoc/connectForm';
 import { emptyValidator } from '../../helpers';
@@ -45,5 +46,5 @@ RegisterForm.propTypes = {
 
 const form = connectForm('registerFormOne')(RegisterForm);
 
-export default wrapCard(form);
+export default alignCenter(wrapCard(form));
 

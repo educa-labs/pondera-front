@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import MediaQuery from 'react-responsive';
 import ScrollScreen from '../components/Layout/ScrollScreen';
-import Pondera from '../components/Pondera/Pondera';
+import NavigationBar from '../components/NavigationBar/NavigationBar';
+import PonderaForm from '../components/Pondera/PonderaForm';
+import Page from '../components/Layout/Page';
 import Result from '../components/Result/Result';
 import { logOut } from '../redux/session';
 import { setFieldValue, getValues } from '../redux/forms';
@@ -97,32 +100,49 @@ class Simula extends Component {
   }
 
   render() {
-    return (
-      <ScrollScreen
-        index={this.state.currentScreen}
-        goBack={() => this.setScreen(0)}
-      >
-        <Pondera
-          onSubmit={this.handleSubmit}
-          logOut={this.handleLogOut}
-          univs={this.props.univs}
-          careers={this.props.careers || []}
-          isLoading={this.props.isLoading}
-          calculating={this.props.calculating}
-          onUnivChange={this.onUnivChange}
-          onSelectTest={this.onSelectTest}
-          selectedTest={this.state.selectedTest}
-          setHistoryRef={this.setHistoryRef}
-          setScienceRef={this.setScienceRef}
-        />
-        <Result
-          goBack={() => this.setScreen(0)}
-          result={this.props.result}
-          onSimilarClick={this.onSimilarClick}
-          calculating={this.props.calculating}
-        />
-      </ScrollScreen>
+    const pondera = (
+      <PonderaForm
+        onSubmit={this.handleSubmit}
+        logOut={this.handleLogOut}
+        univs={this.props.univs}
+        careers={this.props.careers || []}
+        isLoading={this.props.isLoading}
+        calculating={this.props.calculating}
+        onUnivChange={this.onUnivChange}
+        onSelectTest={this.onSelectTest}
+        selectedTest={this.state.selectedTest}
+        setHistoryRef={this.setHistoryRef}
+        setScienceRef={this.setScienceRef}
+      />
     );
+    const result = (
+      <Result
+        goBack={() => this.setScreen(0)}
+        result={this.props.result}
+        onSimilarClick={this.onSimilarClick}
+        calculating={this.props.calculating}
+      />
+    );
+    return ([
+      <MediaQuery key="0" maxDeviceWidth={1224}>
+        <ScrollScreen
+          index={this.state.currentScreen}
+          goBack={() => this.setScreen(0)}
+        >
+          <Page>
+            <NavigationBar pondera logOut={logOut} />
+            {pondera}
+          </Page>
+          {result}
+        </ScrollScreen>
+      </MediaQuery>,
+      <MediaQuery key="1" minDeviceWidth={1224}>
+        <div>
+          {pondera}
+          {result}
+        </div>
+      </MediaQuery>,
+    ]);
   }
 }
 

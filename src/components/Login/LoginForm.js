@@ -5,6 +5,7 @@ import Form from 'muicss/lib/react/form';
 import Button from 'muicss/lib/react/button';
 import TextInput from '../Inputs/TextInput';
 import wrapCard from '../../hoc/wrapCard';
+import alignCenter from '../../hoc/alignCenter';
 import connectForm from '../../hoc/connectForm';
 import { emptyValidator } from '../../helpers';
 import BubbleWarpper from '../Other/BubbleWrapper';
@@ -60,4 +61,4 @@ const form = connectForm(
   ['email', 'password'],
 )(Loginform);
 
-export default wrapCard(form);
+export default alignCenter(wrapCard(form));

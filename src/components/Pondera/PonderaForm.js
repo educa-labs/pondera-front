@@ -8,6 +8,7 @@ import Container from 'muicss/lib/react/container';
 import TextInput from '../Inputs/TextInput';
 import SelectInput from '../Inputs/SelectInput';
 import wrapCard from '../../hoc/wrapCard';
+import alignCenter from '../../hoc/alignCenter';
 import connectForm from '../../hoc/connectForm';
 import Field from '../../hoc/Field';
 import LoadingWrapper from '../Other/LoadingWrapper';
@@ -168,4 +169,4 @@ PonderaForm.propTypes = {
 
 
 const form = connectForm('ponderaForm')(PonderaForm);
-export default wrapCard(form);
+export default alignCenter(wrapCard(form));
