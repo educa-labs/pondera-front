@@ -1,52 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Transition } from 'react-transition-group';
-import { Route } from 'react-router-dom';
-import ProtectedRoute from '../../hoc/ProtectedRoute';
+import { Motion, spring } from 'react-motion';
 
+
+/**
+ * PageTransition manages the smooth transition between two full width children
+ * Root div is full width and has no overflow-x
+ * The page container stack horizontally both childs
+ * Each child must be 100vw witdh
+ */
 
 const PageTransition = ({
   currentPage,
-  defaultPath,
-  pathOne,
-  pathTwo,
   children,
-  isLogged,
-  delay,
 }) => (
   <div className="page-transition">
-    <Transition in={currentPage === pathOne || currentPage === defaultPath} timeout={500}>
-      {status => (
-        <div className={`pages-wrapper fade fade-${status}`}>
-          <Route
-            path={pathOne}
-            children={props => (
-              React.cloneElement(children[0], props)
-            )}
-          />
-          <ProtectedRoute
-            path={pathTwo}
-            children={props => (
-              React.cloneElement(children[1], props)
-            )}
-            isLogged={isLogged}
-            requireUser={false}
-            redirectTo="/simula"
-            delay={delay}
-          />
+    <Motion style={{ x: spring(currentPage * 100) }}>
+      {({ x }) => (
+        <div className="page-container" style={{ transform: `translateX(-${x}vw` }}>
+          {children[0]}
+          {children[1]}
         </div>
       )}
-    </Transition>
+    </Motion>
   </div>
 );
 
 PageTransition.propTypes = {
-  delay: PropTypes.bool.isRequired,
-  isLogged: PropTypes.bool.isRequired,
-  pathOne: PropTypes.string.isRequired,
-  pathTwo: PropTypes.string.isRequired,
-  currentPage: PropTypes.string.isRequired,
-  defaultPath: PropTypes.string.isRequired,
+  children: PropTypes.element.isRequired,
+  currentPage: PropTypes.number.isRequired,
 };
 
 export default PageTransition;

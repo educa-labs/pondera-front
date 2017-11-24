@@ -13,6 +13,7 @@ class Landing extends React.Component {
     super(props);
     this.state = {
       completed: false,
+      currentPage: 0,
     };
     this.onSubmitFailureOne = this.onSubmitFailureOne.bind(this);
     this.onSubmitSuccessOne = this.onSubmitSuccessOne.bind(this);
@@ -29,8 +30,10 @@ class Landing extends React.Component {
   }
 
   onSubmitSuccessOne() {
-    this.setState({ completed: true });
-    this.props.history.push('/two');
+    this.setState({
+      completed: true,
+      currentPage: 1,
+    });
   }
 
   onSubmitFailureOne() {
@@ -44,24 +47,16 @@ class Landing extends React.Component {
   }
 
   render() {
-    const currentPage = this.props.location.pathname;
     return (
-      <PageTransition
-        currentPage={currentPage}
-        pathOne="/one"
-        pathTwo="/two"
-        defaultPath="/"
-        isLogged={this.props.isLogged}
-        delay={this.props.delay}
-      >
+      <PageTransition currentPage={this.state.currentPage}>
         <StepOne
           onSubmit={this.onSubmitSuccessOne}
           onSubmitError={this.onSubmitFailureOne}
         />
         <StepTwo
           onSubmit={this.onSubmitTwo}
-          isLogged={this.props.isLogged}
           regions={this.props.regions}
+          goBack={() => this.setState({ currentPage: 0 })}
         />
       </PageTransition>
     );

@@ -25,28 +25,14 @@
 }
 
 
-
 .page-transition {
+  width: 100vw;
   overflow-x: hidden;
 }
 
-.pages-wrapper {
-  display: flex;
+.page-container {
   width: 200vw;
-}
-
-
-.fade {
-  transform: translateX(0);
-  transition: transform 500ms ease-in-out;
-
-  &.fade-exiting {
-    transform: translateX(0);
-  }
-  
-  &.fade-exited {
-    transform: translateX(-100vw);
-  }
+  display: flex;
 }
 
 .bubble-wrapper {
