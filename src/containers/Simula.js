@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ScrollScreen from '../components/Layout/ScrollScreen';
 import Pondera from '../components/Pondera/Pondera';
-import Result from './Result';
+import Result from '../components/Result/Result';
 import { logOut } from '../redux/session';
 import { setFieldValue } from '../redux/forms';
 import { isLoading, fetch } from '../redux/fetch';
@@ -86,6 +86,7 @@ class Simula extends Component {
   }
 
   render() {
+    console.log(this.props.result);
     return (
       <ScrollScreen
         index={this.state.currentScreen}
@@ -104,7 +105,10 @@ class Simula extends Component {
           setHistoryRef={this.setHistoryRef}
           setScienceRef={this.setScienceRef}
         />
-        <Result goBack={() => this.setScreen(0)} />
+        <Result
+          goBack={() => this.setScreen(0)}
+          result={this.props.result}
+        />
       </ScrollScreen>
     );
   }
@@ -121,5 +125,6 @@ export default connect(state => ({
   careers: state.resources.careers.data,
   isLoading: isLoading(state),
   calculating: isCalculating(state),
+  result: state.results.result,
 }))(Simula);
 

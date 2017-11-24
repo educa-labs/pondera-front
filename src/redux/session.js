@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { createSelector } from 'reselect';
-import api from '../helpers/api';
+import { postSession } from '../helpers/api';
 import { waitDelay } from './delay';
 
 /* TYPES */
@@ -41,7 +41,7 @@ export const logUser = (email, password) => (
   async (dispatch) => {
     dispatch(logUserRequest());
     try {
-      const user = await api.postSession(email, password);
+      const user = await postSession(email, password);
       dispatch(logUserSucces(user));
       /* Esperamos un tiempo para la animacion */
       dispatch(waitDelay());

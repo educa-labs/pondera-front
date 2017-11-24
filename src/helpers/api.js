@@ -28,13 +28,15 @@ export const requestPonderation = values => (
   new Promise((resolve) => {
     setTimeout(() => {
       resolve({
+        title: 'Derecho en Universidad Mayor',
         similar: [
           { id: 1, title: 'Derecho' },
           { id: 2, title: 'Ingenieria PUC' },
-          { id: 2, title: 'Ingenieria UCH' },
+          { id: 3, title: 'Ingenieria UCH' },
         ],
         score: 655,
         cut: 444,
+        diff: 655 - 444,
         weights: {
           language: 20,
           math: 20,
