@@ -139,7 +139,9 @@ const PonderaForm = ({
           className="btn--fullwidth"
           variant="raised"
         >
-          Calcular
+          <LoadingWrapper loading white>
+            {() => 'Calcular'}
+          </LoadingWrapper>
         </Button>
       </Col>
     </Row>

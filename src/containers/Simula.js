@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes, { func } from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ScrollScreen from '../components/Layout/ScrollScreen';
 import Pondera from '../components/Pondera/Pondera';
@@ -7,7 +7,7 @@ import Result from './Result';
 import { logOut } from '../redux/session';
 import { setFieldValue } from '../redux/forms';
 import { isLoading, fetch } from '../redux/fetch';
-import { UNIVERSITIES, CAREERS, HISTORY, SCIENCE } from '../helpers/constants';
+import { UNIVERSITIES, CAREERS, HISTORY } from '../helpers/constants';
 
 class Simula extends Component {
   constructor(props) {
@@ -33,6 +33,7 @@ class Simula extends Component {
 
   onUnivChange(ev) {
     this.props.dispatch(fetch(CAREERS, ev.target.value));
+    this.props.dispatch(setFieldValue('ponderaForm')('career', ''));
   }
 
   async onSelectTest(ev) {
