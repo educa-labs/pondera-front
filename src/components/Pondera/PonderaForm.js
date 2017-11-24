@@ -22,6 +22,7 @@ const PonderaForm = ({
   careers,
   univs,
   isLoading,
+  calculating,
   onUnivChange,
   onSelectTest,
   selectedTest,
@@ -139,7 +140,7 @@ const PonderaForm = ({
           className="btn--fullwidth"
           variant="raised"
         >
-          <LoadingWrapper loading white>
+          <LoadingWrapper loading={calculating} white>
             {() => 'Calcular'}
           </LoadingWrapper>
         </Button>
@@ -162,6 +163,7 @@ PonderaForm.propTypes = {
   resetForm: PropTypes.func.isRequired,
   setHistoryRef: PropTypes.func.isRequired,
   setScienceRef: PropTypes.func.isRequired,
+  calculating: PropTypes.bool.isRequired,
 };
 
 
