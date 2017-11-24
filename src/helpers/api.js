@@ -5,7 +5,7 @@ export const postSession = (email, password) => (
         email,
         name: 'Iván',
       });
-    }, 500);
+    }, 2000);
   })
 );
 

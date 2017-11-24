@@ -67,7 +67,6 @@ class Simula extends Component {
     const values = Object.assign({}, getValues(fields), {
       cId,
     });
-    console.log(values);
     dispatch(calculatePonderation(values));
   }
 
