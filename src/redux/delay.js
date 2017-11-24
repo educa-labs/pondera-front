@@ -28,7 +28,7 @@ export const wait = duration => (
 );
 
 
-const delay = (state = true, action) => {
+const delay = (state = false, action) => {
   switch (action.type) {
     case DELAY_ON:
       return true;
