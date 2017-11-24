@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import PageTransition from '../components/Layout/PageTransition';
 import StepOne from '../components/Landing/StepOne';
 import StepTwo from '../components/Landing/StepTwo';
-import { logUser, isLogged } from '../redux/session';
-import { isLoading, fetch } from '../redux/fetch';
+import { logUser } from '../redux/session';
+import { fetch } from '../redux/fetch';
 import { REGIONS } from '../helpers/constants';
 
 class Landing extends React.Component {
@@ -20,12 +20,16 @@ class Landing extends React.Component {
     this.onSubmitTwo = this.onSubmitTwo.bind(this);
   }
 
+
   componentDidMount() {
-    if (this.props.isLogged) {
-      this.props.history.replace('/simula');
-    }
     if (this.props.regions === null) {
-      this.props.fetch(REGIONS);
+      this.props.dispatch(fetch(REGIONS));
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.delay && !nextProps.delay) {
+      this.props.history.replace('/simula');
     }
   }
 
@@ -42,7 +46,7 @@ class Landing extends React.Component {
 
   onSubmitTwo(values) {
     if (this.state.completed) {
-      this.props.logUser(values.email, values.password);
+      this.props.dispatch(logUser(values.email, values.password));
     }
   }
 
@@ -57,6 +61,8 @@ class Landing extends React.Component {
           onSubmit={this.onSubmitTwo}
           regions={this.props.regions}
           goBack={() => this.setState({ currentPage: 0 })}
+          delay={this.props.delay}
+          sessionLoading={this.props.sessionLoading}
         />
       </PageTransition>
     );
@@ -64,19 +70,14 @@ class Landing extends React.Component {
 }
 
 Landing.propTypes = {
-  logUser: PropTypes.func.isRequired,
-  isLogged: PropTypes.bool.isRequired,
-  isLoading: PropTypes.bool.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  sessionLoading: PropTypes.bool.isRequired,
   delay: PropTypes.bool.isRequired,
 };
 
 
 export default connect(state => ({
-  isLogged: isLogged(state),
-  isLoading: isLoading(state),
-  delay: state.delayAnimation,
+  sessionLoading: state.session.loading,
+  delay: state.delay,
   regions: state.resources.regions.data,
-}), {
-  logUser,
-  fetch,
-})(Landing);
+}))(Landing);

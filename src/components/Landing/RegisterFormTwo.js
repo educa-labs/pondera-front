@@ -15,8 +15,9 @@ import Field from '../../hoc/Field';
 
 const RegisterFormTwo = ({
   onSubmit,
-  triggerAnimation,
   regions,
+  sessionLoading,
+  delay,
 }) => {
   const label = (
     <span>
@@ -44,24 +45,35 @@ const RegisterFormTwo = ({
       <Field name="accept" type="checkbox">
         <Checkbox label={label} />
       </Field>
-      <BubbleWarpper trigger={triggerAnimation}>
+      <BubbleWarpper trigger={delay}>
         <Button
           color="primary"
           type="submit"
           className="btn--fullwidth"
           variant="raised"
         >
-          Finalizar
+          <LoadingWrapper loading={sessionLoading} white>
+            {() => 'Finalizar'}
+          </LoadingWrapper>
         </Button>
       </BubbleWarpper>
     </Form>
   );
 };
 
+RegisterFormTwo.defaultProps = {
+  regions: null,
+};
+
 
 RegisterFormTwo.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  triggerAnimation: PropTypes.bool.isRequired,
+  sessionLoading: PropTypes.bool.isRequired,
+  delay: PropTypes.bool.isRequired,
+  regions: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+  })),
 };
 
 
