@@ -38,7 +38,7 @@ export const resetForm = formName => () => ({
 
 /* SIDE EFFECTS */
 
-const getValues = (fields) => {
+export const getValues = (fields) => {
   const values = {};
   Object.keys(fields).forEach((key) => {
     values[key] = fields[key].value;

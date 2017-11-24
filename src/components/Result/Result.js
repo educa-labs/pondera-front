@@ -22,12 +22,12 @@ import ResultFooter from './ResultFooter';
         },
 */
 
-const Result = ({ goBack, result }) => (
+const Result = ({ goBack, result, onSimilarClick }) => (
   result ? (
     <div className="page">
       <ResultHeader title={result.title} />
       <ResultWeights weights={result.weights} />
-      <ResultBody result={result} />
+      <ResultBody result={result} onSimilarClick={onSimilarClick} />
       <ResultFooter onClick={goBack} />
     </div>
   ) : null

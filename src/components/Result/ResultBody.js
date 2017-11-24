@@ -3,7 +3,7 @@ import Container from 'muicss/lib/react/container';
 import Row from 'muicss/lib/react/row';
 import Col from 'muicss/lib/react/col';
 
-const ResultBody = ({ result }) => (
+const ResultBody = ({ result, onSimilarClick }) => (
   <div>
     <div className="result-header-gray">Resultados de ponderación</div>
     <Container className="result-body">
@@ -32,7 +32,9 @@ const ResultBody = ({ result }) => (
         <Row key={career.id}>
           <Col xs={7}>{career.title}</Col>
           <Col className="pondera-link" xs={5}>
-            ponderar
+            <div onClick={() => onSimilarClick(career.id)}>
+              ponderar
+            </div>
           </Col>
         </Row>
       ))}

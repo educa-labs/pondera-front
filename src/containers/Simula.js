@@ -5,7 +5,7 @@ import ScrollScreen from '../components/Layout/ScrollScreen';
 import Pondera from '../components/Pondera/Pondera';
 import Result from '../components/Result/Result';
 import { logOut } from '../redux/session';
-import { setFieldValue } from '../redux/forms';
+import { setFieldValue, getValues } from '../redux/forms';
 import { isLoading, fetch } from '../redux/fetch';
 import { calculatePonderation, isCalculating } from '../redux/results';
 import { UNIVERSITIES, CAREERS, HISTORY } from '../helpers/constants';
@@ -24,6 +24,7 @@ class Simula extends Component {
     this.onSelectTest = this.onSelectTest.bind(this);
     this.setHistoryRef = this.setHistoryRef.bind(this);
     this.setScienceRef = this.setScienceRef.bind(this);
+    this.onSimilarClick = this.onSimilarClick.bind(this);
   }
 
   componentDidMount() {
@@ -60,14 +61,24 @@ class Simula extends Component {
     this.props.dispatch(setFieldValue('ponderaForm')(other, ''));
   }
 
-  setScreen(index) {
-    this.setState({ currentScreen: index });
+
+  onSimilarClick(cId) {
+    const { fields, dispatch } = this.props;
+    const values = Object.assign({}, getValues(fields), {
+      cId,
+    });
+    console.log(values);
+    dispatch(calculatePonderation(values));
   }
 
   setHistoryRef(el) {
     if (el) {
       this.historyEl = el;
     }
+  }
+
+  setScreen(index) {
+    this.setState({ currentScreen: index });
   }
 
   setScienceRef(el) {
@@ -80,13 +91,13 @@ class Simula extends Component {
     this.props.dispatch(calculatePonderation(values));
   }
 
+
   handleLogOut() {
     this.props.dispatch(logOut());
     this.props.history.replace('/');
   }
 
   render() {
-    console.log(this.props.result);
     return (
       <ScrollScreen
         index={this.state.currentScreen}
@@ -108,6 +119,7 @@ class Simula extends Component {
         <Result
           goBack={() => this.setScreen(0)}
           result={this.props.result}
+          onSimilarClick={this.onSimilarClick}
         />
       </ScrollScreen>
     );
@@ -125,6 +137,7 @@ export default connect(state => ({
   careers: state.resources.careers.data,
   isLoading: isLoading(state),
   calculating: isCalculating(state),
+  fields: state.forms.ponderaForm,
   result: state.results.result,
 }))(Simula);
 
