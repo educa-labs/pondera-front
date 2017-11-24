@@ -7,6 +7,7 @@ import Result from './Result';
 import { logOut } from '../redux/session';
 import { setFieldValue } from '../redux/forms';
 import { isLoading, fetch } from '../redux/fetch';
+import { calculatePonderation, isCalculating } from '../redux/results';
 import { UNIVERSITIES, CAREERS, HISTORY } from '../helpers/constants';
 
 class Simula extends Component {
@@ -28,6 +29,14 @@ class Simula extends Component {
   componentDidMount() {
     if (this.props.univs === null) {
       this.props.dispatch(fetch(UNIVERSITIES));
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.calculating !== this.props.calculating) {
+      if (!nextProps.calculating) {
+        this.setScreen(1);
+      }
     }
   }
 
@@ -68,7 +77,7 @@ class Simula extends Component {
   }
 
   handleSubmit(values) {
-    this.setScreen(1);
+    this.props.dispatch(calculatePonderation(values));
   }
 
   handleLogOut() {
@@ -88,6 +97,7 @@ class Simula extends Component {
           univs={this.props.univs}
           careers={this.props.careers || []}
           isLoading={this.props.isLoading}
+          calculating={this.props.calculating}
           onUnivChange={this.onUnivChange}
           onSelectTest={this.onSelectTest}
           selectedTest={this.state.selectedTest}
@@ -102,6 +112,7 @@ class Simula extends Component {
 
 Simula.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  calculating: PropTypes.bool.isRequired,
 };
 
 
@@ -109,5 +120,6 @@ export default connect(state => ({
   univs: state.resources.univs.data,
   careers: state.resources.careers.data,
   isLoading: isLoading(state),
+  calculating: isCalculating(state),
 }))(Simula);
 
