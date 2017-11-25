@@ -2,19 +2,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MediaQuery from 'react-responsive';
-
 import ScrollScreen from '../components/Layout/ScrollScreen';
-
 import NavigationBar from '../components/NavigationBar/NavigationBar';
 import PonderaDesk from '../components/Pondera/PonderaDesk';
 import PonderaMobile from '../components/Pondera/PonderaMobile';
 import PonderaForm from '../components/Pondera/PonderaForm';
 import Page from '../components/Layout/Page';
+import Result from '../components/Result/Result';
 import ResultHeader from '../components/Result/ResultHeader';
 import ResultWeights from '../components/Result/ResultWeights';
 import ResultBody from '../components/Result/ResultBody';
 import ResultFooter from '../components/Result/ResultFooter';
-import alignCenter from '../hoc/alignCenter';
 import { logOut } from '../redux/session';
 import { setFieldValue, getValues } from '../redux/forms';
 import { isLoading, fetch } from '../redux/fetch';
@@ -124,8 +122,13 @@ class Simula extends Component {
         setScienceRef={this.setScienceRef}
       />
     );
-    const MobileForm = alignCenter(() => pondera);
-    const DeskForm = React.cloneElement(pondera, { desk: true });
+    const DeskForm = React.cloneElement(pondera, {
+      desk: true,
+      onSubmit: (values) => {
+        this.setScreen(0);
+        this.handleSubmit(values);
+      },
+    });
     
     const { result } = this.props;
     return ([
@@ -138,13 +141,15 @@ class Simula extends Component {
             </PonderaMobile>
           </Page>
           <Page>
-            <ResultHeader result={result} />
-            <ResultWeights result={result} />
-            <ResultBody result={result} onSimilarClick={this.onSimilarClick} />
-            <ResultFooter
-              onClick={() => this.setScreen(0)}
-              calculating={this.props.calculating}
-            />
+            <Result>
+              <ResultHeader result={result} />
+              <ResultWeights result={result} />
+              <ResultBody result={result} onSimilarClick={this.onSimilarClick} />
+              <ResultFooter
+                onClick={() => this.setScreen(0)}
+                calculating={this.props.calculating}
+              />
+            </Result>
           </Page>
         </ScrollScreen>
       </MediaQuery>,
@@ -154,7 +159,10 @@ class Simula extends Component {
           <PonderaDesk
             index={this.state.currentScreen}
             result={result}
-            onSimilarClick={this.onSimilarClick}
+            onSimilarClick={() => {
+              this.setScreen(0);
+              this.onSimilarClick();
+            }}
             calculating={this.props.calculating}
           >
             {DeskForm}

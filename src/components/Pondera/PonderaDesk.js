@@ -25,7 +25,7 @@ const PonderaDesk = ({
         {result && <ResultHeader result={result} />}
         {result && <ResultWeights result={result} />}
         {result && <ResultBody result={result} onSimilarClick={onSimilarClick} />}
-        {result && <ResultFooter desk calculating={calculating} />}
+        {result && <ResultFooter desk />}
       </Panel>
     </HideCard>
   </Container>
