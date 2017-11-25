@@ -11,6 +11,13 @@ export const createUser = data => (
   request.post('/users', data)
 );
 
+export const createSession = ({ email, password }) => (
+  request.post('/session', {
+    email,
+    password,
+  })
+);
+
 export const getResource = (resource, options = {}) => {
   switch (resource) {
     case REGIONS:

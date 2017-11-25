@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { createSelector } from 'reselect';
-import { createUser } from '../helpers/api';
+import { createUser, createSession } from '../helpers/api';
 import { wait } from './delay';
 
 /* TYPES */
@@ -43,6 +43,20 @@ export const registerUser = values => (
     dispatch(logUserRequest());
     try {
       const user = await createUser(values);
+      dispatch(logUserSucces(user));
+      /* Esperamos un tiempo para la animacion */
+      dispatch(wait(300));
+    } catch (err) {
+      dispatch(logUserFailure(err));
+    }
+  }
+);
+
+export const logUser = ({ email, password }) => (
+  async (dispatch) => {
+    dispatch(logUserRequest());
+    try {
+      const user = await createSession({ email, password });
       dispatch(logUserSucces(user));
       /* Esperamos un tiempo para la animacion */
       dispatch(wait(300));
