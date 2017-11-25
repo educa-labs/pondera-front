@@ -101,8 +101,9 @@ const data = (state = null, action) => {
   }
 };
 
+
 const initialState = {
-  data: null,
+  data: [],
   loading: false,
   error: null,
 };
