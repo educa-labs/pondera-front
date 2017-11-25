@@ -37,7 +37,7 @@ const PonderaForm = ({
     <Container>
       <Row>
         <Col xs={6} className="padding-col">
-          <Field name="nem" validator={scoreValidator}>
+          <Field name="NEM" validator={scoreValidator}>
             <TextInput
               label="NEM"
               floatingLabel
@@ -109,7 +109,7 @@ const PonderaForm = ({
           />
           <LoadingWrapper loading={isLoading}>
             {() => (
-              <Field name="career" type="select" validator={emptyValidator}>
+              <Field name="cId" type="select" validator={emptyValidator}>
                 <SelectInput
                   label="Carrera"
                   options={careers}

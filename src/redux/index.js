@@ -25,13 +25,13 @@ const registerFormTwo = createForm('registerFormTwo', {
 });
 
 const ponderaForm = createForm('ponderaForm', {
-  nem: { required: true },
+  NEM: { required: true },
   ranking: { required: true },
   language: { required: true },
   math: { required: true },
   science: {},
   history: {},
-  career: { required: true },
+  cId: { required: true },
 });
 
 const loginForm = createForm('loginForm', {
