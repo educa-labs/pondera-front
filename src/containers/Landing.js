@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PageTransition from '../components/Layout/PageTransition';
 import StepOne from '../components/Landing/StepOne';
 import StepTwo from '../components/Landing/StepTwo';
-import { logUser } from '../redux/session';
+import { registerUser } from '../redux/session';
 import { fetch } from '../redux/fetch';
 import { REGIONS } from '../helpers/constants';
 
@@ -46,7 +46,7 @@ class Landing extends React.Component {
 
   onSubmitTwo(values) {
     if (this.state.completed) {
-      this.props.dispatch(logUser(values.email, values.password));
+      this.props.dispatch(registerUser(values));
     }
   }
 
