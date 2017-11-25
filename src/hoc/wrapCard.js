@@ -3,8 +3,8 @@ import Panel from 'muicss/lib/react/panel';
 
 
 function wrapCard(Component) {
-  const Card = props => (
-    <Panel>
+  const Card = ({ desk, ...props }) => (
+    <Panel className={desk ? 'fixed-size-panel' : ''}>
       <Component {...props} />
     </Panel>
   );

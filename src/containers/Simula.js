@@ -2,16 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MediaQuery from 'react-responsive';
-import Panel from 'muicss/lib/react/panel';
-import Container from 'muicss/lib/react/container';
-import Row from 'muicss/lib/react/row';
-import Col from 'muicss/lib/react/col';
-import Logo from '../assets/svg/logo-pondera.svg';
+
 import ScrollScreen from '../components/Layout/ScrollScreen';
+
 import NavigationBar from '../components/NavigationBar/NavigationBar';
+import PonderaDesk from '../components/Pondera/PonderaDesk';
+import PonderaMobile from '../components/Pondera/PonderaMobile';
 import PonderaForm from '../components/Pondera/PonderaForm';
 import Page from '../components/Layout/Page';
-import Result from '../components/Result/Result';
 import ResultHeader from '../components/Result/ResultHeader';
 import ResultWeights from '../components/Result/ResultWeights';
 import ResultBody from '../components/Result/ResultBody';
@@ -23,25 +21,6 @@ import { isLoading, fetch } from '../redux/fetch';
 import { calculatePonderation, isCalculating } from '../redux/results';
 import { UNIVERSITIES, CAREERS, HISTORY } from '../helpers/constants';
 
-
-const resultOne = {
-  title: 'Derecho en Universidad Mayor',
-  similar: [
-    { id: 1, title: 'Derecho' },
-    { id: 2, title: 'Ingenieria PUC' },
-    { id: 3, title: 'Ingenieria UCH' },
-  ],
-  score: 655,
-  cut: 444,
-  diff: 655 - 444,
-  weights: {
-    language: 20,
-    math: 20,
-    history: 10,
-    nem: 25,
-    ranking: 25,
-  },
-};
 
 class Simula extends Component {
   constructor(props) {
@@ -145,19 +124,23 @@ class Simula extends Component {
         setScienceRef={this.setScienceRef}
       />
     );
-    const CenterdForm = alignCenter(() => pondera);
+    const MobileForm = alignCenter(() => pondera);
+    const DeskForm = React.cloneElement(pondera, { desk: true });
+    
     const { result } = this.props;
     return ([
       <MediaQuery key="0" maxDeviceWidth={1224}>
         <ScrollScreen index={this.state.currentScreen}>
           <Page>
             <NavigationBar pondera logOut={logOut} />
-            <CenterdForm />
+            <PonderaMobile>
+              {pondera}
+            </PonderaMobile>
           </Page>
           <Page>
-            <ResultHeader result={resultOne} />
-            <ResultWeights result={resultOne} />
-            <ResultBody result={resultOne} onSimilarClick={this.onSimilarClick} />
+            <ResultHeader result={result} />
+            <ResultWeights result={result} />
+            <ResultBody result={result} onSimilarClick={this.onSimilarClick} />
             <ResultFooter
               onClick={() => this.setScreen(0)}
               calculating={this.props.calculating}
@@ -168,26 +151,14 @@ class Simula extends Component {
       <MediaQuery key="1" minDeviceWidth={1224}>
         <Page>
           <NavigationBar pondera desk logOut={logOut} />
-          <Container fluid>
-            <div className="big-logo">
-              <Logo width={400} height={150} />
-            </div>
-            <Row>
-              <Col xs={12} sm={6} lg={6}>
-                {pondera}
-              </Col>
-              <Col xs={12} sm={6} lg={6}>
-                <Panel className="panel-result">
-                  <Container>
-                    <legend>Resultado</legend>
-                  </Container>
-                  <ResultHeader result={resultOne} />
-                  <ResultWeights result={resultOne} />
-                  <ResultBody result={resultOne} onSimilarClick={this.onSimilarClick} />
-                </Panel>
-              </Col>
-            </Row>
-          </Container>
+          <PonderaDesk
+            index={this.state.currentScreen}
+            result={result}
+            onSimilarClick={this.onSimilarClick}
+            calculating={this.props.calculating}
+          >
+            {DeskForm}
+          </PonderaDesk>
         </Page>
       </MediaQuery>,
     ]);

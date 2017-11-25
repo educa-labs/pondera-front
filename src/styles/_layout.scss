@@ -38,8 +38,10 @@
   align-items: center;
 }
 
+/* SIMULa */
+
 .panel-result {
-  padding: 15px 0;
+  padding: 15px 0 0 0;
 }
 
 .big-logo {
@@ -53,4 +55,19 @@
   svg {
     fill: white;
   }
+}
+
+.justify-center {
+  justify-content: center;
+  display: flex;
+}
+
+.fixed-size-panel {
+  height: 50rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.no-margin {
+  margin-left: 0;
 }
