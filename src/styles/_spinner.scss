@@ -56,6 +56,12 @@ $duration: 1.4s;
 .spinner {
   width: 70px;
   text-align: center;
+  display: flex;
+  transform: scale(0.8)
+}
+
+.spinner-white > div {
+  background-color: white !important;
 }
 
 .spinner > div {
