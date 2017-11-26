@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Option from 'muicss/lib/react/option';
 import Select from 'muicss/lib/react/select';
+import WithError from '../../hoc/EnhanceInput';
 
 const SelectInput = ({ options, placeholder, ...props }) => {
   const defaultOption = {
@@ -25,4 +26,4 @@ SelectInput.propTypes = {
   })).isRequired,
 };
 
-export default SelectInput;
+export default WithError(SelectInput);
