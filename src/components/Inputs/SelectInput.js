@@ -10,7 +10,7 @@ const SelectInput = ({ options, placeholder, ...props }) => {
     title: placeholder,
   };
   return (
-    <Select {...props}>
+    <Select {...props} useDefault>
       {[defaultOption, ...options].map(opt => (
         <Option key={opt.id} value={opt.id} label={opt.title} />
       ))}
