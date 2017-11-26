@@ -9,15 +9,21 @@ const NavigationBar = (props) => {
   // const back = arrowBackRoutes.includes(location.pathname);
   // const none = displayNone.includes(location.pathname);
   // if (none) return null;
+  let leftIcon = <Logo width={80} height={35} />;
+  if (props.back) {
+    leftIcon = (
+      <button className="icon-button" onClick={props.onBackClick}>
+        <i className="material-icons">arrow_back</i>
+      </button>
+    );
+  } else if (props.desk) {
+    leftIcon = null;
+  }
+
   return (
     <nav>
       <section className="nav-left">
-        {props.back ? (
-          <button className="icon-button" onClick={props.onBackClick}>
-            <i className="material-icons">arrow_back</i>
-          </button>
-        ) : <Logo width={80} height={35} />}
-        
+        {leftIcon}
       </section>
       {props.pondera ? (
         <section className="nav-right">

@@ -6,6 +6,7 @@ import is from 'is_js';
 const SET_FORM_VALUE = 'SET_FORM_VALUE';
 const SUBMIT_FAILURE = 'SUBMIT_FAILURE';
 const RESET_FORM = 'RESET_FORM';
+const RESET_FIELD = 'RESET_FIELD';
 const VALIDATION_ERROR = 'VALIDATON_ERROR';
 
 /* ACTION CREATORS */
@@ -34,6 +35,12 @@ export const resetForm = formName => () => ({
   type: RESET_FORM,
   formName,
   fieldName: 'reset',
+});
+
+export const resetField = formName => fieldName => ({
+  type: RESET_FIELD,
+  formName,
+  fieldName,
 });
 
 /* SIDE EFFECTS */
@@ -115,6 +122,7 @@ const createFormReducer = (formName, fields) => {
         case SET_FORM_VALUE:
           return action.value;
         case RESET_FORM:
+        case RESET_FIELD:
           return field.defaultValue || '';
         default:
           return state;
@@ -127,6 +135,7 @@ const createFormReducer = (formName, fields) => {
           if (!state) return true;
           return state;
         case RESET_FORM:
+        case RESET_FIELD:
           return false;
         default:
           return state;

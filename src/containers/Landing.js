@@ -1,36 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import is from 'is_js';
 import { connect } from 'react-redux';
 import PageTransition from '../components/Layout/PageTransition';
 import StepOne from '../components/Landing/StepOne';
 import StepTwo from '../components/Landing/StepTwo';
-import { logUser, isLogged } from '../redux/session';
-import { isLoading, fetch } from '../redux/fetch';
+import { registerUser } from '../redux/session';
+import { fetch } from '../redux/fetch';
 import { REGIONS } from '../helpers/constants';
+import { getValues } from '../redux/forms';
 
 class Landing extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       completed: false,
+      currentPage: 0,
     };
     this.onSubmitFailureOne = this.onSubmitFailureOne.bind(this);
     this.onSubmitSuccessOne = this.onSubmitSuccessOne.bind(this);
     this.onSubmitTwo = this.onSubmitTwo.bind(this);
   }
 
+
   componentDidMount() {
-    if (this.props.isLogged) {
-      this.props.history.replace('/simula');
+    if (is.empty(this.props.regions)) {
+      this.props.dispatch(fetch(REGIONS));
     }
-    if (this.props.regions === null) {
-      this.props.fetch(REGIONS);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.delay && !nextProps.delay) {
+      this.props.history.replace('/simula');
     }
   }
 
   onSubmitSuccessOne() {
-    this.setState({ completed: true });
-    this.props.history.push('/two');
+    this.setState({
+      completed: true,
+      currentPage: 1,
+    });
   }
 
   onSubmitFailureOne() {
@@ -39,29 +48,24 @@ class Landing extends React.Component {
 
   onSubmitTwo(values) {
     if (this.state.completed) {
-      this.props.logUser(values.email, values.password);
+      const fields = Object.assign({}, this.props.fields, values);
+      this.props.dispatch(registerUser(fields));
     }
   }
 
   render() {
-    const currentPage = this.props.location.pathname;
     return (
-      <PageTransition
-        currentPage={currentPage}
-        pathOne="/one"
-        pathTwo="/two"
-        defaultPath="/"
-        isLogged={this.props.isLogged}
-        delay={this.props.delay}
-      >
+      <PageTransition currentPage={this.state.currentPage}>
         <StepOne
           onSubmit={this.onSubmitSuccessOne}
           onSubmitError={this.onSubmitFailureOne}
         />
         <StepTwo
           onSubmit={this.onSubmitTwo}
-          isLogged={this.props.isLogged}
           regions={this.props.regions}
+          goBack={() => this.setState({ currentPage: 0 })}
+          delay={this.props.delay}
+          sessionLoading={this.props.sessionLoading}
         />
       </PageTransition>
     );
@@ -69,19 +73,15 @@ class Landing extends React.Component {
 }
 
 Landing.propTypes = {
-  logUser: PropTypes.func.isRequired,
-  isLogged: PropTypes.bool.isRequired,
-  isLoading: PropTypes.bool.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  sessionLoading: PropTypes.bool.isRequired,
   delay: PropTypes.bool.isRequired,
 };
 
 
 export default connect(state => ({
-  isLogged: isLogged(state),
-  isLoading: isLoading(state),
-  delay: state.delayAnimation,
+  sessionLoading: state.session.loading,
+  delay: state.delay,
   regions: state.resources.regions.data,
-}), {
-  logUser,
-  fetch,
-})(Landing);
+  fields: getValues(state.forms.registerFormOne),
+}))(Landing);

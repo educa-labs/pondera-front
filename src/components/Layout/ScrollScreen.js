@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Motion, spring } from 'react-motion';
 import { DraggableCore } from 'react-draggable';
 
@@ -50,7 +49,7 @@ class ScrollScreen extends Component {
 
 
   render() {
-    const { index, children, goNext, goBack } = this.props;
+    const { index, children } = this.props;
     const { posY, innerHeight } = this.state;
     return (
       <div className="screen-wrapper">

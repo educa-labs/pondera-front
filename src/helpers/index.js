@@ -1,6 +1,6 @@
 export const emptyValidator = value => new Promise((resolve, reject) => {
   if (value === '') {
-    reject(new Error('Tienes que escribir algo'));
+    reject(new Error('Campo requerido'));
   }
   resolve();
 });

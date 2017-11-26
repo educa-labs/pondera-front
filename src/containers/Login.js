@@ -1,31 +1,28 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Page from '../components/Layout/Page';
 import LoginForm from '../components/Login/LoginForm';
-import { logUser, isLogged } from '../redux/session';
+import { logUser } from '../redux/session';
 import NavigationBar from '../components/NavigationBar/NavigationBar';
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleSubmit(values) {
-    console.log(values);
-    const { email, password } = values;
-    this.props.logUser(email, password);
+class Login extends React.Component {
+  componentWillReceiveProps(nextProps) {
+    if (this.props.delay && !nextProps.delay) {
+      this.props.history.replace('/simula');
+    }
   }
 
   render() {
-    const { history, isLogged } = this.props;
+    const {
+      history, dispatch, ...props
+    } = this.props;
     return (
       <Page>
-        <NavigationBar back onBackClick={() => history.goBack()} />
+        <NavigationBar back onBackClick={history.goBack} />
         <LoginForm
-          onSubmit={this.handleSubmit}
-          triggerAnimation={isLogged}
+          onSubmit={values => dispatch(logUser(values))}
+          {...props}
         />
       </Page>
     );
@@ -33,12 +30,13 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  logUser: PropTypes.func.isRequired,
-  isLogged: PropTypes.bool.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  delay: PropTypes.bool.isRequired,
 };
 
+
 export default connect(state => ({
-  isLogged: isLogged(state),
-}), {
-  logUser,
-})(Login);
+  delay: state.delay,
+  sessionLoading: state.session.loading,
+  submitError: state.session.error,
+}))(Login);

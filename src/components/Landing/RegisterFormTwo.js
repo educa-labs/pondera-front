@@ -7,6 +7,7 @@ import Checkbox from 'muicss/lib/react/checkbox';
 import TextInput from '../Inputs/TextInput';
 import SelectInput from '../Inputs/SelectInput';
 import wrapCard from '../../hoc/wrapCard';
+import alignCenter from '../../hoc/alignCenter';
 import connectForm from '../../hoc/connectForm';
 import BubbleWarpper from '../Other/BubbleWrapper';
 import LoadingWrapper from '../Other/LoadingWrapper';
@@ -15,8 +16,9 @@ import Field from '../../hoc/Field';
 
 const RegisterFormTwo = ({
   onSubmit,
-  triggerAnimation,
   regions,
+  sessionLoading,
+  delay,
 }) => {
   const label = (
     <span>
@@ -36,35 +38,46 @@ const RegisterFormTwo = ({
       </Field>
       <LoadingWrapper loading={regions === null}>
         {() => (
-          <Field name="region" type="select">
-            <SelectInput label="Región" options={regions} />
+          <Field name="regionId" type="select">
+            <SelectInput label="Región" placeholder="Region" options={regions} />
           </Field>
         )}
       </LoadingWrapper>
       <Field name="accept" type="checkbox">
         <Checkbox label={label} />
       </Field>
-      <BubbleWarpper trigger={triggerAnimation}>
+      <BubbleWarpper trigger={delay}>
         <Button
           color="primary"
           type="submit"
           className="btn--fullwidth"
           variant="raised"
         >
-          Finalizar
+          <LoadingWrapper loading={sessionLoading} white>
+            {() => 'Finalizar'}
+          </LoadingWrapper>
         </Button>
       </BubbleWarpper>
     </Form>
   );
 };
 
+RegisterFormTwo.defaultProps = {
+  regions: null,
+};
+
 
 RegisterFormTwo.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  triggerAnimation: PropTypes.bool.isRequired,
+  sessionLoading: PropTypes.bool.isRequired,
+  delay: PropTypes.bool.isRequired,
+  regions: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+  })),
 };
 
 
 const form = connectForm('registerFormTwo')(RegisterFormTwo);
 
-export default wrapCard(form);
+export default alignCenter(wrapCard(form));

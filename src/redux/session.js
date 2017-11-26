@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { createSelector } from 'reselect';
-import { postSession } from '../helpers/api';
-import { waitDelay } from './delay';
+import { createUser, createSession } from '../helpers/api';
+import { wait } from './delay';
 
 /* TYPES */
 const LOG_USER_REQUEST = 'LOG_USER_REQUEST';
@@ -20,9 +20,9 @@ const logUserFailure = error => ({
   error,
 });
 
-const logUserSucces = user => ({
+const logUserSucces = token => ({
   type: LOG_USER_SUCCESS,
-  user,
+  token,
 });
 
 export const logOut = () => ({
@@ -37,16 +37,33 @@ export const isLogged = createSelector(getUser, isNotNull);
 
 /* THUNKS */
 
-export const logUser = (email, password) => (
+
+export const registerUser = values => (
   async (dispatch) => {
     dispatch(logUserRequest());
     try {
-      const user = await postSession(email, password);
-      dispatch(logUserSucces(user));
+      const user = await createUser(values);
+      dispatch(logUserSucces(user.data.token));
       /* Esperamos un tiempo para la animacion */
-      dispatch(waitDelay());
+      dispatch(wait(300));
     } catch (err) {
       dispatch(logUserFailure(err));
+    }
+  }
+);
+
+export const logUser = values => (
+  async (dispatch) => {
+    dispatch(logUserRequest());
+    try {
+      const user = await createSession(values);
+      dispatch(logUserSucces(user.data.token));
+      /* Esperamos un tiempo para la animacion */
+      dispatch(wait(300));
+    } catch (err) {
+      if (err.response) {
+        dispatch(logUserFailure(err.response.data.message));
+      }
     }
   }
 );
@@ -69,24 +86,26 @@ const error = (state = null, action) => {
   switch (action.type) {
     case LOG_USER_FAILURE:
       return action.error;
+    case LOG_USER_SUCCESS:
+      return null;
     default:
       return state;
   }
 };
 
-const user = (state = null, action) => {
+const token = (state = null, action) => {
   switch (action.type) {
     case LOGOUT_USER:
       return null;
     case LOG_USER_SUCCESS:
-      return action.user;
+      return action.token;
     default:
       return state;
   }
 };
 
 export default combineReducers({
-  user,
+  token,
   error,
   loading,
 });

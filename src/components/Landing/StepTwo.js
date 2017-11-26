@@ -4,30 +4,16 @@ import RegisterFormTwo from './RegisterFormTwo';
 import Page from '../Layout/Page';
 import NavigationBar from '../NavigationBar/NavigationBar';
 
-const StepTwo = ({
-  history, isLogged, regions, onSubmit,
-}) => (
+const StepTwo = ({ goBack, ...props }) => (
   <Page>
-    <NavigationBar back onBackClick={() => history.goBack()} />
-    <RegisterFormTwo
-      onSubmit={onSubmit}
-      triggerAnimation={isLogged}
-      regions={regions}
-    />
+    <NavigationBar back onBackClick={goBack} />
+    <RegisterFormTwo {...props} />
   </Page>
 );
 
-StepTwo.defaultProps = {
-  regions: null,
-};
 
 StepTwo.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  isLogged: PropTypes.bool.isRequired,
-  regions: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-  })),
+  goBack: PropTypes.func.isRequired,
 };
 
 export default StepTwo;

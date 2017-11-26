@@ -17,19 +17,11 @@
   left: 0;
   right: 0;
   z-index: -1;
-  height: 30rem;
+  height: 33rem;
 }
 
 /* SCROLL SCREEN */
 
-
-.overlay-screen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 2;
-}
 
 .screen-wrapper {
   height: 100vh;
@@ -44,4 +36,38 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+/* SIMULa */
+
+.panel-result {
+  padding: 15px 0 0 0;
+}
+
+.big-logo {
+  height: 22rem;
+  display: flex;
+  padding-top: 2rem;
+  justify-content: center;
+  .logo-wrapper {
+    margin: 3rem;
+  }
+  svg {
+    fill: white;
+  }
+}
+
+.justify-center {
+  justify-content: center;
+  display: flex;
+}
+
+.fixed-size-panel {
+  height: 52rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.no-margin {
+  margin-left: 0;
 }
