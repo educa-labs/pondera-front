@@ -157,6 +157,10 @@ PonderaForm.propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
   })).isRequired,
+  univs: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+  })).isRequired,
   isLoading: PropTypes.bool.isRequired,
   onUnivChange: PropTypes.func.isRequired,
   onSelectTest: PropTypes.func.isRequired,
