@@ -13,14 +13,14 @@ import {
 
 const registerFormOne = createForm('registerFormOne', {
   name: { required: true },
-  email: { required: true },
+  mail: { required: true },
   password: { required: true },
 });
 
 const registerFormTwo = createForm('registerFormTwo', {
   rut: { required: true },
   phone: { required: true },
-  region: { required: true },
+  regionId: { required: true },
   accept: { required: true },
 });
 
@@ -35,7 +35,7 @@ const ponderaForm = createForm('ponderaForm', {
 });
 
 const loginForm = createForm('loginForm', {
-  email: { required: true },
+  mail: { required: true },
   password: { required: true },
 });
 
