@@ -20,9 +20,9 @@ const logUserFailure = error => ({
   error,
 });
 
-const logUserSucces = user => ({
+const logUserSucces = token => ({
   type: LOG_USER_SUCCESS,
-  user,
+  token,
 });
 
 export const logOut = () => ({
@@ -43,7 +43,7 @@ export const registerUser = values => (
     dispatch(logUserRequest());
     try {
       const user = await createUser(values);
-      dispatch(logUserSucces(user));
+      dispatch(logUserSucces(user.data.token));
       /* Esperamos un tiempo para la animacion */
       dispatch(wait(300));
     } catch (err) {
@@ -52,12 +52,13 @@ export const registerUser = values => (
   }
 );
 
-export const logUser = ({ email, password }) => (
+export const logUser = values => (
   async (dispatch) => {
     dispatch(logUserRequest());
     try {
-      const user = await createSession({ email, password });
-      dispatch(logUserSucces(user));
+      console.log(values);
+      const user = await createSession(values);
+      dispatch(logUserSucces(user.data.token));
       /* Esperamos un tiempo para la animacion */
       dispatch(wait(300));
     } catch (err) {
@@ -89,19 +90,19 @@ const error = (state = null, action) => {
   }
 };
 
-const user = (state = null, action) => {
+const token = (state = null, action) => {
   switch (action.type) {
     case LOGOUT_USER:
       return null;
     case LOG_USER_SUCCESS:
-      return action.user;
+      return action.token;
     default:
       return state;
   }
 };
 
 export default combineReducers({
-  user,
+  token,
   error,
   loading,
 });

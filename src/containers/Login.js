@@ -6,12 +6,15 @@ import LoginForm from '../components/Login/LoginForm';
 import { logUser } from '../redux/session';
 import NavigationBar from '../components/NavigationBar/NavigationBar';
 
-const Login = ({ delay, history, dispatch }) => (
+const Login = ({
+  delay, history, dispatch, sessionLoading,
+}) => (
   <Page>
     <NavigationBar back onBackClick={history.goBack} />
     <LoginForm
       onSubmit={values => dispatch(logUser(values))}
-      triggerAnimation={delay}
+      delay={delay}
+      sessionLoading={sessionLoading}
     />
   </Page>
 );
@@ -19,6 +22,7 @@ const Login = ({ delay, history, dispatch }) => (
 Login.propTypes = {
   dispatch: PropTypes.func.isRequired,
   delay: PropTypes.bool.isRequired,
+  sessionLoading: PropTypes.bool.isRequired,
 };
 
 export default connect(state => ({

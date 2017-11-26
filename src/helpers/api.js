@@ -3,7 +3,7 @@ import { REGIONS, UNIVERSITIES, CAREERS } from '../helpers/constants';
 
 const request = axios.create({
   baseURL: 'http://api.pondera.cl/api/v1',
-  withCredentials: true,
+  // withCredentials: true,
   responseType: 'json',
 });
 
@@ -11,11 +11,8 @@ export const createUser = data => (
   request.post('/users', data)
 );
 
-export const createSession = ({ email, password }) => (
-  request.post('/session', {
-    email,
-    password,
-  })
+export const createSession = data => (
+  request.post('/session', data)
 );
 
 export const getResource = (resource, options = {}) => {
