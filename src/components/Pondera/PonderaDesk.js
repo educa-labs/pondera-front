@@ -10,7 +10,7 @@ import ResultBody from '../Result/ResultBody';
 import ResultFooter from '../Result/ResultFooter';
 
 const PonderaDesk = ({
-  result, children, index, onSimilarClick, calculating,
+  result, children, index, onSimilarClick, resultName,
 }) => (
   <Container fluid>
     <div className="big-logo">
@@ -22,7 +22,7 @@ const PonderaDesk = ({
         <Container className="no-margin">
           <legend>Resultado</legend>
         </Container>
-        {result && <ResultHeader result={result} />}
+        {result && <ResultHeader title={resultName} />}
         {result && <ResultWeights result={result} />}
         {result && <ResultBody result={result} onSimilarClick={onSimilarClick} />}
         {result && <ResultFooter desk />}
@@ -40,7 +40,7 @@ PonderaDesk.propTypes = {
   children: PropTypes.element.isRequired,
   index: PropTypes.number.isRequired,
   onSimilarClick: PropTypes.func.isRequired,
-  calculating: PropTypes.bool.isRequired,
-}
+  resultName: PropTypes.string.isRequired,
+};
 
 export default PonderaDesk;

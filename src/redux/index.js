@@ -65,7 +65,12 @@ const resultTitleSelector = (univs, careers, uId, cId) => {
   if (is.any.empty(univs, careers, uId, cId)) return '';
   const career = careers.filter(car => car.id === cId)[0];
   const univ = univs.filter(uni => uni.id === uId)[0];
-  return `${career.title} en ${univ.title}`;
+  try {
+    return `${career.title} en ${univ.title}`;
+  } catch (err) {
+    console.log(univs, careers, uId, cId);
+    return '';
+  }
 };
 
 export const careerNameSelector = createSelector(

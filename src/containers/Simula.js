@@ -16,7 +16,7 @@ import ResultBody from '../components/Result/ResultBody';
 import ResultFooter from '../components/Result/ResultFooter';
 import { careerNameSelector } from '../redux';
 import { logOut } from '../redux/session';
-import { setFieldValue, getValues } from '../redux/forms';
+import { resetField, getValues } from '../redux/forms';
 import { isLoading, fetch } from '../redux/fetch';
 import { calculatePonderation } from '../redux/results';
 import { UNIVERSITIES, CAREERS, HISTORY } from '../helpers/constants';
@@ -56,6 +56,9 @@ class Simula extends Component {
         this.setScreen(1);
       }
     }
+    if (nextProps.resultName !== this.props.resultName) {
+      this.setScreen(0);
+    }
   }
 
   onUnivChange(id) {
@@ -63,7 +66,7 @@ class Simula extends Component {
       id,
       token: this.props.token,
     }));
-    this.props.dispatch(setFieldValue('ponderaForm')('career', ''));
+    this.props.dispatch(resetField('ponderaForm')('cId'));
   }
 
   async onSelectTest(ev) {
@@ -78,7 +81,7 @@ class Simula extends Component {
       other = 'history';
       this.scienceEl.controlEl.focus();
     }
-    this.props.dispatch(setFieldValue('ponderaForm')(other, ''));
+    this.props.dispatch(resetField('ponderaForm')(other));
   }
 
 
@@ -165,10 +168,11 @@ class Simula extends Component {
       </MediaQuery>,
       <MediaQuery key="1" minDeviceWidth={1224}>
         <Page>
-          <NavigationBar pondera desk logOut={logOut} />
+          <NavigationBar pondera desk logOut={this.handleLogOut} />
           <PonderaDesk
             index={this.state.currentScreen}
             result={result}
+            resultName={resultName}
             onSimilarClick={() => {
               this.setScreen(0);
               this.onSimilarClick();
