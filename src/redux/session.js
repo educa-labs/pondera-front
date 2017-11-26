@@ -47,7 +47,11 @@ export const registerUser = values => (
       /* Esperamos un tiempo para la animacion */
       dispatch(wait(300));
     } catch (err) {
-      dispatch(logUserFailure(err));
+      if (err.response) {
+        dispatch(logUserFailure(err.response.data.message));
+      } else if (err.request) {
+        dispatch(logUserFailure('Oops, algo salio mal, vuelve a intentarlo'));
+      }
     }
   }
 );
@@ -63,6 +67,8 @@ export const logUser = values => (
     } catch (err) {
       if (err.response) {
         dispatch(logUserFailure(err.response.data.message));
+      } else if (err.request) {
+        dispatch(logUserFailure('Oops, algo salio mal, vuelve a intentarlo'));
       }
     }
   }
