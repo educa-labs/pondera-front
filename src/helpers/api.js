@@ -2,9 +2,10 @@ import axios from 'axios';
 import { REGIONS, UNIVERSITIES, CAREERS } from '../helpers/constants';
 
 const request = axios.create({
-  baseURL: 'http://api.pondera.cl/api/v1',
+  baseURL: 'https://api.pondera.cl/api/v1',
   // withCredentials: true,
   responseType: 'json',
+  timeout: 2000,
 });
 
 export const createUser = data => (
