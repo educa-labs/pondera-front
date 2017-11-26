@@ -22,7 +22,7 @@ const RegisterForm = ({ onSubmit }) => (
     <Field name="name" validator={emptyValidator}>
       <TextInput label="Nombre y apellido" floatingLabel />
     </Field>
-    <Field name="email" validator={emptyValidator}>
+    <Field name="mail" validator={emptyValidator}>
       <TextInput label="Correo electrónico" floatingLabel />
     </Field>
     <Field name="password">

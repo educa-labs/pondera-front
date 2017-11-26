@@ -24,7 +24,7 @@ const Loginform = ({
       <Link to="/">regístrate para ponderar</Link>
     </div>
     <br />
-    <Field name="email" validator={emptyValidator}>
+    <Field name="mail" validator={emptyValidator}>
       <TextInput label="Correo electrónico" floatingLabel />
     </Field>
     <Field name="password" validator={emptyValidator}>
@@ -36,6 +36,7 @@ const Loginform = ({
         type="submit"
         className="btn--fullwidth"
         variant="raised"
+        disabled={sessionLoading}
       >
         <LoadingWrapper loading={sessionLoading} white>
           {() => 'Acceder'}
@@ -45,7 +46,11 @@ const Loginform = ({
   </Form>
 );
 
+Loginform.propTypes = {
+  delay: PropTypes.bool.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  sessionLoading: PropTypes.bool.isRequired,
+};
 
 const form = connectForm('loginForm')(Loginform);
-
 export default alignCenter(wrapCard(form));

@@ -21,7 +21,7 @@ const SelectInput = ({ options, placeholder, ...props }) => {
 SelectInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
   })).isRequired,
 };

@@ -38,7 +38,7 @@ const RegisterFormTwo = ({
       </Field>
       <LoadingWrapper loading={regions === null}>
         {() => (
-          <Field name="region" type="select">
+          <Field name="regionId" type="select">
             <SelectInput label="Región" placeholder="Region" options={regions} />
           </Field>
         )}
@@ -72,7 +72,7 @@ RegisterFormTwo.propTypes = {
   sessionLoading: PropTypes.bool.isRequired,
   delay: PropTypes.bool.isRequired,
   regions: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
   })),
 };
