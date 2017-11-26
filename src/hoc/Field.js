@@ -21,29 +21,27 @@ const Field = ({
     const value = type === 'checkbox' ? ev.target.checked : ev.target.value;
     logChange(formName)(name, value);
   };
-
-  const { value } = fields[name];
-
-  const extraProps = {
-    ...props,
-    onChange,
-  };
-  if (type === 'text') {
-    extraProps.value = value;
-    extraProps.errorText = fields[name].error;
-    extraProps.onBlur = validator ? onBlur : undefined;
+  try {
+    const { value } = fields[name];
+    const extraProps = {
+      ...props,
+      onChange,
+    };
+    if (type === 'text' || type === 'select') {
+      extraProps.value = value;
+      extraProps.errorText = fields[name].error;
+      extraProps.onBlur = validator ? onBlur : undefined;
+    }
+    if (type === 'checkbox') {
+      extraProps.checked = value;
+    }
+  
+    return (
+      React.cloneElement(props.children, extraProps)
+    );
+  } catch (error) {
+    throw new Error(`No existe el campo con nombre ${name}`);
   }
-  if (type === 'select') {
-    extraProps.value = value;
-    extraProps.onBlur = validator ? onBlur : undefined;
-  }
-  if (type === 'checkbox') {
-    extraProps.checked = value;
-  }
-
-  return (
-    React.cloneElement(props.children, extraProps)
-  );
 };
 
 Field.contextTypes = {
