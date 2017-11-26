@@ -56,13 +56,14 @@ export const logUser = values => (
   async (dispatch) => {
     dispatch(logUserRequest());
     try {
-      console.log(values);
       const user = await createSession(values);
       dispatch(logUserSucces(user.data.token));
       /* Esperamos un tiempo para la animacion */
       dispatch(wait(300));
     } catch (err) {
-      dispatch(logUserFailure(err));
+      if (err.response) {
+        dispatch(logUserFailure(err.response.data.message));
+      }
     }
   }
 );
@@ -85,6 +86,8 @@ const error = (state = null, action) => {
   switch (action.type) {
     case LOG_USER_FAILURE:
       return action.error;
+    case LOG_USER_SUCCESS:
+      return null;
     default:
       return state;
   }

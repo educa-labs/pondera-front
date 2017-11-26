@@ -14,14 +14,15 @@ class Login extends React.Component {
   }
 
   render() {
-    const { delay, history, dispatch, sessionLoading } = this.props;
+    const {
+      history, dispatch, ...props
+    } = this.props;
     return (
       <Page>
         <NavigationBar back onBackClick={history.goBack} />
         <LoginForm
           onSubmit={values => dispatch(logUser(values))}
-          delay={delay}
-          sessionLoading={sessionLoading}
+          {...props}
         />
       </Page>
     );
@@ -31,9 +32,11 @@ class Login extends React.Component {
 Login.propTypes = {
   dispatch: PropTypes.func.isRequired,
   delay: PropTypes.bool.isRequired,
-  sessionLoading: PropTypes.bool.isRequired,
 };
+
 
 export default connect(state => ({
   delay: state.delay,
+  sessionLoading: state.session.loading,
+  submitError: state.session.error,
 }))(Login);

@@ -16,6 +16,7 @@ const Loginform = ({
   onSubmit,
   sessionLoading,
   delay,
+  submitError,
 }) => (
   <Form onSubmit={onSubmit}>
     <legend>Ingresa</legend>
@@ -30,6 +31,7 @@ const Loginform = ({
     <Field name="password" validator={emptyValidator}>
       <TextInput label="Contraseña" type="password" floatingLabel />
     </Field>
+    <div className="mui-textfield--error-text">{submitError}</div>
     <BubbleWarpper trigger={delay}>
       <Button
         color="primary"
@@ -50,6 +52,11 @@ Loginform.propTypes = {
   delay: PropTypes.bool.isRequired,
   onSubmit: PropTypes.func.isRequired,
   sessionLoading: PropTypes.bool.isRequired,
+  submitError: PropTypes.string,
+};
+
+Loginform.defaultProps = {
+  submitError: null,
 };
 
 const form = connectForm('loginForm')(Loginform);
