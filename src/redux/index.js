@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux';
+import { createSelector } from 'reselect';
+import is from 'is_js';
 import session from './session';
 import results from './results';
 import createForm from './forms';
@@ -32,6 +34,7 @@ const ponderaForm = createForm('ponderaForm', {
   science: {},
   history: {},
   cId: { required: true },
+  uId: {},
 });
 
 const loginForm = createForm('loginForm', {
@@ -51,6 +54,28 @@ const forms = combineReducers({
   ponderaForm,
   loginForm,
 });
+
+
+const univsSelector = state => state.resources.univs.data;
+const careersSelector = state => state.resources.careers.data;
+const uIdSelector = state => state.forms.ponderaForm.uId.value;
+const cIdSelector = state => state.forms.ponderaForm.cId.value;
+
+const resultTitleSelector = (univs, careers, uId, cId) => {
+  if (is.any.empty(univs, careers, uId, cId)) return '';
+  const career = careers.filter(car => car.id === cId)[0];
+  const univ = univs.filter(uni => uni.id === uId)[0];
+  return `${career.title} en ${univ.title}`;
+};
+
+export const careerNameSelector = createSelector(
+  univsSelector,
+  careersSelector,
+  uIdSelector,
+  cIdSelector,
+  resultTitleSelector,
+);
+
 
 export default combineReducers({
   session,

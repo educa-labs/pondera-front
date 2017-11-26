@@ -24,12 +24,12 @@ const ponderaSuccess = result => ({
 
 /* THUNK */
 
-export const calculatePonderation = values => (
+export const calculatePonderation = (values, token) => (
   async (dispatch) => {
     dispatch(ponderaRequest());
     try {
-      const result = await requestPonderation(values);
-      dispatch(ponderaSuccess(result));
+      const result = await requestPonderation(values, token);
+      dispatch(ponderaSuccess(result.data));
     } catch (err) {
       dispatch(ponderaFailure(err));
     }
@@ -38,8 +38,6 @@ export const calculatePonderation = values => (
 
 /* SELECTORS */
 
-const getResults = state => state.results;
-export const isCalculating = createSelector(getResults, results => results.loading);
 
 /* REDUCERS */
 

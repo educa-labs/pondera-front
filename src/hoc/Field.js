@@ -9,6 +9,7 @@ const Field = ({
   type,
   checkValue,
   logChange,
+  handleOnChange,
   ...props
 }, {
   formName,
@@ -19,6 +20,7 @@ const Field = ({
   };
   const onChange = (ev) => {
     const value = type === 'checkbox' ? ev.target.checked : ev.target.value;
+    if (handleOnChange) handleOnChange(value);
     logChange(formName)(name, value);
   };
   try {

@@ -12,25 +12,25 @@ const ResultBody = ({ result, onSimilarClick }) => {
         <Row>
           <Col xs={7}>Mi puntaje</Col>
           <Col className="result-body-values" xs={5}>
-            {result.score}
+            {result.ponderation}
           </Col>
         </Row>
         <Row>
           <Col xs={7}>Corte 2016</Col>
           <Col className="result-body-values" xs={5}>
-            {result.cut}
+            {result.cut || 'No disponible'}
           </Col>
         </Row>
         <Row>
           <Col xs={7}>Diferencia</Col>
           <Col className="result-body-values" xs={5}>
-            {result.diff}
+            {result.diff || 'No disponible'}
           </Col>
         </Row>
       </Container>
       <div className="result-header-gray">Carreras similares</div>
       <Container className="result-body">
-        {result.similar.map(career => (
+        {result.similar && result.similar.map(career => (
           <Row key={career.id}>
             <Col xs={7}>{career.title}</Col>
             <Col className="pondera-link" xs={5}>

@@ -28,12 +28,19 @@ const fetchSuccess = (resource, data) => ({
 
 /* SIDE EFFECTS */
 
+const parseData = data => (
+  data.data.map(el => ({
+    id: String(el.id),
+    title: el.attributes ? el.attributes.title : el.title,
+  }))
+);
+
 export const fetch = (resource, ...args) => (
   async (dispatch) => {
     dispatch(fetchRequest(resource));
     try {
       const res = await getResource(resource, ...args);
-      dispatch(fetchSuccess(resource, res.data));
+      dispatch(fetchSuccess(resource, parseData(res.data)));
     } catch (error) {
       if (error.response) {
         // The request was made and the server responded with a status code

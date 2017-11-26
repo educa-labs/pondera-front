@@ -37,7 +37,9 @@ export const getResource = (resource, options = {}) => {
 };
 
 export const requestPonderation = (data, token) => (
-  request.post('/ponderar', {
+  request({
+    url: '/ponderar',
+    method: 'post',
     headers: {
       Authorization: token,
     },

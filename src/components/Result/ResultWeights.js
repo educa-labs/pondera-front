@@ -2,7 +2,7 @@ import React from 'react';
 import Container from 'muicss/lib/react/container';
 
 const subjects = [
-  { value: 'nem', label: 'NEM' },
+  { value: 'NEM', label: 'NEM' },
   { value: 'ranking', label: 'Rank' },
   { value: 'language', label: 'Lang' },
   { value: 'math', label: 'Mate' },

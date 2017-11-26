@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import is from 'is_js';
 import { connect } from 'react-redux';
 import MediaQuery from 'react-responsive';
 import ScrollScreen from '../components/Layout/ScrollScreen';
@@ -13,10 +14,11 @@ import ResultHeader from '../components/Result/ResultHeader';
 import ResultWeights from '../components/Result/ResultWeights';
 import ResultBody from '../components/Result/ResultBody';
 import ResultFooter from '../components/Result/ResultFooter';
+import { careerNameSelector } from '../redux';
 import { logOut } from '../redux/session';
 import { setFieldValue, getValues } from '../redux/forms';
 import { isLoading, fetch } from '../redux/fetch';
-import { calculatePonderation, isCalculating } from '../redux/results';
+import { calculatePonderation } from '../redux/results';
 import { UNIVERSITIES, CAREERS, HISTORY } from '../helpers/constants';
 
 
@@ -38,8 +40,13 @@ class Simula extends Component {
   }
 
   componentDidMount() {
-    if (this.props.univs === null) {
-      this.props.dispatch(fetch(UNIVERSITIES));
+    if (is.null(this.props.token)) {
+      this.props.history.replace('/');
+    }
+    if (is.empty(this.props.univs)) {
+      this.props.dispatch(fetch(UNIVERSITIES, {
+        token: this.props.token,
+      }));
     }
   }
 
@@ -51,8 +58,11 @@ class Simula extends Component {
     }
   }
 
-  onUnivChange(ev) {
-    this.props.dispatch(fetch(CAREERS, ev.target.value));
+  onUnivChange(id) {
+    this.props.dispatch(fetch(CAREERS, {
+      id,
+      token: this.props.token,
+    }));
     this.props.dispatch(setFieldValue('ponderaForm')('career', ''));
   }
 
@@ -73,11 +83,11 @@ class Simula extends Component {
 
 
   onSimilarClick(cId) {
-    const { fields, dispatch } = this.props;
+    const { fields, dispatch, token } = this.props;
     const values = Object.assign({}, getValues(fields), {
       cId,
     });
-    dispatch(calculatePonderation(values));
+    dispatch(calculatePonderation(values, token));
   }
 
   setHistoryRef(el) {
@@ -97,7 +107,8 @@ class Simula extends Component {
   }
 
   handleSubmit(values) {
-    this.props.dispatch(calculatePonderation(values));
+    const { token } = this.props;
+    this.props.dispatch(calculatePonderation(values, token));
   }
 
 
@@ -110,9 +121,8 @@ class Simula extends Component {
     const pondera = (
       <PonderaForm
         onSubmit={this.handleSubmit}
-        logOut={this.handleLogOut}
         univs={this.props.univs}
-        careers={this.props.careers || []}
+        careers={this.props.careers}
         isLoading={this.props.isLoading}
         calculating={this.props.calculating}
         onUnivChange={this.onUnivChange}
@@ -130,19 +140,19 @@ class Simula extends Component {
       },
     });
     
-    const { result } = this.props;
+    const { result, resultName } = this.props;
     return ([
       <MediaQuery key="0" maxDeviceWidth={1224}>
         <ScrollScreen index={this.state.currentScreen}>
           <Page>
-            <NavigationBar pondera logOut={logOut} />
+            <NavigationBar pondera logOut={this.handleLogOut} />
             <PonderaMobile>
               {pondera}
             </PonderaMobile>
           </Page>
           <Page>
             <Result>
-              <ResultHeader result={result} />
+              <ResultHeader title={resultName} />
               <ResultWeights result={result} />
               <ResultBody result={result} onSimilarClick={this.onSimilarClick} />
               <ResultFooter
@@ -176,15 +186,24 @@ class Simula extends Component {
 Simula.propTypes = {
   dispatch: PropTypes.func.isRequired,
   calculating: PropTypes.bool.isRequired,
+  token: PropTypes.string.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  resultName: PropTypes.string.isRequired,
+  careers: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+  })).isRequired,
 };
 
 
 export default connect(state => ({
   univs: state.resources.univs.data,
   careers: state.resources.careers.data,
+  token: state.session.token,
   isLoading: isLoading(state),
-  calculating: isCalculating(state),
+  calculating: state.results.loading,
   fields: state.forms.ponderaForm,
   result: state.results.result,
+  resultName: careerNameSelector(state),
 }))(Simula);
 

@@ -101,12 +101,13 @@ const PonderaForm = ({
     <LoadingWrapper loading={univs === null}>
       {() => (
         <div>
-          <SelectInput
-            label="Universidad"
-            options={univs}
-            onChange={onUnivChange}
-            placeholder="Escoge una universidad"
-          />
+          <Field name="uId" type="select" handleOnChange={onUnivChange}>
+            <SelectInput
+              label="Universidad"
+              options={univs}
+              placeholder="Escoge una universidad"
+            />
+          </Field>
           <LoadingWrapper loading={isLoading}>
             {() => (
               <Field name="cId" type="select" validator={emptyValidator}>

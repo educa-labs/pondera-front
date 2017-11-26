@@ -1,10 +1,10 @@
 import React from 'react';
 import Container from 'muicss/lib/react/container';
 
-const ResultHeader = ({ result }) => (
-  result ? (
+const ResultHeader = ({ title }) => (
+  title ? (
     <Container className="result-header">
-      { result.title }
+      {title}
     </Container>
   ) : null
 );
