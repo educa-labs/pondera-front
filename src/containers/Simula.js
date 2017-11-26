@@ -16,7 +16,7 @@ import ResultBody from '../components/Result/ResultBody';
 import ResultFooter from '../components/Result/ResultFooter';
 import { careerNameSelector } from '../redux';
 import { logOut } from '../redux/session';
-import { resetField, getValues } from '../redux/forms';
+import { resetField, getValues, setFieldValue } from '../redux/forms';
 import { isLoading, fetch } from '../redux/fetch';
 import { calculatePonderation } from '../redux/results';
 import { UNIVERSITIES, CAREERS, HISTORY } from '../helpers/constants';
@@ -85,12 +85,15 @@ class Simula extends Component {
   }
 
 
-  onSimilarClick(cId) {
+  onSimilarClick(cId, uId) {
     const { fields, dispatch, token } = this.props;
-    const values = Object.assign({}, getValues(fields), {
+    const values = Object.assign({}, fields, {
       cId,
+      uId: undefined,
     });
     dispatch(calculatePonderation(values, token));
+    dispatch(setFieldValue('ponderaForm')('cId', cId));
+    dispatch(setFieldValue('ponderaForm')('uId', uId));
   }
 
   setHistoryRef(el) {
@@ -197,6 +200,29 @@ Simula.propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
   })).isRequired,
+  fields: PropTypes.shape({
+    NEM: PropTypes.string.isRequired,
+    ranking: PropTypes.string.isRequired,
+    language: PropTypes.string.isRequired,
+    math: PropTypes.string.isRequired,
+    science: PropTypes.string.isRequired,
+    history: PropTypes.string.isRequired,
+    cId: PropTypes.string.isRequired,
+    uId: PropTypes.string.isRequired,
+  }).isRequired,
+  result: PropTypes.shape({
+    cut: PropTypes.number.isRequired,
+    diff: PropTypes.number.isRequired,
+    pond: PropTypes.number.isRequired,
+    weights: PropTypes.shape({
+      NEM: PropTypes.number.isRequired,
+      ranking: PropTypes.number.isRequired,
+      math: PropTypes.number.isRequired,
+      language: PropTypes.number.isRequired,
+      history: PropTypes.number,
+      science: PropTypes.number,
+    }),
+  }).isRequired,
 };
 
 
@@ -206,7 +232,7 @@ export default connect(state => ({
   token: state.session.token,
   isLoading: isLoading(state),
   calculating: state.results.loading,
-  fields: state.forms.ponderaForm,
+  fields: getValues(state.forms.ponderaForm),
   result: state.results.result,
   resultName: careerNameSelector(state),
 }))(Simula);
