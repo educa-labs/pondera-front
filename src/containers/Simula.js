@@ -19,6 +19,7 @@ import { logoutUser } from '../redux/session';
 import { resetField, getValues } from '../redux/forms';
 import { isLoading, fetch } from '../redux/fetch';
 import { calculatePonderation } from '../redux/results';
+import { getSimilarCareers } from '../redux/similar';
 import { UNIVERSITIES, CAREERS } from '../helpers/constants';
 
 
@@ -81,7 +82,10 @@ class Simula extends Component {
     } = this.props;
     const pondera = (
       <PonderaForm
-        onSubmit={values => dispatch(calculatePonderation(values, token))}
+        onSubmit={(values) => {
+          dispatch(calculatePonderation(values, token));
+          dispatch(getSimilarCareers(values.cId));
+        }}
         univs={this.props.univs}
         careers={this.props.careers}
         isLoading={this.props.isLoading}

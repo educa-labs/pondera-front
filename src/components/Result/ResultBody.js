@@ -12,7 +12,7 @@ const ResultBody = ({ result, onSimilarClick }) => {
         <Row>
           <Col xs={7}>Mi puntaje</Col>
           <Col className="result-body-values" xs={5}>
-            {result.ponderation}
+            {result.pond}
           </Col>
         </Row>
         <Row>

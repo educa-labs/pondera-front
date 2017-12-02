@@ -7,6 +7,8 @@ import createForm from './forms';
 import delay from './delay';
 import propmtEvent from './promptEvent';
 import fetchReducer from './fetch';
+import similar from './similar';
+
 import {
   UNIVERSITIES,
   CAREERS,
@@ -89,4 +91,5 @@ export default combineReducers({
   results,
   propmtEvent,
   resources,
+  similar,
 });
