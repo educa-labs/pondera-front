@@ -184,11 +184,7 @@ PonderaForm.propTypes = {
   })).isRequired,
   isLoading: PropTypes.bool.isRequired,
   onUnivChange: PropTypes.func.isRequired,
-  onSelectTest: PropTypes.func.isRequired,
-  selectedTest: PropTypes.string.isRequired,
   resetForm: PropTypes.func.isRequired,
-  setHistoryRef: PropTypes.func.isRequired,
-  setScienceRef: PropTypes.func.isRequired,
   calculating: PropTypes.bool.isRequired,
 };
 
