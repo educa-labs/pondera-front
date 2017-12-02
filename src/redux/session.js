@@ -65,10 +65,10 @@ export const registerUser = values => (
     dispatch(logUserRequest());
     try {
       const user = await createUser(values);
-      dispatch(logUserSucces(user.data.token));
-      dispatch(saveUserToken(user.data.token));
       /* Esperamos un tiempo para la animacion */
       dispatch(wait(300));
+      dispatch(logUserSucces(user.data.token));
+      dispatch(saveUserToken(user.data.token));
     } catch (err) {
       if (err.response) {
         dispatch(logUserFailure(err.response.data.message));
@@ -84,10 +84,10 @@ export const logUser = values => (
     dispatch(logUserRequest());
     try {
       const user = await createSession(values);
-      dispatch(logUserSucces(user.data.token));
-      dispatch(saveUserToken(user.data.token));
       /* Esperamos un tiempo para la animacion */
       dispatch(wait(300));
+      dispatch(logUserSucces(user.data.token));
+      dispatch(saveUserToken(user.data.token));
     } catch (err) {
       if (err.response) {
         dispatch(logUserFailure(err.response.data.message));

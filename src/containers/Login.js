@@ -6,28 +6,15 @@ import LoginForm from '../components/Login/LoginForm';
 import { logUser } from '../redux/session';
 import NavigationBar from '../components/NavigationBar/NavigationBar';
 
-class Login extends React.Component {
-  componentWillReceiveProps(nextProps) {
-    if (this.props.delay && !nextProps.delay) {
-      this.props.history.replace('/simula');
-    }
-  }
-
-  render() {
-    const {
-      history, dispatch, ...props
-    } = this.props;
-    return (
-      <Page>
-        <NavigationBar back onBackClick={history.goBack} />
-        <LoginForm
-          onSubmit={values => dispatch(logUser(values))}
-          {...props}
-        />
-      </Page>
-    );
-  }
-}
+const Login = ({ history, dispatch, ...props }) => (
+  <Page>
+    <NavigationBar back onBackClick={history.goBack} />
+    <LoginForm
+      onSubmit={values => dispatch(logUser(values))}
+      {...props}
+    />
+  </Page>
+);
 
 Login.propTypes = {
   dispatch: PropTypes.func.isRequired,

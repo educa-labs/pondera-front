@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import is from 'is_js';
 import { connect } from 'react-redux';
-import { Switch, Route, withRouter } from 'react-router-dom';
+import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
 import { loadUserToken } from '../redux/session';
 import Landing from './Landing';
 import Simula from './Simula';
@@ -16,13 +16,28 @@ import Background from '../components/Layout/BackGround';
 class App extends React.Component {
   componentDidMount() {
     if (is.null(this.props.token)) {
-      console.log('Hola');
       this.props.dispatch(loadUserToken());
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.token !== this.props.token) {
+      if (!nextProps.token) {
+        nextProps.history.replace('/');
+      }
+    }
+    if (nextProps.delay !== this.props.delay) {
+      if (!nextProps.delay && nextProps.token) {
+        nextProps.history.replace('/simula');
+      }
     }
   }
 
   shouldComponentUpdate(nextProps) {
     if (this.props.token !== nextProps.token) {
+      return false;
+    }
+    if (this.props.delay !== nextProps.delay) {
       return false;
     }
     return true;
@@ -47,10 +62,12 @@ class App extends React.Component {
 
 const connectedApp = connect(state => ({
   token: state.session.token,
+  delay: state.delay,
 }))(App);
 
 App.propTypes = {
   token: PropTypes.string,
+  delay: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 

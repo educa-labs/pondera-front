@@ -15,7 +15,7 @@ import ResultWeights from '../components/Result/ResultWeights';
 import ResultBody from '../components/Result/ResultBody';
 import ResultFooter from '../components/Result/ResultFooter';
 import { careerNameSelector } from '../redux';
-import { logOut } from '../redux/session';
+import { logoutUser } from '../redux/session';
 import { resetField, getValues } from '../redux/forms';
 import { isLoading, fetch } from '../redux/fetch';
 import { calculatePonderation } from '../redux/results';
@@ -40,9 +40,6 @@ class Simula extends Component {
   }
 
   componentDidMount() {
-    if (is.null(this.props.token)) {
-      this.props.history.replace('/');
-    }
     if (is.empty(this.props.univs)) {
       this.props.dispatch(fetch(UNIVERSITIES, {
         token: this.props.token,
@@ -116,8 +113,7 @@ class Simula extends Component {
 
 
   handleLogOut() {
-    this.props.dispatch(logOut());
-    this.props.history.replace('/');
+    this.props.dispatch(logoutUser());
   }
 
   render() {

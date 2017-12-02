@@ -29,12 +29,6 @@ class Landing extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.delay && !nextProps.delay) {
-      this.props.history.replace('/simula');
-    }
-  }
-
   onSubmitSuccessOne() {
     this.setState({
       completed: true,
