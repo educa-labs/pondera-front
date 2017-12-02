@@ -5,6 +5,10 @@ const SIMILAR_REQUEST = 'SIMILAR_REQUEST';
 const SIMILAR_FAILURE = 'SIMILAR_FAILURE';
 const SIMILAR_SUCCESS = 'SIMILAR_SUCCESS';
 
+const mock = [
+  { cId: '264', uId: '4', title: 'Química y Farmacia USACH' },
+];
+
 const similarRequest = () => ({
   type: SIMILAR_REQUEST,
 });
@@ -23,9 +27,10 @@ export const getSimilarCareers = (cId, token) => (
   async (dispatch) => {
     dispatch(similarRequest());
     try {
-      const similar = await requestSimilarCareers(cId, token);
-      dispatch(similarSuccess(similar.data));
+      // const similar = await requestSimilarCareers(cId, token);
+      dispatch(similarSuccess(mock));
     } catch (err) {
+      console.log(err);
       if (err.response) {
         dispatch(similarFailure(err.response.status));
       }
@@ -57,7 +62,7 @@ const error = (state = null, action) => {
 const similar = (state = null, action) => {
   switch (action.type) {
     case SIMILAR_SUCCESS:
-      return action.result;
+      return action.similar;
     default:
       return state;
   }

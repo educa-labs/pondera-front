@@ -70,7 +70,7 @@ const resultTitleSelector = (univs, careers, uId, cId) => {
   try {
     return `${career.title} en ${univ.title}`;
   } catch (err) {
-    console.log(univs, careers, uId, cId);
+    console.log(err);
     return '';
   }
 };

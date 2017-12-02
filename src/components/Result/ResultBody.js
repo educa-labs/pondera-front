@@ -3,7 +3,7 @@ import Container from 'muicss/lib/react/container';
 import Row from 'muicss/lib/react/row';
 import Col from 'muicss/lib/react/col';
 
-const ResultBody = ({ result, onSimilarClick }) => {
+const ResultBody = ({ result, similar, onSimilarClick }) => {
   if (result === null) return null;
   return (
     <div>
@@ -28,21 +28,23 @@ const ResultBody = ({ result, onSimilarClick }) => {
           </Col>
         </Row>
       </Container>
-      <div className="result-header-gray">Carreras similares</div>
-      <Container className="result-body">
-        {result.similar && result.similar.map(career => (
-          <Row key={career.id}>
-            <Col xs={7}>{career.title}</Col>
-            <Col className="pondera-link" xs={5}>
-              <div onClick={() => onSimilarClick(career.id)}>
-                ponderar
-              </div>
-            </Col>
-          </Row>
-        ))}
-      </Container>
+      {similar && <div className="result-header-gray">Carreras similares</div>}
+      {similar && (
+        <Container className="result-body">
+          {similar.map(career => (
+            <Row key={career.cId}>
+              <Col xs={7}>{career.title}</Col>
+              <Col className="pondera-link" xs={5}>
+                <div onClick={() => onSimilarClick(career.cId, career.uId)}>
+                  ponderar
+                </div>
+              </Col>
+            </Row>
+          ))}
+        </Container>
+      )}
     </div>
   );
-}
+};
 
 export default ResultBody;

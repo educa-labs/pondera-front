@@ -16,7 +16,7 @@ import ResultBody from '../components/Result/ResultBody';
 import ResultFooter from '../components/Result/ResultFooter';
 import { careerNameSelector } from '../redux';
 import { logoutUser } from '../redux/session';
-import { resetField, getValues } from '../redux/forms';
+import { resetField, getValues, setFieldValue } from '../redux/forms';
 import { isLoading, fetch } from '../redux/fetch';
 import { calculatePonderation } from '../redux/results';
 import { getSimilarCareers } from '../redux/similar';
@@ -46,11 +46,16 @@ class Simula extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.calculating !== this.props.calculating) {
       if (!nextProps.calculating) {
+        console.log('Tenemos que cambiar');
         this.setScreen(1);
       }
     }
-    if (nextProps.resultName !== this.props.resultName) {
-      this.setScreen(0);
+    if (nextProps.values.cId !== this.props.values.cId) {
+      if (this.state.currentScreen === 1) this.setScreen(0);
+    }
+
+    if (nextProps.values.uId !== this.props.values.uId) {
+      if (this.state.currentScreen === 1) this.setScreen(0);
     }
   }
 
@@ -64,12 +69,16 @@ class Simula extends Component {
   }
 
 
-  onSimilarClick(cId) {
-    const { fields, dispatch, token } = this.props;
-    const values = Object.assign({}, getValues(fields), {
+  onSimilarClick(cId, uId) {
+    const { values, dispatch, token } = this.props;
+    const finalValues = Object.assign({}, values, {
       cId,
+      uId,
     });
-    dispatch(calculatePonderation(values, token));
+    dispatch(calculatePonderation(finalValues, token));
+    dispatch(fetch(CAREERS, { id: uId, token }));
+    dispatch(setFieldValue('ponderaForm')('cId', cId));
+    dispatch(setFieldValue('ponderaForm')('uId', uId));
   }
 
   setScreen(index) {
@@ -78,7 +87,7 @@ class Simula extends Component {
 
   render() {
     const {
-      result, resultName, dispatch, token,
+      result, resultName, dispatch, token, similar, similarLoading
     } = this.props;
     const pondera = (
       <PonderaForm
@@ -98,7 +107,8 @@ class Simula extends Component {
       desk: true,
       onSubmit: (values) => {
         this.setScreen(0);
-        this.handleSubmit(values);
+        dispatch(calculatePonderation(values, token));
+        dispatch(getSimilarCareers(values.cId));
       },
     });
     
@@ -118,7 +128,12 @@ class Simula extends Component {
             <Result>
               <ResultHeader title={resultName} />
               <ResultWeights result={result} />
-              <ResultBody result={result} onSimilarClick={this.onSimilarClick} />
+              <ResultBody
+                result={result}
+                similar={similar}
+                loading={similarLoading}
+                onSimilarClick={this.onSimilarClick}
+              />
               <ResultFooter
                 onClick={() => this.setScreen(0)}
                 calculating={this.props.calculating}
@@ -134,9 +149,10 @@ class Simula extends Component {
             index={this.state.currentScreen}
             result={result}
             resultName={resultName}
-            onSimilarClick={() => {
+            similar={similar}
+            onSimilarClick={(cId, uId) => {
               this.setScreen(0);
-              this.onSimilarClick();
+              this.onSimilarClick(cId, uId);
             }}
             calculating={this.props.calculating}
           >
@@ -167,8 +183,10 @@ export default connect(state => ({
   token: state.session.token,
   isLoading: isLoading(state),
   calculating: state.results.loading,
-  fields: state.forms.ponderaForm,
+  values: getValues(state.forms.ponderaForm),
   result: state.results.result,
+  similar: state.similar.similar,
+  similarLoading: state.similar.loading,
   resultName: careerNameSelector(state),
 }))(Simula);
 
