@@ -4,43 +4,29 @@ import { Redirect, Route } from 'react-router-dom';
 
 const xor = (a, b) => (a && !b) || (!a && b);
 
-const ProtectedRoute = ({
-  component: Component,
-  children,
-  isLogged,
-  requireUser,
-  redirectTo,
-  delay,
-  ...rest,
-}) => (
+const PrivateRoute = ({ component: Component, isAuthenticated, ...rest }) => (
   <Route
     {...rest}
-    render={(props) => {
-      if (!delay && xor(isLogged, requireUser)) {
-        return <Redirect to={redirectTo} />;
-      }
-      if (children) {
-        return children(props);
-      }
-      return <Component {...props} />;
-    }}
+    render={props => (
+      isAuthenticated ? (
+        <Component {...props} />
+      ) : (
+        <Redirect to={{
+          pathname: '/',
+          state: { from: props.location },
+          }}
+        />
+      )
+    )}
   />
 );
 
-ProtectedRoute.defaultProps = {
-  delay: false,
+PrivateRoute.defaultProps = {
   component: undefined,
 };
 
-ProtectedRoute.propTypes = {
-  isLogged: PropTypes.bool.isRequired,
-  requireUser: PropTypes.bool.isRequired,
-  redirectTo: PropTypes.string.isRequired,
-  delay: PropTypes.bool,
-  component: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.element,
-  ]),
+PrivateRoute.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 
-export default ProtectedRoute;
+export default PrivateRoute;

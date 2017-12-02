@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import is from 'is_js';
 import { connect } from 'react-redux';
-import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
 import { loadUserToken } from '../redux/session';
+import ProtectedRoute from '../hoc/ProtectedRoute';
 import Landing from './Landing';
 import Simula from './Simula';
 import Login from './Login';
@@ -44,11 +45,12 @@ class App extends React.Component {
   }
 
   render() {
+    const { token } = this.props;
     return (
       <div>
         <Background />
         <Switch>
-          <Route path="/simula"component={Simula} />
+          <ProtectedRoute isAuthenticated={is.not.null(token)} path="/simula"component={Simula} />
           <Route path="/login" component={Login} />
           <Route path="/terms" component={Terms} />
           <Route path="/contacto" component={Contacto} />
