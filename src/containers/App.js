@@ -1,7 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import is from 'is_js';
 import { connect } from 'react-redux';
 import { Switch, Route, withRouter } from 'react-router-dom';
-import { setPromptEvent } from '../redux/promptEvent';
+import { loadUserToken } from '../redux/session';
 import Landing from './Landing';
 import Simula from './Simula';
 import Login from './Login';
@@ -10,14 +12,20 @@ import Ready from '../components/Terms/Ready';
 import Contacto from '../components/Terms/Contacto';
 import Background from '../components/Layout/BackGround';
 
+
 class App extends React.Component {
   componentDidMount() {
-    window.addEventListener('beforeinstallprompt', async (event) => {
-      console.log('beforeinstallprompt fired');
-      event.preventDefault();
-      this.props.dispatch(setPromptEvent(event));
+    if (is.null(this.props.token)) {
+      console.log('Hola');
+      this.props.dispatch(loadUserToken());
+    }
+  }
+
+  shouldComponentUpdate(nextProps) {
+    if (this.props.token !== nextProps.token) {
       return false;
-    });
+    }
+    return true;
   }
 
   render() {
@@ -37,7 +45,18 @@ class App extends React.Component {
   }
 }
 
-const connectedApp = connect(null)(App);
+const connectedApp = connect(state => ({
+  token: state.session.token,
+}))(App);
+
+App.propTypes = {
+  token: PropTypes.string,
+  dispatch: PropTypes.func.isRequired,
+};
+
+App.defaultProps = {
+  token: null,
+};
 
 // export default App;
 export default withRouter(connectedApp);

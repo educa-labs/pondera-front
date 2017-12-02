@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { createSelector } from 'reselect';
 import { createUser, createSession } from '../helpers/api';
+import { saveToken, loadToken, clearStore } from '../helpers/storage';
 import { wait } from './delay';
 
 /* TYPES */
@@ -8,6 +9,8 @@ const LOG_USER_REQUEST = 'LOG_USER_REQUEST';
 const LOG_USER_FAILURE = 'LOG_USER_FAILURE';
 const LOG_USER_SUCCESS = 'LOG_USER_SUCCESS';
 const LOGOUT_USER = 'LOGOUT_USER';
+const SAVE_USER_TOKEN = 'SAVE_USER_TOKEN';
+const LOAD_USER_TOKEN = 'LOAD_USER_TOKEN';
 
 /* ACTION CREATORS */
 
@@ -25,7 +28,16 @@ const logUserSucces = token => ({
   token,
 });
 
-export const logOut = () => ({
+const saveUserSuccess = () => ({
+  type: SAVE_USER_TOKEN,
+});
+
+const loadUserSuccess = token => ({
+  type: LOAD_USER_TOKEN,
+  token,
+});
+
+const logOut = () => ({
   type: LOGOUT_USER,
 });
 
@@ -37,6 +49,16 @@ export const isLogged = createSelector(getUser, isNotNull);
 
 /* THUNKS */
 
+const saveUserToken = token => (
+  async (dispatch) => {
+    try {
+      await saveToken(token);
+      dispatch(saveUserSuccess());
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
 
 export const registerUser = values => (
   async (dispatch) => {
@@ -44,6 +66,7 @@ export const registerUser = values => (
     try {
       const user = await createUser(values);
       dispatch(logUserSucces(user.data.token));
+      dispatch(saveUserToken(user.data.token));
       /* Esperamos un tiempo para la animacion */
       dispatch(wait(300));
     } catch (err) {
@@ -62,6 +85,7 @@ export const logUser = values => (
     try {
       const user = await createSession(values);
       dispatch(logUserSucces(user.data.token));
+      dispatch(saveUserToken(user.data.token));
       /* Esperamos un tiempo para la animacion */
       dispatch(wait(300));
     } catch (err) {
@@ -70,6 +94,28 @@ export const logUser = values => (
       } else if (err.request) {
         dispatch(logUserFailure('Oops, algo salio mal, vuelve a intentarlo'));
       }
+    }
+  }
+);
+
+export const logoutUser = () => (
+  async (dispatch) => {
+    try {
+      await clearStore();
+      dispatch(logOut());
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const loadUserToken = () => (
+  async (dispatch) => {
+    try {
+      const token = await loadToken();
+      dispatch(loadUserSuccess(token));
+    } catch (error) {
+      console.log(error);
     }
   }
 );
@@ -103,6 +149,7 @@ const token = (state = null, action) => {
   switch (action.type) {
     case LOGOUT_USER:
       return null;
+    case LOAD_USER_TOKEN:
     case LOG_USER_SUCCESS:
       return action.token;
     default:

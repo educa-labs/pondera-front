@@ -26,6 +26,7 @@
     "koa": "^2.3.0",
     "koa-mount": "^3.0.0",
     "koa-static": "^4.0.1",
+    "localforage": "^1.5.5",
     "muicss": "^0.9.27",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
