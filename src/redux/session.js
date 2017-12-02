@@ -9,6 +9,8 @@ const LOG_USER_REQUEST = 'LOG_USER_REQUEST';
 const LOG_USER_FAILURE = 'LOG_USER_FAILURE';
 const LOG_USER_SUCCESS = 'LOG_USER_SUCCESS';
 const LOGOUT_USER = 'LOGOUT_USER';
+const STORAGE_REQUEST = 'STORAGE_REQUEST';
+const STORAGE_ERROR = 'STORAGE_ERROR';
 const SAVE_USER_TOKEN = 'SAVE_USER_TOKEN';
 const LOAD_USER_TOKEN = 'LOAD_USER_TOKEN';
 
@@ -26,6 +28,14 @@ const logUserFailure = error => ({
 const logUserSucces = token => ({
   type: LOG_USER_SUCCESS,
   token,
+});
+
+const storageRequest = () => ({
+  type: STORAGE_REQUEST,
+});
+
+const storageError = () => ({
+  type: STORAGE_ERROR,
 });
 
 const saveUserSuccess = () => ({
@@ -111,10 +121,12 @@ export const logoutUser = () => (
 
 export const loadUserToken = () => (
   async (dispatch) => {
+    dispatch(storageRequest());
     try {
       const token = await loadToken();
       dispatch(loadUserSuccess(token));
     } catch (error) {
+      dispatch(storageError());
       console.log(error);
     }
   }
@@ -128,6 +140,19 @@ const loading = (state = false, action) => {
       return true;
     case LOG_USER_SUCCESS:
     case LOG_USER_FAILURE:
+      return false;
+    default:
+      return state;
+  }
+};
+
+const storageLoading = (state = true, action) => {
+  switch (action.type) {
+    case STORAGE_REQUEST:
+      return true;
+    case STORAGE_ERROR:
+    case SAVE_USER_TOKEN:
+    case LOAD_USER_TOKEN:
       return false;
     default:
       return state;
@@ -161,5 +186,6 @@ export default combineReducers({
   token,
   error,
   loading,
+  storageLoading,
 });
 

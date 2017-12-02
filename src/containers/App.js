@@ -22,11 +22,6 @@ class App extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.token !== this.props.token) {
-      if (!nextProps.token) {
-        nextProps.history.replace('/');
-      }
-    }
     if (nextProps.delay !== this.props.delay) {
       if (!nextProps.delay && nextProps.token) {
         nextProps.history.replace('/simula');
@@ -35,9 +30,6 @@ class App extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if (this.props.token !== nextProps.token) {
-      return false;
-    }
     if (this.props.delay !== nextProps.delay) {
       return false;
     }
@@ -45,7 +37,9 @@ class App extends React.Component {
   }
 
   render() {
-    const { token } = this.props;
+    const { token, storageLoading } = this.props;
+    console.log(storageLoading);
+    if (storageLoading) return <div>Loading ...</div>;
     return (
       <div>
         <Background />
@@ -64,6 +58,7 @@ class App extends React.Component {
 
 const connectedApp = connect(state => ({
   token: state.session.token,
+  storageLoading: state.session.storageLoading,
   delay: state.delay,
 }))(App);
 
@@ -71,6 +66,7 @@ App.propTypes = {
   token: PropTypes.string,
   delay: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
+  storageLoading: PropTypes.bool.isRequired,
 };
 
 App.defaultProps = {
