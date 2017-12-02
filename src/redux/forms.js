@@ -110,6 +110,7 @@ const createFormReducer = (formName, fields) => {
         case VALIDATION_ERROR:
           return action.error;
         case SET_FORM_VALUE:
+        case RESET_FIELD:
           if (is.not.null(state)) return null;
           return state;
         default:

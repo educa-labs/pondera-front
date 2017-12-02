@@ -12,143 +12,168 @@ import connectForm from '../../hoc/connectForm';
 import Field from '../../hoc/Field';
 import LoadingWrapper from '../Other/LoadingWrapper';
 import RadioWrapper from '../Other/RadioWrapper';
+import { resetField } from '../../redux/forms';
 import { HISTORY, SCIENCE } from '../../helpers/constants';
 import { scoreValidator, emptyValidator } from '../../helpers';
 
+class PonderaForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedTest: HISTORY,
+    };
+    this.onSelectTest = this.onSelectTest.bind(this);
+  }
 
-const PonderaForm = ({
-  onSubmit,
-  resetForm,
-  careers,
-  univs,
-  isLoading,
-  calculating,
-  onUnivChange,
-  onSelectTest,
-  selectedTest,
-  setHistoryRef,
-  setScienceRef,
-}) => (
-  <Form onSubmit={onSubmit}>
-    <legend>Ponderar</legend>
-    <div className="mui--text-subhead">
-      Ingresa tus puntajes y carrera
-    </div>
-    <Container>
-      <Row>
-        <Col xs={6} className="padding-col">
-          <Field name="NEM" validator={scoreValidator}>
-            <TextInput
-              label="NEM"
-              floatingLabel
-              type="number"
-            />
-          </Field>
-          <Field name="language" validator={scoreValidator}>
-            <TextInput
-              label="Leng"
-              floatingLabel
-              type="number"
-            />
-          </Field>
-          <RadioWrapper
-            onSelect={onSelectTest}
-            selected={selectedTest}
-            id={HISTORY}
-          >
-            <Field name="history" validator={scoreValidator}>
-              <TextInput
-                label="Hist"
-                floatingLabel
-                type="number"
-                setRef={setHistoryRef}
-              />
-            </Field>
-          </RadioWrapper>
-        </Col>
-        <Col xs={6} className="padding-col">
-          <Field name="ranking" validator={scoreValidator}>
-            <TextInput
-              label="Rank"
-              floatingLabel
-              type="number"
-            />
-          </Field>
-          <Field name="math" validator={scoreValidator}>
-            <TextInput
-              label="Mate"
-              floatingLabel
-              type="number"
-            />
-          </Field>
-          <RadioWrapper
-            onSelect={onSelectTest}
-            selected={selectedTest}
-            id={SCIENCE}
-          >
-            <Field name="science" validator={scoreValidator}>
-              <TextInput
-                label="Cien"
-                floatingLabel
-                type="number"
-                setRef={setScienceRef}
-              />
-            </Field>
-          </RadioWrapper>
-        </Col>
-      </Row>
-    </Container>
-    <LoadingWrapper loading={univs === null}>
-      {() => (
-        <div>
-          <Field name="uId" type="select" handleOnChange={onUnivChange}>
-            <SelectInput
-              label="Universidad"
-              options={univs}
-              placeholder="Escoge una universidad"
-            />
-          </Field>
-          <LoadingWrapper loading={isLoading}>
-            {() => (
-              <Field name="cId" type="select" validator={emptyValidator}>
-                <SelectInput
-                  label="Carrera"
-                  options={careers}
-                  placeholder="Elige una carrera"
+  async onSelectTest(ev) {
+    const selectedTest = ev.target.id;
+    let other;
+
+    await this.setState({ selectedTest });
+    if (selectedTest === HISTORY) {
+      other = 'science';
+      this.historyEl.controlEl.focus();
+    } else {
+      other = 'history';
+      this.scienceEl.controlEl.focus();
+    }
+    this.props.dispatch(resetField('ponderaForm')(other));
+  }
+
+  render() {
+    const {
+      onSubmit,
+      resetForm,
+      careers,
+      univs,
+      isLoading,
+      calculating,
+      onUnivChange,
+    } = this.props;
+    const { selectedTest } = this.state;
+    return (
+      <Form onSubmit={onSubmit}>
+        <legend>Ponderar</legend>
+        <div className="mui--text-subhead">
+          Ingresa tus puntajes y carrera
+        </div>
+        <Container>
+          <Row>
+            <Col xs={6} className="padding-col">
+              <Field name="NEM" validator={scoreValidator}>
+                <TextInput
+                  label="NEM"
+                  floatingLabel
+                  type="number"
                 />
               </Field>
-            )}
-          </LoadingWrapper>
-        </div>
-      )}
-    </LoadingWrapper>
-    <Row>
-      <Col xs={6}>
-        <Button
-          color="primary"
-          type="button"
-          className="btn--fullwidth"
-          variant="flat"
-          onClick={resetForm}
-        >
-          Reestablecer
-        </Button>
-      </Col>
-      <Col xs={6}>
-        <Button
-          color="primary"
-          type="submit"
-          className="btn--fullwidth"
-          variant="raised"
-        >
-          <LoadingWrapper loading={calculating} white>
-            {() => 'Calcular'}
-          </LoadingWrapper>
-        </Button>
-      </Col>
-    </Row>
-  </Form>
-);
+              <Field name="language" validator={scoreValidator}>
+                <TextInput
+                  label="Leng"
+                  floatingLabel
+                  type="number"
+                />
+              </Field>
+              <RadioWrapper
+                onSelect={this.onSelectTest}
+                selected={selectedTest}
+                id={HISTORY}
+              >
+                <Field name="history" validator={scoreValidator}>
+                  <TextInput
+                    label="Hist"
+                    floatingLabel
+                    type="number"
+                    setRef={(ref) => { this.historyEl = ref; }}
+                  />
+                </Field>
+              </RadioWrapper>
+            </Col>
+            <Col xs={6} className="padding-col">
+              <Field name="ranking" validator={scoreValidator}>
+                <TextInput
+                  label="Rank"
+                  floatingLabel
+                  type="number"
+                />
+              </Field>
+              <Field name="math" validator={scoreValidator}>
+                <TextInput
+                  label="Mate"
+                  floatingLabel
+                  type="number"
+                />
+              </Field>
+              <RadioWrapper
+                onSelect={this.onSelectTest}
+                selected={selectedTest}
+                id={SCIENCE}
+              >
+                <Field name="science" validator={scoreValidator}>
+                  <TextInput
+                    label="Cien"
+                    floatingLabel
+                    type="number"
+                    setRef={(ref) => { this.scienceEl = ref; }}
+                  />
+                </Field>
+              </RadioWrapper>
+            </Col>
+          </Row>
+        </Container>
+        <LoadingWrapper loading={univs === null}>
+          {() => (
+            <div>
+              <Field name="uId" type="select" handleOnChange={onUnivChange}>
+                <SelectInput
+                  label="Universidad"
+                  options={univs}
+                  placeholder="Escoge una universidad"
+                />
+              </Field>
+              <LoadingWrapper loading={isLoading}>
+                {() => (
+                  <Field name="cId" type="select" validator={emptyValidator}>
+                    <SelectInput
+                      label="Carrera"
+                      options={careers}
+                      placeholder="Elige una carrera"
+                    />
+                  </Field>
+                )}
+              </LoadingWrapper>
+            </div>
+          )}
+        </LoadingWrapper>
+        <Row>
+          <Col xs={6}>
+            <Button
+              color="primary"
+              type="button"
+              className="btn--fullwidth"
+              variant="flat"
+              onClick={resetForm}
+            >
+              Reestablecer
+            </Button>
+          </Col>
+          <Col xs={6}>
+            <Button
+              color="primary"
+              type="submit"
+              className="btn--fullwidth"
+              variant="raised"
+            >
+              <LoadingWrapper loading={calculating} white>
+                {() => 'Calcular'}
+              </LoadingWrapper>
+            </Button>
+          </Col>
+        </Row>
+      </Form>
+    );
+  }
+}
 
 
 PonderaForm.propTypes = {

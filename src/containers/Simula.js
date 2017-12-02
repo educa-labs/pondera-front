@@ -19,7 +19,7 @@ import { logoutUser } from '../redux/session';
 import { resetField, getValues } from '../redux/forms';
 import { isLoading, fetch } from '../redux/fetch';
 import { calculatePonderation } from '../redux/results';
-import { UNIVERSITIES, CAREERS, HISTORY } from '../helpers/constants';
+import { UNIVERSITIES, CAREERS } from '../helpers/constants';
 
 
 class Simula extends Component {
@@ -27,22 +27,17 @@ class Simula extends Component {
     super(props);
     this.state = {
       currentScreen: 0,
-      selectedTest: HISTORY,
     };
     this.setScreen = this.setScreen.bind(this);
-    this.handleLogOut = this.handleLogOut.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.onUnivChange = this.onUnivChange.bind(this);
-    this.onSelectTest = this.onSelectTest.bind(this);
-    this.setHistoryRef = this.setHistoryRef.bind(this);
-    this.setScienceRef = this.setScienceRef.bind(this);
     this.onSimilarClick = this.onSimilarClick.bind(this);
   }
 
   componentDidMount() {
-    if (is.empty(this.props.univs)) {
+    const { token, univs } = this.props;
+    if (is.empty(univs)) {
       this.props.dispatch(fetch(UNIVERSITIES, {
-        token: this.props.token,
+        token,
       }));
     }
   }
@@ -59,26 +54,12 @@ class Simula extends Component {
   }
 
   onUnivChange(id) {
+    const { token } = this.props;
     this.props.dispatch(fetch(CAREERS, {
       id,
-      token: this.props.token,
+      token,
     }));
     this.props.dispatch(resetField('ponderaForm')('cId'));
-  }
-
-  async onSelectTest(ev) {
-    const selectedTest = ev.target.id;
-    let other;
-
-    await this.setState({ selectedTest });
-    if (selectedTest === HISTORY) {
-      other = 'science';
-      this.historyEl.controlEl.focus();
-    } else {
-      other = 'history';
-      this.scienceEl.controlEl.focus();
-    }
-    this.props.dispatch(resetField('ponderaForm')(other));
   }
 
 
@@ -90,45 +71,23 @@ class Simula extends Component {
     dispatch(calculatePonderation(values, token));
   }
 
-  setHistoryRef(el) {
-    if (el) {
-      this.historyEl = el;
-    }
-  }
-
   setScreen(index) {
     this.setState({ currentScreen: index });
   }
 
-  setScienceRef(el) {
-    if (el) {
-      this.scienceEl = el;
-    }
-  }
-
-  handleSubmit(values) {
-    const { token } = this.props;
-    this.props.dispatch(calculatePonderation(values, token));
-  }
-
-
-  handleLogOut() {
-    this.props.dispatch(logoutUser());
-  }
-
   render() {
+    const {
+      result, resultName, dispatch, token,
+    } = this.props;
     const pondera = (
       <PonderaForm
-        onSubmit={this.handleSubmit}
+        onSubmit={values => dispatch(calculatePonderation(values, token))}
         univs={this.props.univs}
         careers={this.props.careers}
         isLoading={this.props.isLoading}
         calculating={this.props.calculating}
         onUnivChange={this.onUnivChange}
-        onSelectTest={this.onSelectTest}
-        selectedTest={this.state.selectedTest}
-        setHistoryRef={this.setHistoryRef}
-        setScienceRef={this.setScienceRef}
+        dispatch={dispatch}
       />
     );
     const DeskForm = React.cloneElement(pondera, {
@@ -139,12 +98,14 @@ class Simula extends Component {
       },
     });
     
-    const { result, resultName } = this.props;
     return ([
       <MediaQuery key="0" maxDeviceWidth={1224}>
-        <ScrollScreen index={this.state.currentScreen}>
+        <ScrollScreen
+          index={this.state.currentScreen}
+          goBack={() => this.setScreen(0)}
+        >
           <Page>
-            <NavigationBar pondera logOut={this.handleLogOut} />
+            <NavigationBar pondera logOut={() => dispatch(logoutUser())} />
             <PonderaMobile>
               {pondera}
             </PonderaMobile>
