@@ -57,3 +57,8 @@ export const formatRut = (value) => {
   }
   return value;
 };
+
+export const formatRutBack = (value) => {
+  const match = value.match(/(\d\d?)\.?(\d{3})\.?(\d{3})-?(\d)/);
+  return `${match[1]}${match[2]}${match[3]}-${match[4]}`;
+};

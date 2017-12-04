@@ -7,7 +7,7 @@ import TextInput from '../Inputs/TextInput';
 import wrapCard from '../../hoc/wrapCard';
 import alignCenter from '../../hoc/alignCenter';
 import connectForm from '../../hoc/connectForm';
-import { emptyValidator } from '../../helpers';
+import { emptyValidator, emailValidator } from '../../helpers';
 import BubbleWarpper from '../Other/BubbleWrapper';
 import Field from '../../hoc/Field';
 import LoadingWrapper from '../Other/LoadingWrapper';
@@ -25,7 +25,7 @@ const Loginform = ({
       <Link to="/">regístrate para ponderar</Link>
     </div>
     <br />
-    <Field name="mail" validator={emptyValidator}>
+    <Field name="mail" validator={emailValidator}>
       <TextInput label="Correo electrónico" floatingLabel />
     </Field>
     <Field name="password" validator={emptyValidator}>
