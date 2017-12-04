@@ -11,6 +11,7 @@ import Login from './Login';
 import Terms from '../components/Terms/Terms';
 import Ready from '../components/Terms/Ready';
 import Contacto from '../components/Terms/Contacto';
+import Support from '../components/Terms/Support';
 import Background from '../components/Layout/BackGround';
 
 
@@ -38,7 +39,6 @@ class App extends React.Component {
 
   render() {
     const { token, storageLoading } = this.props;
-    console.log(storageLoading);
     if (storageLoading) return <div>Loading ...</div>;
     return (
       <div>
@@ -49,6 +49,7 @@ class App extends React.Component {
           <Route path="/terms" component={Terms} />
           <Route path="/contacto" component={Contacto} />
           <Route path="/ready" component={Ready} />
+          <Route path="/support" component={Support} />
           <Route path="/" component={Landing} />
         </Switch>
       </div>
