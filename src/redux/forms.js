@@ -82,11 +82,14 @@ export const submitForm = formName => (onSubmit, onSubmitError) => (
   }
 );
 
-export const validateField = formName => (fieldName, validator) => (
+export const validateField = formName => (fieldName, validator, formatter) => (
   async (dispatch, getState) => {
     const field = getState().forms[formName][fieldName];
     try {
       await validator(field.value);
+      if (typeof formatter === 'function') {
+        dispatch(setFieldValue(formName)(fieldName, formatter(field.value)));
+      }
     } catch (error) {
       dispatch(validationError(formName)(fieldName, error.message));
     }
