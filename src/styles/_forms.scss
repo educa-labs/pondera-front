@@ -4,10 +4,13 @@
   }
   .mui-textfield--with-error {
     margin-bottom: 0;
+    select + label {
+      color: $mui-text-danger;
+    }
   }
 
   .textfield-correct {
-    & > input {
+    & > input, select {
       border-color: $mui-accent-color;
       border-width: 2px;
     }
@@ -15,7 +18,24 @@
     & > label {
       color: $mui-accent-color!important;
     }
+  }
 
+  .selectfield-invalid {
+    & > select {
+      border-color: $mui-text-danger;
+      border-width: 2px;
+    }
+  }
+
+  .selectfield-correct {
+    & > select {
+      border-color: $mui-accent-color;
+      border-width: 2px;
+    }
+
+    & > label {
+      color: $mui-accent-color!important;
+    }
   }
 
   .mui-textfield--error-text {

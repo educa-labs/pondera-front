@@ -12,7 +12,9 @@ import connectForm from '../../hoc/connectForm';
 import BubbleWarpper from '../Other/BubbleWrapper';
 import LoadingWrapper from '../Other/LoadingWrapper';
 import Field from '../../hoc/Field';
-import { emptyValidator, formatPhone, phoneValidator } from '../../helpers';
+import {
+  formatPhone, phoneValidator, formatRut, rutValidator, emptyValidator,
+} from '../../helpers';
 
 
 const RegisterFormTwo = ({
@@ -31,10 +33,10 @@ const RegisterFormTwo = ({
       <legend>Registro</legend>
       <div className="mui--text-subhead">completa tus datos</div>
       <br />
-      <Field name="rut" validator={emptyValidator}>
+      <Field name="rut" validator={rutValidator} format={formatRut}>
         <TextInput
           label="RUT"
-          hintText="Sin puntos y ni guion. Ej, 189184964"
+          hintText="Sin puntos ni guion. Ej, 189184964"
           floatingLabel
         />
       </Field>
@@ -45,14 +47,14 @@ const RegisterFormTwo = ({
       >
         <TextInput
           label="Celular"
-          hintText="Los últimos 9 dígitos. Ej, 948464111"
+          hintText="Sin codigo de país. Ej, 948464111"
           floatingLabel
         />
       </Field>
       <LoadingWrapper loading={regions === null}>
         {() => (
-          <Field name="regionId" type="select">
-            <SelectInput label="Región" placeholder="Region" options={regions} />
+          <Field name="regionId" type="select" validator={emptyValidator}>
+            <SelectInput label="Región" placeholder="Escoge una región" options={regions} />
           </Field>
         )}
       </LoadingWrapper>
