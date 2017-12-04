@@ -5,6 +5,19 @@
   .mui-textfield--with-error {
     margin-bottom: 0;
   }
+
+  .textfield-correct {
+    & > input {
+      border-color: $mui-accent-color;
+      border-width: 2px;
+    }
+
+    & > label {
+      color: $mui-accent-color!important;
+    }
+
+  }
+
   .mui-textfield--error-text {
     color: $mui-text-danger;
     margin: 5px 0;

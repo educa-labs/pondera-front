@@ -7,6 +7,7 @@ const SET_FORM_VALUE = 'SET_FORM_VALUE';
 const SUBMIT_FAILURE = 'SUBMIT_FAILURE';
 const RESET_FORM = 'RESET_FORM';
 const RESET_FIELD = 'RESET_FIELD';
+const MARK_AS_CORRECT = 'MARK_AS_CORRECT';
 const VALIDATION_ERROR = 'VALIDATON_ERROR';
 
 /* ACTION CREATORS */
@@ -39,6 +40,12 @@ export const resetForm = formName => () => ({
 
 export const resetField = formName => fieldName => ({
   type: RESET_FIELD,
+  formName,
+  fieldName,
+});
+
+const markAsCorrect = formName => fieldName => ({
+  type: MARK_AS_CORRECT,
   formName,
   fieldName,
 });
@@ -90,6 +97,7 @@ export const validateField = formName => (fieldName, validator, formatter) => (
       if (typeof formatter === 'function') {
         dispatch(setFieldValue(formName)(fieldName, formatter(field.value)));
       }
+      dispatch(markAsCorrect(formName)(fieldName));
     } catch (error) {
       dispatch(validationError(formName)(fieldName, error.message));
     }
@@ -105,6 +113,7 @@ const createFormReducer = (formName, fields) => {
     value: defaultValue || '',
     error: null,
     touched: false,
+    correct: false,
     required,
   });
   const createFieldReducer = (fieldName, field) => {
@@ -148,6 +157,20 @@ const createFormReducer = (formName, fields) => {
 
     const required = (state = field.required || false) => state;
 
+    const correct = (state = false, action) => {
+      switch (action.type) {
+        case MARK_AS_CORRECT:
+          return true;
+        case SET_FORM_VALUE:
+          return false;
+        case RESET_FIELD:
+        case RESET_FORM:
+          return false;
+        default:
+          return state;
+      }
+    };
+
     return (state = createInitalState(field), action) => {
       if (action.fieldName !== fieldName && action.fieldName !== 'reset') return state;
       return combineReducers({
@@ -155,6 +178,7 @@ const createFormReducer = (formName, fields) => {
         error,
         touched,
         required,
+        correct,
       })(state, action);
     };
   };

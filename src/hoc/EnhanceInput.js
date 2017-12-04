@@ -6,13 +6,13 @@ const Input = (Component) => {
   class InputWrapper extends React.Component {
     render() {
       const {
-        errorText, hintText, setRef, ...rest
+        errorText, hintText, setRef, correct, ...rest
       } = this.props;
       return ([
         <Component
           key="0"
           ref={setRef}
-          className="mui-textfield--with-error"
+          className={`mui-textfield--with-error ${correct && 'textfield-correct'}`}
           invalid={errorText}
           {...rest}
         />,
@@ -28,12 +28,14 @@ const Input = (Component) => {
     errorText: PropTypes.string,
     hintText: PropTypes.string,
     setRef: PropTypes.func,
+    correct: PropTypes.bool,
   };
 
   InputWrapper.defaultProps = {
     errorText: null,
     hintText: null,
     setRef: null,
+    correct: false,
   };
 
   return InputWrapper;

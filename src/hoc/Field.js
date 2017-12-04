@@ -16,26 +16,29 @@ const Field = ({
   fields,
 }) => {
   const onBlur = () => {
-    dispatch(validateField(formName)(name, validator, format));
+    if (typeof validator === 'function') {
+      dispatch(validateField(formName)(name, validator, format));
+    }
   };
   const onChange = (ev) => {
     const value = type === 'checkbox' ? ev.target.checked : ev.target.value;
-    if (handleOnChange) handleOnChange(value);
+    if (typeof handleOnChange === 'function') handleOnChange(value);
     dispatch(setFieldValue(formName)(name, value));
   };
   try {
-    const { value } = fields[name];
+    const field = fields[name];
     const extraProps = {
       ...props,
       onChange,
+      correct: field.correct || undefined,
     };
     if (type === 'text' || type === 'select') {
-      extraProps.value = value;
+      extraProps.value = field.value;
       extraProps.errorText = fields[name].error;
       extraProps.onBlur = validator ? onBlur : undefined;
     }
     if (type === 'checkbox') {
-      extraProps.checked = value;
+      extraProps.checked = field.value;
     }
   
     return (
