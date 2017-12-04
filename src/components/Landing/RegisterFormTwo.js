@@ -12,6 +12,7 @@ import connectForm from '../../hoc/connectForm';
 import BubbleWarpper from '../Other/BubbleWrapper';
 import LoadingWrapper from '../Other/LoadingWrapper';
 import Field from '../../hoc/Field';
+import { emptyValidator } from '../../helpers';
 
 
 const RegisterFormTwo = ({
@@ -30,11 +31,19 @@ const RegisterFormTwo = ({
       <legend>Registro</legend>
       <div className="mui--text-subhead">completa tus datos</div>
       <br />
-      <Field name="rut">
-        <TextInput label="RUT" floatingLabel />
+      <Field name="rut" validator={emptyValidator}>
+        <TextInput
+          label="RUT"
+          hintText="Sin puntos y ni guion. Ej, 189184964"
+          floatingLabel
+        />
       </Field>
-      <Field name="phone">
-        <TextInput label="Número telefónico" floatingLabel />
+      <Field name="phone" validator={emptyValidator}>
+        <TextInput
+          label="Celular"
+          hintText="Los últimos 9 dígitos. Ej, 948464111"
+          floatingLabel
+        />
       </Field>
       <LoadingWrapper loading={regions === null}>
         {() => (

@@ -12,6 +12,13 @@
     min-height: 17px;
   }
 
+  .mui-textfield--hint-text {
+    color: $mui-text-dark-secondary;
+    margin: 5px 0;
+    font-size: 12px;
+    min-height: 17px;
+  }
+
   .mui-textfield:first-of-type {
     margin-top: 10px;
   }
