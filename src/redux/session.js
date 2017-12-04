@@ -84,6 +84,9 @@ export const registerUser = values => (
         dispatch(logUserFailure(err.response.data.message));
       } else if (err.request) {
         dispatch(logUserFailure('Oops, algo salio mal, vuelve a intentarlo'));
+      } else {
+        console.log(err);
+        dispatch(logUserFailure('Oops, algo salio mal, vuelve a intentarlo'));
       }
     }
   }

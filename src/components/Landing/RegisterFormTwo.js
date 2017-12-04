@@ -22,6 +22,7 @@ const RegisterFormTwo = ({
   regions,
   sessionLoading,
   delay,
+  submitError,
 }) => {
   const label = (
     <span>
@@ -61,6 +62,7 @@ const RegisterFormTwo = ({
       <Field name="accept" type="checkbox">
         <Checkbox label={label} />
       </Field>
+      <div className="mui-textfield--error-text">{submitError}</div>
       <BubbleWarpper trigger={delay}>
         <Button
           color="primary"
@@ -73,12 +75,16 @@ const RegisterFormTwo = ({
           </LoadingWrapper>
         </Button>
       </BubbleWarpper>
+      <div className="support-link">
+        <Link to="/support">No puedo crear una cuenta</Link>
+      </div>
     </Form>
   );
 };
 
 RegisterFormTwo.defaultProps = {
   regions: null,
+  submitError: null,
 };
 
 
@@ -86,6 +92,7 @@ RegisterFormTwo.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   sessionLoading: PropTypes.bool.isRequired,
   delay: PropTypes.bool.isRequired,
+  submitError: PropTypes.string,
   regions: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,

@@ -13,7 +13,7 @@ export const createUser = (data) => {
   const finalData = Object.assign({}, data, {
     rut: formatRutBack(data.rut),
   });
-  request.post('/users', finalData);
+  return request.post('/users', finalData);
 };
 
 export const createSession = data => (

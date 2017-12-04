@@ -60,6 +60,7 @@ class Landing extends React.Component {
           goBack={() => this.setState({ currentPage: 0 })}
           delay={this.props.delay}
           sessionLoading={this.props.sessionLoading}
+          submitError={this.props.submitError}
         />
       </PageTransition>
     );
@@ -75,6 +76,7 @@ Landing.propTypes = {
 
 export default connect(state => ({
   sessionLoading: state.session.loading,
+  submitError: state.session.error,
   delay: state.delay,
   regions: state.resources.regions.data,
   fields: getValues(state.forms.registerFormOne),
