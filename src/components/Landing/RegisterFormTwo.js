@@ -12,7 +12,7 @@ import connectForm from '../../hoc/connectForm';
 import BubbleWarpper from '../Other/BubbleWrapper';
 import LoadingWrapper from '../Other/LoadingWrapper';
 import Field from '../../hoc/Field';
-import { emptyValidator } from '../../helpers';
+import { emptyValidator, formatPhone, phoneValidator } from '../../helpers';
 
 
 const RegisterFormTwo = ({
@@ -38,7 +38,11 @@ const RegisterFormTwo = ({
           floatingLabel
         />
       </Field>
-      <Field name="phone" validator={emptyValidator}>
+      <Field
+        name="phone"
+        validator={phoneValidator}
+        format={formatPhone}
+      >
         <TextInput
           label="Celular"
           hintText="Los últimos 9 dígitos. Ej, 948464111"
