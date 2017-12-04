@@ -2,8 +2,11 @@
   legend {
     margin-bottom: 0;
   }
+
   .mui-textfield--with-error {
     margin-bottom: 0;
+  }
+  .mui-textfield-invalid {
     select + label {
       color: $mui-text-danger;
     }

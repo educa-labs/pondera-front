@@ -8,11 +8,12 @@ const Input = (Component) => {
       const {
         errorText, hintText, setRef, correct, ...rest
       } = this.props;
+      const cls = `mui-textfield--with-error ${correct ? 'textfield-correct' : ''} ${errorText ? 'textfield-invalid' : ''}`;
       return ([
         <Component
           key="0"
           ref={setRef}
-          className={`mui-textfield--with-error ${correct && 'textfield-correct'}`}
+          className={cls}
           invalid={errorText}
           {...rest}
         />,
