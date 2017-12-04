@@ -55,6 +55,13 @@
     min-height: 17px;
   }
 
+  .support-link {
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-end;
+    color: $mui-text-dark-secondary;
+  }
+
   .mui-textfield:first-of-type {
     margin-top: 10px;
   }

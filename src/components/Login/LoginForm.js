@@ -45,6 +45,9 @@ const Loginform = ({
         </LoadingWrapper>
       </Button>
     </BubbleWarpper>
+    <div className="support-link">
+      <Link to="/support">Olvidé mi contraseña</Link>
+    </div>
   </Form>
 );
 
