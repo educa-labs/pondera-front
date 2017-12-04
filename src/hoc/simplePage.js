@@ -7,7 +7,7 @@ import NavigationBar from '../components/NavigationBar/NavigationBar';
 export default Content => ({ history, ...props }) => {
   const Card = alignCenter(wrapCard(Content));
   return ([
-    <NavigationBar key="0" back={history.goBack} />,
+    <NavigationBar key="0" back onBackClick={history.goBack} />,
     <Page key="1">
       <Card {...props} />
     </Page>,
