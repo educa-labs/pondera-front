@@ -5,14 +5,18 @@ import { connect } from 'react-redux';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import { loadUserToken } from '../redux/session';
 import ProtectedRoute from '../hoc/ProtectedRoute';
-import Landing from './Landing';
-import Simula from './Simula';
-import Login from './Login';
-import Terms from '../components/Terms/Terms';
-import Ready from '../components/Terms/Ready';
-import Contacto from '../components/Terms/Contacto';
-import Support from '../components/Terms/Support';
+import lazyComponent from '../hoc/lazyComponent';
 import Background from '../components/Layout/BackGround';
+import Landing from './Landing';
+// import Support from '../components/Terms/Support';
+
+
+const Support = lazyComponent(() => import('../components/Terms/Support'))
+const Terms = lazyComponent(() => import('../components/Terms/Terms'));
+const Login = lazyComponent(() => import('./Login'));
+const Ready = lazyComponent(() => import('../components/Terms/Ready'));
+const Contacto = lazyComponent(() => import('../components/Terms/Contacto'));
+const Simula = lazyComponent(() => import('./Simula'));
 
 
 class App extends React.Component {
