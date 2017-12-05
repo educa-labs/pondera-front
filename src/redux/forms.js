@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import is from 'is_js';
 
 /* TYPES */
 
@@ -123,7 +122,7 @@ const createFormReducer = (formName, fields) => {
           return action.error;
         case SET_FORM_VALUE:
         case RESET_FIELD:
-          if (is.not.null(state)) return null;
+          if (state !== null) return null;
           return state;
         default:
           return state;

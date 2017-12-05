@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import is from 'is_js';
 import { connect } from 'react-redux';
 import MediaQuery from 'react-responsive';
 import ScrollScreen from '../components/Layout/ScrollScreen';
@@ -36,7 +35,7 @@ class Simula extends Component {
 
   componentDidMount() {
     const { token, univs } = this.props;
-    if (is.empty(univs)) {
+    if (univs === []) {
       this.props.dispatch(fetch(UNIVERSITIES, {
         token,
       }));

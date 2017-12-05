@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import is from 'is_js';
 import { connect } from 'react-redux';
 import PageTransition from '../components/Layout/PageTransition';
 import StepOne from '../components/Landing/StepOne';
@@ -24,7 +23,7 @@ class Landing extends React.Component {
 
 
   componentDidMount() {
-    if (is.empty(this.props.regions)) {
+    if (this.props.regions === []) {
       this.props.dispatch(fetch(REGIONS));
     }
   }

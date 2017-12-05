@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import is from 'is_js';
 import { connect } from 'react-redux';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import { loadUserToken } from '../redux/session';
@@ -48,7 +47,7 @@ class App extends React.Component {
       <div>
         <Background />
         <Switch>
-          <ProtectedRoute isAuthenticated={is.not.null(token)} path="/simula"component={Simula} />
+          <ProtectedRoute isAuthenticated={tokne !== null} path="/simula"component={Simula} />
           <Route path="/login" component={Login} />
           <Route path="/terms" component={Terms} />
           <Route path="/contacto" component={Contacto} />

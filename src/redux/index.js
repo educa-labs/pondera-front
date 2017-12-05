@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 import { createSelector } from 'reselect';
-import is from 'is_js';
 import session from './session';
 import results from './results';
 import createForm from './forms';
