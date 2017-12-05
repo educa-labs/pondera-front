@@ -15,7 +15,7 @@ const extractPlugin = new ExtractTextPlugin({
 module.exports = {
   entry: {
     vendor: ['react', 'react-dom', 'muicss', 'localforage'],
-    app: './src/index.js',
+    app: ['babel-polyfill', './src/index.js'],
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
