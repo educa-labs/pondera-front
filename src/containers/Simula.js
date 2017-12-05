@@ -14,7 +14,6 @@ import ResultHeader from '../components/Result/ResultHeader';
 import ResultWeights from '../components/Result/ResultWeights';
 import ResultBody from '../components/Result/ResultBody';
 import ResultFooter from '../components/Result/ResultFooter';
-import { careerNameSelector } from '../redux';
 import { logoutUser } from '../redux/session';
 import { resetField, getValues, setFieldValue } from '../redux/forms';
 import { isLoading, fetch } from '../redux/fetch';
@@ -28,10 +27,12 @@ class Simula extends Component {
     super(props);
     this.state = {
       currentScreen: 0,
+      title: '',
     };
     this.setScreen = this.setScreen.bind(this);
     this.onUnivChange = this.onUnivChange.bind(this);
     this.onSimilarClick = this.onSimilarClick.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -43,19 +44,35 @@ class Simula extends Component {
     }
   }
 
+
   componentWillReceiveProps(nextProps) {
-    if (nextProps.calculating !== this.props.calculating) {
-      if (!nextProps.calculating) {
-        console.log('Tenemos que cambiar');
-        this.setScreen(1);
+    if (nextProps.careers !== this.props.careers) {
+      const {
+        careers, univs, cId, uId,
+      } = nextProps;
+      const career = careers.filter(car => car.id === cId.toString())[0];
+      const univ = univs.filter(uni => uni.id === uId.toString())[0];
+
+      if (is.existy(career)) {
+        this.setState({ title: `${career.title} en ${univ.title}` });
       }
     }
-    if (nextProps.values.cId !== this.props.values.cId) {
-      if (this.state.currentScreen === 1) this.setScreen(0);
-    }
+    if (nextProps.cId !== this.props.cId) {
+      const {
+        careers, univs, cId, uId,
+      } = nextProps;
 
-    if (nextProps.values.uId !== this.props.values.uId) {
-      if (this.state.currentScreen === 1) this.setScreen(0);
+      const univ = univs.filter(uni => uni.id === uId)[0];
+      const career = careers.filter(car => car.id === cId)[0];
+
+      if (is.existy(career)) {
+        this.setState({ title: `${career.title} en ${univ.title}` });
+      }
+    }
+    if (nextProps.calculating !== this.props.calculating) {
+      if (!nextProps.calculating) {
+        this.setScreen(1);
+      }
     }
   }
 
@@ -85,16 +102,25 @@ class Simula extends Component {
     this.setState({ currentScreen: index });
   }
 
+  handleSubmit(values) {
+    const {
+      careers, univs, cId, uId, dispatch, token,
+    } = this.props;
+    const career = careers.filter(car => car.id === cId)[0];
+    const univ = univs.filter(uni => uni.id === uId)[0];
+
+    console.log(career, univ);
+    dispatch(calculatePonderation(values, token));
+    dispatch(getSimilarCareers(values.cId));
+  }
+
   render() {
     const {
-      result, resultName, dispatch, token, similar, similarLoading
+      result, dispatch, token, similar, similarLoading, univs, careers,
     } = this.props;
     const pondera = (
       <PonderaForm
-        onSubmit={(values) => {
-          dispatch(calculatePonderation(values, token));
-          dispatch(getSimilarCareers(values.cId));
-        }}
+        onSubmit={this.handleSubmit}
         univs={this.props.univs}
         careers={this.props.careers}
         isLoading={this.props.isLoading}
@@ -126,7 +152,7 @@ class Simula extends Component {
           </Page>
           <Page>
             <Result>
-              <ResultHeader title={resultName} />
+              <ResultHeader title={this.state.title} />
               <ResultWeights result={result} />
               <ResultBody
                 result={result}
@@ -148,7 +174,7 @@ class Simula extends Component {
           <PonderaDesk
             index={this.state.currentScreen}
             result={result}
-            resultName={resultName}
+            resultName={this.state.title}
             similar={similar}
             onSimilarClick={(cId, uId) => {
               this.setScreen(0);
@@ -169,7 +195,6 @@ Simula.propTypes = {
   calculating: PropTypes.bool.isRequired,
   token: PropTypes.string.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  resultName: PropTypes.string.isRequired,
   careers: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
@@ -187,6 +212,7 @@ export default connect(state => ({
   result: state.results.result,
   similar: state.similar.similar,
   similarLoading: state.similar.loading,
-  resultName: careerNameSelector(state),
+  cId: state.forms.ponderaForm.cId.value,
+  uId: state.forms.ponderaForm.uId.value,
 }))(Simula);
 

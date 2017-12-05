@@ -53,7 +53,7 @@ export const requestPonderation = (data, token) => (
 );
 
 export const requestSimilarCareers = (cId, token) => (
-  request.get(`/similar/${cId}`, {
+  request.get(`/ponderar/similar/${cId}`, {
     headers: {
       Authorization: token,
     },

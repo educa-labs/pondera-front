@@ -24,7 +24,7 @@ const ResultBody = ({ result, similar, onSimilarClick }) => {
         <Row>
           <Col xs={7}>Diferencia</Col>
           <Col className="result-body-values" xs={5}>
-            {result.diff || 'No disponible'}
+            {result.diff.toFixed(2) || 'No disponible'}
           </Col>
         </Row>
       </Container>
@@ -33,7 +33,7 @@ const ResultBody = ({ result, similar, onSimilarClick }) => {
         <Container className="result-body">
           {similar.map(career => (
             <Row key={career.cId}>
-              <Col xs={7}>{career.title}</Col>
+              <Col xs={7}>{career.cTitle} {career.uInitials}</Col>
               <Col className="pondera-link" xs={5}>
                 <div onClick={() => onSimilarClick(career.cId, career.uId)}>
                   ponderar

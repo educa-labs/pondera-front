@@ -33,11 +33,12 @@ const PonderaDesk = ({
 
 PonderaDesk.defaultProps = {
   result: null,
+  similar: null,
 };
 
 PonderaDesk.propTypes = {
   result: PropTypes.object,
-  similar: PropTypes.array.isRequired,
+  similar: PropTypes.array,
   children: PropTypes.element.isRequired,
   index: PropTypes.number.isRequired,
   onSimilarClick: PropTypes.func.isRequired,
