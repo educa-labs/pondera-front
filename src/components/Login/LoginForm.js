@@ -26,7 +26,7 @@ const Loginform = ({
     </div>
     <br />
     <Field name="mail" validator={emailValidator}>
-      <TextInput label="Correo electrónico" floatingLabel />
+      <TextInput autocapitalize="none" label="Correo electrónico" floatingLabel />
     </Field>
     <Field name="password" validator={emptyValidator}>
       <TextInput label="Contraseña" type="password" floatingLabel />

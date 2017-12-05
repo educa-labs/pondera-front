@@ -48,7 +48,7 @@ const RegisterFormTwo = ({
       >
         <TextInput
           label="Celular"
-          hintText="Sin codigo de país. Ej, 948464111"
+          hintText="Sin +569. Ej, 48464111"
           floatingLabel
         />
       </Field>

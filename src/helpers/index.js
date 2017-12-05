@@ -22,9 +22,9 @@ export const scoreValidator = value => new Promise((resolve, reject) => {
 });
 
 export const phoneValidator = (value) => {
-  const match = value.match(/^(\+56)?(9\d{8})/);
+  const match = value.match(/^(\+569)?(\d{8})/);
   if (match) return Promise.resolve();
-  return Promise.reject(new Error('Ingresa un número válido, ej, 948454110'));
+  return Promise.reject(new Error('Ingresa un número válido, ej, 48454111'));
 };
 
 export const emailValidator = (value) => {
@@ -40,8 +40,8 @@ export const lengthValidator = (min, max = 32) => (value) => {
 };
 
 export const formatPhone = (value) => {
-  const match = value.match(/^(\+56)?(9\d{8})/);
-  return `+56${match[2]}`;
+  const match = value.match(/^(\+569)?(\d{8})/);
+  return `+569${match[2]}`;
 };
 
 export const rutValidator = (value) => {
