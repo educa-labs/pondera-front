@@ -2,14 +2,10 @@
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunkMiddleware from 'redux-thunk';
-// import logger from 'redux-logger';
+import logger from 'redux-logger';
 import reducer from '../redux';
 
-async function configureStore() {
-  let logger;
-  if (process.env.NODE_ENV === 'development') {
-    const logger = await import('redux-logger');
-  }
+function configureStore() {
   const store = createStore(
     reducer,
     composeWithDevTools(applyMiddleware(thunkMiddleware, logger)),

@@ -20,7 +20,7 @@ const Simula = lazyComponent(() => import('./Simula'));
 
 class App extends React.Component {
   componentDidMount() {
-    if (is.null(this.props.token)) {
+    if (this.props.token === null) {
       this.props.dispatch(loadUserToken());
     }
   }
@@ -47,7 +47,7 @@ class App extends React.Component {
       <div>
         <Background />
         <Switch>
-          <ProtectedRoute isAuthenticated={tokne !== null} path="/simula"component={Simula} />
+          <ProtectedRoute isAuthenticated={token !== null} path="/simula"component={Simula} />
           <Route path="/login" component={Login} />
           <Route path="/terms" component={Terms} />
           <Route path="/contacto" component={Contacto} />
