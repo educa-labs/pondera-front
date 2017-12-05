@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import is from 'is_js';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MediaQuery from 'react-responsive';
@@ -35,7 +36,7 @@ class Simula extends Component {
 
   componentDidMount() {
     const { token, univs } = this.props;
-    if (univs === []) {
+    if (is.empty(univs)) {
       this.props.dispatch(fetch(UNIVERSITIES, {
         token,
       }));

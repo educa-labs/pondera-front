@@ -12,7 +12,6 @@ export default function lazyComponent(importComponent) {
 
     async componentDidMount() {
       const { default: component } = await importComponent();
-      console.log('Montamos');
       this.setState({
         component: component
       });
