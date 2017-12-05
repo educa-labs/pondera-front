@@ -65,7 +65,8 @@ class Simula extends Component {
       const univ = univs.filter(uni => uni.id === uId)[0];
       const career = careers.filter(car => car.id === cId)[0];
 
-      if (is.existy(career)) {
+      this.setScreen(0);
+      if (is.all.existy(career, univ)) {
         this.setState({ title: `${career.title} en ${univ.title}` });
       }
     }
@@ -99,17 +100,15 @@ class Simula extends Component {
   }
 
   setScreen(index) {
-    this.setState({ currentScreen: index });
+    if (this.state.currentScreen !== index) {
+      this.setState({ currentScreen: index });
+    }
   }
 
   handleSubmit(values) {
     const {
       careers, univs, cId, uId, dispatch, token,
     } = this.props;
-    const career = careers.filter(car => car.id === cId)[0];
-    const univ = univs.filter(uni => uni.id === uId)[0];
-
-    console.log(career, univ);
     dispatch(calculatePonderation(values, token));
     dispatch(getSimilarCareers(values.cId));
   }
