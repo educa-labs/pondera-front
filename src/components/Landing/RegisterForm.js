@@ -20,13 +20,13 @@ const RegisterForm = ({ onSubmit }) => (
     </div>
     <br />
     <Field name="name" validator={nameValidator}>
-      <TextInput label="Nombre y apellido" hint="Pablo Rojas" />
+      <TextInput id="name" label="Nombre y apellido" hint="Pablo Rojas" />
     </Field>
     <Field name="mail" validator={emailValidator}>
-      <TextInput label="Correo electrónico" hint="plablo@gmail.com" />
+      <TextInput id="mail" label="Correo electrónico" hint="plablo@gmail.com" />
     </Field>
     <Field name="password" validator={lengthValidator(8)}>
-      <TextInput label="Contraseña" floatingLabel type="password" />
+      <TextInput id="password" label="Contraseña" floatingLabel type="password" />
     </Field>
     <Button
       color="primary"
