@@ -52,7 +52,6 @@ class Simula extends Component {
         careers, univs, cId, uId,
       } = nextProps;
       const career = careers.filter(car => car.id === cId.toString())[0];
-      console.log(career, cId);
       const univ = univs.filter(uni => uni.id === uId.toString())[0];
 
       if (is.existy(career)) {
@@ -67,7 +66,7 @@ class Simula extends Component {
       const univ = univs.filter(uni => uni.id === uId)[0];
       const career = careers.filter(car => car.id === cId)[0];
 
-      this.setScreen(0);
+      //
       if (is.all.existy(career, univ)) {
         this.setState({ title: `${career.title} en ${univ.title}` });
       }
@@ -229,6 +228,8 @@ Simula.propTypes = {
       science: PropTypes.number,
     }),
   }).isRequired,
+  cId: PropTypes.string.isRequired,
+  uId: PropTypes.string.isRequired,
 };
 
 
