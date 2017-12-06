@@ -8,7 +8,7 @@ import wrapCard from '../../hoc/wrapCard';
 import alignCenter from '../../hoc/alignCenter';
 import Field from '../../hoc/Field';
 import connectForm from '../../hoc/connectForm';
-import { emptyValidator } from '../../helpers';
+import { lengthValidator, nameValidator, emailValidator } from '../../helpers';
 
 
 const RegisterForm = ({ onSubmit }) => (
@@ -19,14 +19,14 @@ const RegisterForm = ({ onSubmit }) => (
       <Link to="login">inicia sesión en tu cuenta</Link>
     </div>
     <br />
-    <Field name="name" validator={emptyValidator}>
-      <TextInput label="Nombre y apellido" floatingLabel />
+    <Field name="name" validator={nameValidator}>
+      <TextInput id="name" label="Nombre y apellido" hint="Sebastián Guiller" />
     </Field>
-    <Field name="mail" validator={emptyValidator}>
-      <TextInput label="Correo electrónico" floatingLabel />
+    <Field name="mail" validator={emailValidator}>
+      <TextInput autocapitalize="none" id="mail" label="Correo electrónico" hint="sebag@gmail.com" />
     </Field>
-    <Field name="password">
-      <TextInput label="Contraseña" floatingLabel type="password" />
+    <Field name="password" validator={lengthValidator(8)}>
+      <TextInput id="password" label="Contraseña" floatingLabel type="password" />
     </Field>
     <Button
       color="primary"

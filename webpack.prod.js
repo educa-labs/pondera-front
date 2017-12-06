@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
@@ -12,10 +13,10 @@ const extractPlugin = new ExtractTextPlugin({
 });
 
 module.exports = {
-  entry: [
-    'babel-polyfill',
-    './src/index.js',
-  ],
+  entry: {
+    vendor: ['react', 'react-dom', 'muicss', 'localforage'],
+    app: ['babel-polyfill', './src/index.js'],
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[chunkhash].js',
@@ -105,6 +106,12 @@ module.exports = {
     ]),
     new ServiceWorkerWebpackPlugin({
       entry: path.join(__dirname, 'public/sw.js'),
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
     }),
   ],
 };

@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import is from 'is_js';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import PageTransition from '../components/Layout/PageTransition';
 import StepOne from '../components/Landing/StepOne';
@@ -26,12 +26,6 @@ class Landing extends React.Component {
   componentDidMount() {
     if (is.empty(this.props.regions)) {
       this.props.dispatch(fetch(REGIONS));
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.delay && !nextProps.delay) {
-      this.props.history.replace('/simula');
     }
   }
 
@@ -66,6 +60,7 @@ class Landing extends React.Component {
           goBack={() => this.setState({ currentPage: 0 })}
           delay={this.props.delay}
           sessionLoading={this.props.sessionLoading}
+          submitError={this.props.submitError}
         />
       </PageTransition>
     );
@@ -81,6 +76,7 @@ Landing.propTypes = {
 
 export default connect(state => ({
   sessionLoading: state.session.loading,
+  submitError: state.session.error,
   delay: state.delay,
   regions: state.resources.regions.data,
   fields: getValues(state.forms.registerFormOne),

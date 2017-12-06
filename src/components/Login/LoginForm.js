@@ -7,7 +7,7 @@ import TextInput from '../Inputs/TextInput';
 import wrapCard from '../../hoc/wrapCard';
 import alignCenter from '../../hoc/alignCenter';
 import connectForm from '../../hoc/connectForm';
-import { emptyValidator } from '../../helpers';
+import { emptyValidator, emailValidator } from '../../helpers';
 import BubbleWarpper from '../Other/BubbleWrapper';
 import Field from '../../hoc/Field';
 import LoadingWrapper from '../Other/LoadingWrapper';
@@ -25,8 +25,8 @@ const Loginform = ({
       <Link to="/">regístrate para ponderar</Link>
     </div>
     <br />
-    <Field name="mail" validator={emptyValidator}>
-      <TextInput label="Correo electrónico" floatingLabel />
+    <Field name="mail" validator={emailValidator}>
+      <TextInput autocapitalize="none" label="Correo electrónico" floatingLabel />
     </Field>
     <Field name="password" validator={emptyValidator}>
       <TextInput label="Contraseña" type="password" floatingLabel />
@@ -45,6 +45,9 @@ const Loginform = ({
         </LoadingWrapper>
       </Button>
     </BubbleWarpper>
+    <div className="support-link">
+      <Link to="/support">Olvidé mi contraseña</Link>
+    </div>
   </Form>
 );
 

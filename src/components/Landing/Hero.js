@@ -1,5 +1,5 @@
 import React from 'react';
-import swift from '../../assets/images/swift.png';
+// import swift from '../../assets/images/swift.png';
 
 const Hero = ({ frame }) => (
   <section id="hero-landing">

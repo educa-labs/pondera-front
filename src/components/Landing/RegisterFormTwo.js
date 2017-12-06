@@ -12,6 +12,9 @@ import connectForm from '../../hoc/connectForm';
 import BubbleWarpper from '../Other/BubbleWrapper';
 import LoadingWrapper from '../Other/LoadingWrapper';
 import Field from '../../hoc/Field';
+import {
+  formatPhone, phoneValidator, formatRut, rutValidator, emptyValidator,
+} from '../../helpers';
 
 
 const RegisterFormTwo = ({
@@ -19,6 +22,7 @@ const RegisterFormTwo = ({
   regions,
   sessionLoading,
   delay,
+  submitError,
 }) => {
   const label = (
     <span>
@@ -30,22 +34,35 @@ const RegisterFormTwo = ({
       <legend>Registro</legend>
       <div className="mui--text-subhead">completa tus datos</div>
       <br />
-      <Field name="rut">
-        <TextInput label="RUT" floatingLabel />
+      <Field name="rut" validator={rutValidator} format={formatRut}>
+        <TextInput
+          label="RUT"
+          hintText="Sin puntos ni guion. Ej, 189184964"
+          floatingLabel
+        />
       </Field>
-      <Field name="phone">
-        <TextInput label="Número telefónico" floatingLabel />
+      <Field
+        name="phone"
+        validator={phoneValidator}
+        format={formatPhone}
+      >
+        <TextInput
+          label="Celular"
+          hintText="Sin +569. Ej, 48464111"
+          floatingLabel
+        />
       </Field>
       <LoadingWrapper loading={regions === null}>
         {() => (
-          <Field name="regionId" type="select">
-            <SelectInput label="Región" placeholder="Region" options={regions} />
+          <Field name="regionId" type="select" validator={emptyValidator}>
+            <SelectInput label="Región" placeholder="Escoge una región" options={regions} />
           </Field>
         )}
       </LoadingWrapper>
       <Field name="accept" type="checkbox">
         <Checkbox label={label} />
       </Field>
+      <div className="mui-textfield--error-text">{submitError}</div>
       <BubbleWarpper trigger={delay}>
         <Button
           color="primary"
@@ -58,12 +75,16 @@ const RegisterFormTwo = ({
           </LoadingWrapper>
         </Button>
       </BubbleWarpper>
+      <div className="support-link">
+        <Link to="/support">No puedo crear una cuenta</Link>
+      </div>
     </Form>
   );
 };
 
 RegisterFormTwo.defaultProps = {
   regions: null,
+  submitError: null,
 };
 
 
@@ -71,6 +92,7 @@ RegisterFormTwo.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   sessionLoading: PropTypes.bool.isRequired,
   delay: PropTypes.bool.isRequired,
+  submitError: PropTypes.string,
   regions: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,

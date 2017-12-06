@@ -1,22 +1,45 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 
 const Input = (Component) => {
-  return class InputWrapper extends React.Component {
+  class InputWrapper extends React.Component {
     render() {
-      const { errorText, setRef, ...rest } = this.props;
+      const {
+        errorText, hintText, setRef, correct, ...rest
+      } = this.props;
+      const cls = `mui-textfield--with-error ${correct ? 'textfield-correct' : ''} ${errorText ? 'textfield-invalid' : ''}`;
       return ([
         <Component
           key="0"
           ref={setRef}
-          className="mui-textfield--with-error"
+          className={cls}
           invalid={errorText}
           {...rest}
         />,
-        <div key="1" className="mui-textfield--error-text">{errorText}</div>,
+        errorText ? (
+          <div key="2" className="mui-textfield--error-text">{errorText}</div>
+        ) : (
+          <div key="1" className="mui-textfield--hint-text">{hintText}</div>
+        ),
       ]);
     }
+  }
+  InputWrapper.propTypes = {
+    errorText: PropTypes.string,
+    hintText: PropTypes.string,
+    setRef: PropTypes.func,
+    correct: PropTypes.bool,
   };
+
+  InputWrapper.defaultProps = {
+    errorText: null,
+    hintText: null,
+    setRef: null,
+    correct: false,
+  };
+
+  return InputWrapper;
 };
 
 export default Input;

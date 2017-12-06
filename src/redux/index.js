@@ -7,6 +7,8 @@ import createForm from './forms';
 import delay from './delay';
 import propmtEvent from './promptEvent';
 import fetchReducer from './fetch';
+import similar from './similar';
+
 import {
   UNIVERSITIES,
   CAREERS,
@@ -65,12 +67,10 @@ const resultTitleSelector = (univs, careers, uId, cId) => {
   if (is.any.empty(univs, careers, uId, cId)) return '';
   const career = careers.filter(car => car.id === cId)[0];
   const univ = univs.filter(uni => uni.id === uId)[0];
-  try {
+  if (is.all.existy(career, univ)) {
     return `${career.title} en ${univ.title}`;
-  } catch (err) {
-    console.log(univs, careers, uId, cId);
-    return '';
   }
+  return '';
 };
 
 export const careerNameSelector = createSelector(
@@ -89,4 +89,5 @@ export default combineReducers({
   results,
   propmtEvent,
   resources,
+  similar,
 });

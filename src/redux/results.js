@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import { createSelector } from 'reselect';
 import { requestPonderation } from '../helpers/api';
 
 const PONDERA_REQUEST = 'PONDERA_REQUEST';
 const PONDERA_FAILURE = 'PONDERA_FAILURE';
 const PONDERA_SUCCESS = 'PONDERA_SUCCESS';
+
 
 /* ACTION CREATORS */
 
@@ -21,6 +21,7 @@ const ponderaSuccess = result => ({
   type: PONDERA_SUCCESS,
   result,
 });
+
 
 /* THUNK */
 

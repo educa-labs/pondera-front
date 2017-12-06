@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import is from 'is_js';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MediaQuery from 'react-responsive';
 import ScrollScreen from '../components/Layout/ScrollScreen';
@@ -14,12 +14,17 @@ import ResultHeader from '../components/Result/ResultHeader';
 import ResultWeights from '../components/Result/ResultWeights';
 import ResultBody from '../components/Result/ResultBody';
 import ResultFooter from '../components/Result/ResultFooter';
+<<<<<<< HEAD
 import { careerNameSelector } from '../redux';
 import { logOut } from '../redux/session';
+=======
+import { logoutUser } from '../redux/session';
+>>>>>>> 6bdcbfcc5e8b791966118814a94bd21b9fafed2e
 import { resetField, getValues, setFieldValue } from '../redux/forms';
 import { isLoading, fetch } from '../redux/fetch';
 import { calculatePonderation } from '../redux/results';
-import { UNIVERSITIES, CAREERS, HISTORY } from '../helpers/constants';
+import { getSimilarCareers } from '../redux/similar';
+import { UNIVERSITIES, CAREERS } from '../helpers/constants';
 
 
 class Simula extends Component {
@@ -27,103 +32,96 @@ class Simula extends Component {
     super(props);
     this.state = {
       currentScreen: 0,
-      selectedTest: HISTORY,
+      title: '',
     };
     this.setScreen = this.setScreen.bind(this);
-    this.handleLogOut = this.handleLogOut.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.onUnivChange = this.onUnivChange.bind(this);
-    this.onSelectTest = this.onSelectTest.bind(this);
-    this.setHistoryRef = this.setHistoryRef.bind(this);
-    this.setScienceRef = this.setScienceRef.bind(this);
     this.onSimilarClick = this.onSimilarClick.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
-    if (is.null(this.props.token)) {
-      this.props.history.replace('/');
-    }
-    if (is.empty(this.props.univs)) {
+    const { token, univs } = this.props;
+    if (is.empty(univs)) {
       this.props.dispatch(fetch(UNIVERSITIES, {
-        token: this.props.token,
+        token,
       }));
     }
   }
 
+
   componentWillReceiveProps(nextProps) {
+    if (nextProps.careers !== this.props.careers) {
+      const {
+        careers, univs, cId, uId,
+      } = nextProps;
+      const career = careers.filter(car => car.id === cId.toString())[0];
+      const univ = univs.filter(uni => uni.id === uId.toString())[0];
+
+      if (is.existy(career)) {
+        this.setState({ title: `${career.title} en ${univ.title}` });
+      }
+    }
+    if (nextProps.cId !== this.props.cId) {
+      const {
+        careers, univs, cId, uId,
+      } = nextProps;
+
+      const univ = univs.filter(uni => uni.id === uId)[0];
+      const career = careers.filter(car => car.id === cId)[0];
+
+      this.setScreen(0);
+      if (is.all.existy(career, univ)) {
+        this.setState({ title: `${career.title} en ${univ.title}` });
+      }
+    }
     if (nextProps.calculating !== this.props.calculating) {
       if (!nextProps.calculating) {
         this.setScreen(1);
       }
     }
-    if (nextProps.resultName !== this.props.resultName) {
-      this.setScreen(0);
-    }
   }
 
   onUnivChange(id) {
+    const { token } = this.props;
     this.props.dispatch(fetch(CAREERS, {
       id,
-      token: this.props.token,
+      token,
     }));
     this.props.dispatch(resetField('ponderaForm')('cId'));
   }
 
-  async onSelectTest(ev) {
-    const selectedTest = ev.target.id;
-    let other;
-
-    await this.setState({ selectedTest });
-    if (selectedTest === HISTORY) {
-      other = 'science';
-      this.historyEl.controlEl.focus();
-    } else {
-      other = 'history';
-      this.scienceEl.controlEl.focus();
-    }
-    this.props.dispatch(resetField('ponderaForm')(other));
-  }
-
 
   onSimilarClick(cId, uId) {
-    const { fields, dispatch, token } = this.props;
-    const values = Object.assign({}, fields, {
+    const { values, dispatch, token } = this.props;
+    const finalValues = Object.assign({}, values, {
       cId,
-      uId: undefined,
+      uId,
     });
-    dispatch(calculatePonderation(values, token));
+    dispatch(calculatePonderation(finalValues, token));
+    dispatch(fetch(CAREERS, { id: uId, token }));
     dispatch(setFieldValue('ponderaForm')('cId', cId));
     dispatch(setFieldValue('ponderaForm')('uId', uId));
   }
 
-  setHistoryRef(el) {
-    if (el) {
-      this.historyEl = el;
-    }
-  }
-
   setScreen(index) {
-    this.setState({ currentScreen: index });
-  }
-
-  setScienceRef(el) {
-    if (el) {
-      this.scienceEl = el;
+    if (this.state.currentScreen !== index) {
+      this.setState({ currentScreen: index });
     }
   }
 
   handleSubmit(values) {
-    const { token } = this.props;
-    this.props.dispatch(calculatePonderation(values, token));
-  }
-
-
-  handleLogOut() {
-    this.props.dispatch(logOut());
-    this.props.history.replace('/');
+    const {
+      careers, univs, cId, uId, dispatch, token,
+    } = this.props;
+    dispatch(calculatePonderation(values, token));
+    dispatch(getSimilarCareers(values.cId));
   }
 
   render() {
+    const {
+      result, dispatch, token, similar, similarLoading, univs, careers,
+    } = this.props;
     const pondera = (
       <PonderaForm
         onSubmit={this.handleSubmit}
@@ -132,35 +130,40 @@ class Simula extends Component {
         isLoading={this.props.isLoading}
         calculating={this.props.calculating}
         onUnivChange={this.onUnivChange}
-        onSelectTest={this.onSelectTest}
-        selectedTest={this.state.selectedTest}
-        setHistoryRef={this.setHistoryRef}
-        setScienceRef={this.setScienceRef}
+        dispatch={dispatch}
       />
     );
     const DeskForm = React.cloneElement(pondera, {
       desk: true,
       onSubmit: (values) => {
         this.setScreen(0);
-        this.handleSubmit(values);
+        dispatch(calculatePonderation(values, token));
+        dispatch(getSimilarCareers(values.cId));
       },
     });
     
-    const { result, resultName } = this.props;
     return ([
       <MediaQuery key="0" maxDeviceWidth={1224}>
-        <ScrollScreen index={this.state.currentScreen}>
+        <ScrollScreen
+          index={this.state.currentScreen}
+          goBack={() => this.setScreen(0)}
+        >
           <Page>
-            <NavigationBar pondera logOut={this.handleLogOut} />
+            <NavigationBar pondera logOut={() => dispatch(logoutUser())} />
             <PonderaMobile>
               {pondera}
             </PonderaMobile>
           </Page>
           <Page>
             <Result>
-              <ResultHeader title={resultName} />
+              <ResultHeader title={this.state.title} />
               <ResultWeights result={result} />
-              <ResultBody result={result} onSimilarClick={this.onSimilarClick} />
+              <ResultBody
+                result={result}
+                similar={similar}
+                loading={similarLoading}
+                onSimilarClick={this.onSimilarClick}
+              />
               <ResultFooter
                 onClick={() => this.setScreen(0)}
                 calculating={this.props.calculating}
@@ -175,10 +178,11 @@ class Simula extends Component {
           <PonderaDesk
             index={this.state.currentScreen}
             result={result}
-            resultName={resultName}
-            onSimilarClick={() => {
+            resultName={this.state.title}
+            similar={similar}
+            onSimilarClick={(cId, uId) => {
               this.setScreen(0);
-              this.onSimilarClick();
+              this.onSimilarClick(cId, uId);
             }}
             calculating={this.props.calculating}
           >
@@ -195,7 +199,6 @@ Simula.propTypes = {
   calculating: PropTypes.bool.isRequired,
   token: PropTypes.string.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  resultName: PropTypes.string.isRequired,
   careers: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
@@ -232,8 +235,15 @@ export default connect(state => ({
   token: state.session.token,
   isLoading: isLoading(state),
   calculating: state.results.loading,
+<<<<<<< HEAD
   fields: getValues(state.forms.ponderaForm),
+=======
+  values: getValues(state.forms.ponderaForm),
+>>>>>>> 6bdcbfcc5e8b791966118814a94bd21b9fafed2e
   result: state.results.result,
-  resultName: careerNameSelector(state),
+  similar: state.similar.similar,
+  similarLoading: state.similar.loading,
+  cId: state.forms.ponderaForm.cId.value,
+  uId: state.forms.ponderaForm.uId.value,
 }))(Simula);
 

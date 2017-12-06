@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { REGIONS, UNIVERSITIES, CAREERS } from '../helpers/constants';
+import { formatRutBack } from '../helpers';
 
 const request = axios.create({
   baseURL: 'https://api.pondera.cl/api/v1',
@@ -8,9 +9,12 @@ const request = axios.create({
   timeout: 2000,
 });
 
-export const createUser = data => (
-  request.post('/users', data)
-);
+export const createUser = (data) => {
+  const finalData = Object.assign({}, data, {
+    rut: formatRutBack(data.rut),
+  });
+  return request.post('/users', finalData);
+};
 
 export const createSession = data => (
   request.post('/session', data)
@@ -48,7 +52,11 @@ export const requestPonderation = (data, token) => (
   })
 );
 
-
-
-
+export const requestSimilarCareers = (cId, token) => (
+  request.get(`/ponderar/similar/${cId}`, {
+    headers: {
+      Authorization: token,
+    },
+  })
+);
 

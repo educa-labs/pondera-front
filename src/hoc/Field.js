@@ -6,9 +6,9 @@ import { validateField, setFieldValue } from '../redux/forms';
 const Field = ({
   name,
   validator,
+  format,
   type,
-  checkValue,
-  logChange,
+  dispatch,
   handleOnChange,
   ...props
 }, {
@@ -16,26 +16,29 @@ const Field = ({
   fields,
 }) => {
   const onBlur = () => {
-    checkValue(formName)(name, validator);
+    if (typeof validator === 'function') {
+      dispatch(validateField(formName)(name, validator, format));
+    }
   };
   const onChange = (ev) => {
     const value = type === 'checkbox' ? ev.target.checked : ev.target.value;
-    if (handleOnChange) handleOnChange(value);
-    logChange(formName)(name, value);
+    if (typeof handleOnChange === 'function') handleOnChange(value);
+    dispatch(setFieldValue(formName)(name, value));
   };
   try {
-    const { value } = fields[name];
+    const field = fields[name];
     const extraProps = {
       ...props,
       onChange,
+      correct: field.correct || undefined,
     };
     if (type === 'text' || type === 'select') {
-      extraProps.value = value;
+      extraProps.value = field.value;
       extraProps.errorText = fields[name].error;
       extraProps.onBlur = validator ? onBlur : undefined;
     }
     if (type === 'checkbox') {
-      extraProps.checked = value;
+      extraProps.checked = field.value;
     }
   
     return (
@@ -69,4 +72,4 @@ const dispatchToProps = dispatch => ({
   ),
 });
 
-export default connect(null, dispatchToProps)(Field);
+export default connect(null)(Field);
