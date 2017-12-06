@@ -23,7 +23,7 @@ const RegisterForm = ({ onSubmit }) => (
       <TextInput id="name" label="Nombre y apellido" hint="Sebastián Guiller" />
     </Field>
     <Field name="mail" validator={emailValidator}>
-      <TextInput autocapitalize="none" id="mail" label="Correo electrónico" hint="sebag@gmail.com" />
+      <TextInput autoCapitalize="none" id="mail" label="Correo electrónico" hint="sebag@gmail.com" />
     </Field>
     <Field name="password" validator={lengthValidator(8)}>
       <TextInput id="password" label="Contraseña" floatingLabel type="password" />

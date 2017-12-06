@@ -14,12 +14,7 @@ import ResultHeader from '../components/Result/ResultHeader';
 import ResultWeights from '../components/Result/ResultWeights';
 import ResultBody from '../components/Result/ResultBody';
 import ResultFooter from '../components/Result/ResultFooter';
-<<<<<<< HEAD
-import { careerNameSelector } from '../redux';
-import { logOut } from '../redux/session';
-=======
 import { logoutUser } from '../redux/session';
->>>>>>> 6bdcbfcc5e8b791966118814a94bd21b9fafed2e
 import { resetField, getValues, setFieldValue } from '../redux/forms';
 import { isLoading, fetch } from '../redux/fetch';
 import { calculatePonderation } from '../redux/results';
@@ -235,11 +230,7 @@ export default connect(state => ({
   token: state.session.token,
   isLoading: isLoading(state),
   calculating: state.results.loading,
-<<<<<<< HEAD
-  fields: getValues(state.forms.ponderaForm),
-=======
   values: getValues(state.forms.ponderaForm),
->>>>>>> 6bdcbfcc5e8b791966118814a94bd21b9fafed2e
   result: state.results.result,
   similar: state.similar.similar,
   similarLoading: state.similar.loading,
