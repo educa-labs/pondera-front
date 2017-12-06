@@ -29,8 +29,16 @@ export const calculatePonderation = (values, token) => (
   async (dispatch) => {
     dispatch(ponderaRequest());
     try {
+      const now = new Date();
       const result = await requestPonderation(values, token);
-      dispatch(ponderaSuccess(result.data));
+      const diff = new Date() - now;
+      if (diff < 500) {
+        setTimeout(() => {
+          dispatch(ponderaSuccess(result.data));
+        }, 500 - diff);
+      } else {
+        dispatch(ponderaSuccess(result.data));
+      }
     } catch (err) {
       dispatch(ponderaFailure(err));
     }
