@@ -7,7 +7,6 @@ import ProtectedRoute from '../hoc/ProtectedRoute';
 import lazyComponent from '../hoc/lazyComponent';
 import Background from '../components/Layout/BackGround';
 import Landing from './Landing';
-// import Support from '../components/Terms/Support';
 
 
 const Support = lazyComponent(() => import('../components/Terms/Support'))

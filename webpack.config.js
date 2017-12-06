@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
@@ -82,6 +83,11 @@ module.exports = {
     }),
     new ServiceWorkerWebpackPlugin({
       entry: path.join(__dirname, 'public/sw.js'),
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production'),
+      },
     }),
   ],
 };

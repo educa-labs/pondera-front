@@ -33,6 +33,12 @@ render(App);
 
 if (module.hot) {
   module.hot.accept('./containers/App', () => {
+    console.log('Hola')
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Entramos');
+      require('./containers/Simula');
+      require('./containers/Landing');
+    }
     const NextApp = require('./containers/App').default;
     render(NextApp);
   });
