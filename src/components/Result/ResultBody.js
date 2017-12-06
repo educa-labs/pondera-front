@@ -1,8 +1,8 @@
 import React from 'react';
-import is from 'is_js';
 import Container from 'muicss/lib/react/container';
 import Row from 'muicss/lib/react/row';
 import Col from 'muicss/lib/react/col';
+import { truncateString } from '../../helpers';
 
 const ResultBody = ({ result, similar, onSimilarClick }) => {
   if (result === null) return null;
@@ -32,16 +32,24 @@ const ResultBody = ({ result, similar, onSimilarClick }) => {
       {similar && <div className="result-header-gray">Carreras similares</div>}
       {similar && (
         <Container className="result-body">
-          {similar.map(career => (
-            <Row key={career.cId}>
-              <Col xs={7}>{career.cTitle} {career.uInitials}</Col>
-              <Col className="pondera-link" xs={5}>
-                <div onClick={() => onSimilarClick(career.cId, career.uId)}>
-                  ponderar
+          <Row>
+            <Col xs={8}>
+              {similar.map(career => (
+                <div key={career.cId} className="similar-title">
+                  <span>{truncateString(`${career.cTitle} ${career.uInitials}`, 50)}</span>
                 </div>
-              </Col>
-            </Row>
-          ))}
+              ))}
+            </Col>
+            <Col xs={4}>
+              {similar.map(career => (
+                <div key={career.cId} className="similar-title">
+                  <div className="pondera-link" onClick={() => onSimilarClick(career.cId, career.uId)}>
+                    ponderar
+                  </div>
+                </div>
+              ))}
+            </Col>
+          </Row>
         </Container>
       )}
     </div>

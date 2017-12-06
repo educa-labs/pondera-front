@@ -33,6 +33,7 @@ class Simula extends Component {
     this.onUnivChange = this.onUnivChange.bind(this);
     this.onSimilarClick = this.onSimilarClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onReset = this.onReset.bind(this);
   }
 
   componentDidMount() {
@@ -51,6 +52,7 @@ class Simula extends Component {
         careers, univs, cId, uId,
       } = nextProps;
       const career = careers.filter(car => car.id === cId.toString())[0];
+      console.log(career, cId);
       const univ = univs.filter(uni => uni.id === uId.toString())[0];
 
       if (is.existy(career)) {
@@ -105,6 +107,21 @@ class Simula extends Component {
     }
   }
 
+  onReset() {
+    const { dispatch, token } = this.props;
+    dispatch(fetch(CAREERS, {
+      id: 28,
+      token,
+    }));
+    dispatch(setFieldValue('ponderaForm')('cId', 1340));
+    dispatch(setFieldValue('ponderaForm')('uId', 28));
+    dispatch(setFieldValue('ponderaForm')('NEM', '555'));
+    dispatch(setFieldValue('ponderaForm')('ranking', '555'));
+    dispatch(setFieldValue('ponderaForm')('language', '555'));
+    dispatch(setFieldValue('ponderaForm')('math', '555'));
+    dispatch(setFieldValue('ponderaForm')('history', '555'));
+  }
+
   handleSubmit(values) {
     const {
       careers, univs, cId, uId, dispatch, token,
@@ -126,6 +143,7 @@ class Simula extends Component {
         calculating={this.props.calculating}
         onUnivChange={this.onUnivChange}
         dispatch={dispatch}
+        onReset={this.onReset}
       />
     );
     const DeskForm = React.cloneElement(pondera, {
@@ -198,16 +216,6 @@ Simula.propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
   })).isRequired,
-  fields: PropTypes.shape({
-    NEM: PropTypes.string.isRequired,
-    ranking: PropTypes.string.isRequired,
-    language: PropTypes.string.isRequired,
-    math: PropTypes.string.isRequired,
-    science: PropTypes.string.isRequired,
-    history: PropTypes.string.isRequired,
-    cId: PropTypes.string.isRequired,
-    uId: PropTypes.string.isRequired,
-  }).isRequired,
   result: PropTypes.shape({
     cut: PropTypes.number.isRequired,
     diff: PropTypes.number.isRequired,

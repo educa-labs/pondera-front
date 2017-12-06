@@ -49,6 +49,7 @@ class PonderaForm extends React.Component {
       isLoading,
       calculating,
       onUnivChange,
+      onReset,
     } = this.props;
     const { selectedTest } = this.state;
     return (
@@ -152,7 +153,7 @@ class PonderaForm extends React.Component {
               type="button"
               className="btn--fullwidth"
               variant="flat"
-              onClick={resetForm}
+              onClick={onReset}
             >
               Reestablecer
             </Button>

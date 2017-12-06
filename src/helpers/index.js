@@ -62,3 +62,8 @@ export const formatRutBack = (value) => {
   const match = value.match(/(\d\d?)\.?(\d{3})\.?(\d{3})-?(\d)/);
   return `${match[1]}${match[2]}${match[3]}-${match[4]}`;
 };
+
+export const truncateString = (value, len) => {
+  const points = value.length > len ? '...' : '';
+  return `${value.substring(0, len)} ${points}`;
+};
