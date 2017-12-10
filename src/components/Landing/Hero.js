@@ -3,13 +3,15 @@ import React from 'react';
 
 const Hero = ({ frame }) => (
   <section id="hero-landing">
-    <div className="from-left mui--text-display3">Pondera.</div>
+    <div className="from-left mui--text-display4">Pondera.</div>
     <div
       id="swift"
       className={frame && 'from-right'}
-      style={frame ? { backgroundImage: `url(${swift})` } : null}
+      style={frame ? { backgroundImage: 'url(/images/pondera.png)' } : null}
     />
-    <div className="hero-title mui--text-title">Y participa por un auto 0km.</div>
+    <div className="hero-title mui--text-title">
+      Y participa por un nuevo <strong>IPhone X</strong> y uno de los dos <strong>Galaxy S8</strong>
+    </div>
   </section>
 );
 

@@ -103,6 +103,9 @@ module.exports = {
       {
         from: './public/icons', to: 'icons',
       },
+      {
+        from: './public/images', to: 'images',
+      },
     ]),
     new ServiceWorkerWebpackPlugin({
       entry: path.join(__dirname, 'public/sw.js'),

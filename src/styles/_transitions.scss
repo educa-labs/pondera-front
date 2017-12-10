@@ -1,18 +1,18 @@
 @keyframes fromLeft {
   0% {
-    transform: translateX(-100vw);
+    transform: translate3d(-100vw, 0);
   }
   100% {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 @keyframes fromRight {
   0% {
-    transform: translateX(100vw);
+    transform: translate3d(100vw, -7rem, 0);
   }
   100% {
-    transform: translateX(0);
+    transform: translateX(0, -7rem, 0);
   }
 }
 

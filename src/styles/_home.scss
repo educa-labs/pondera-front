@@ -2,12 +2,11 @@
   color: white;
   text-align: center;
   #swift {
-    height: 15rem;
+    height: 35rem;
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
-    position: relative;
-    top: -5rem;
+    transform: translateY(-7rem);
   }
   .hero-title {
     color: black;
