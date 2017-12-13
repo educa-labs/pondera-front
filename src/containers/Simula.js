@@ -15,7 +15,7 @@ import ResultWeights from '../components/Result/ResultWeights';
 import ResultBody from '../components/Result/ResultBody';
 import ResultFooter from '../components/Result/ResultFooter';
 import { logoutUser } from '../redux/session';
-import { resetField, getValues, setFieldValue } from '../redux/forms';
+import { resetField, getValues, setFieldValue, resetForm } from '../redux/forms';
 import { isLoading, fetch } from '../redux/fetch';
 import { calculatePonderation } from '../redux/results';
 import { getSimilarCareers } from '../redux/similar';
@@ -72,7 +72,7 @@ class Simula extends Component {
       }
     }
     if (nextProps.calculating !== this.props.calculating) {
-      if (!nextProps.calculating) {
+      if (!nextProps.calculating && !nextProps.error) {
         this.setScreen(1);
       }
     }
@@ -107,18 +107,12 @@ class Simula extends Component {
   }
 
   onReset() {
-    const { dispatch, token } = this.props;
-    dispatch(fetch(CAREERS, {
-      id: 28,
-      token,
-    }));
-    dispatch(setFieldValue('ponderaForm')('cId', 1340));
-    dispatch(setFieldValue('ponderaForm')('uId', 28));
-    dispatch(setFieldValue('ponderaForm')('NEM', '555'));
-    dispatch(setFieldValue('ponderaForm')('ranking', '555'));
-    dispatch(setFieldValue('ponderaForm')('language', '555'));
-    dispatch(setFieldValue('ponderaForm')('math', '555'));
-    dispatch(setFieldValue('ponderaForm')('history', '555'));
+    const { dispatch } = this.props;
+    const { currentScreen } = this.state;
+    if (currentScreen === 1) {
+      this.setScreen(0);
+    }
+    dispatch(resetForm('ponderaForm')());
   }
 
   handleSubmit(values) {
@@ -239,6 +233,7 @@ export default connect(state => ({
   token: state.session.token,
   isLoading: isLoading(state),
   calculating: state.results.loading,
+  error: state.results.error,
   values: getValues(state.forms.ponderaForm),
   result: state.results.result,
   similar: state.similar.similar,

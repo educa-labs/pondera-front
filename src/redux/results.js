@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { requestPonderation } from '../helpers/api';
+import { validationError } from './forms';
 
 const PONDERA_REQUEST = 'PONDERA_REQUEST';
 const PONDERA_FAILURE = 'PONDERA_FAILURE';
@@ -40,7 +41,12 @@ export const calculatePonderation = (values, token) => (
         dispatch(ponderaSuccess(result.data));
       }
     } catch (err) {
-      dispatch(ponderaFailure(err));
+      if (err.response) {
+        dispatch(ponderaFailure(err.response.data.message));
+        dispatch(validationError('ponderaForm')('cId', err.response.data.message));
+      } else {
+        console.log(err);
+      }
     }
   }
 );
@@ -66,6 +72,8 @@ const error = (state = null, action) => {
   switch (action.type) {
     case PONDERA_FAILURE:
       return action.error;
+    case PONDERA_SUCCESS:
+      return null;
     default:
       return state;
   }

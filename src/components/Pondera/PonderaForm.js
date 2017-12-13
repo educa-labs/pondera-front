@@ -38,6 +38,7 @@ class PonderaForm extends React.Component {
       this.scienceEl.controlEl.focus();
     }
     this.props.dispatch(resetField('ponderaForm')(other));
+    this.props.dispatch(resetField('ponderaForm')('cId'));
   }
 
   render() {

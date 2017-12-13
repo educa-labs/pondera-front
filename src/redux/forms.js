@@ -120,7 +120,6 @@ const createFormReducer = (formName, fields) => {
       switch (action.type) {
         case VALIDATION_ERROR:
           return action.error;
-        case RESET_FIELD:
         case RESET_FORM:
         case SET_FORM_VALUE:
         case RESET_FIELD:
