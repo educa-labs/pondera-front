@@ -24,7 +24,7 @@ export const setFieldValue = formName => (fieldName, value) => ({
   value,
 });
 
-const validationError = formName => (fieldName, error) => ({
+export const validationError = formName => (fieldName, error) => ({
   type: VALIDATION_ERROR,
   formName,
   fieldName,

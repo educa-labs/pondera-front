@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
-import { createSelector } from 'reselect';
+import is from 'is_js';
+import { validationError, resetForm } from './forms';
 import { createUser, createSession } from '../helpers/api';
 import { saveToken, loadToken, clearStore } from '../helpers/storage';
 import { wait } from './delay';
@@ -53,9 +54,30 @@ const logOut = () => ({
 
 /* SELECTORS */
 
-const getUser = state => state.session.user;
-const isNotNull = user => user !== null;
-export const isLogged = createSelector(getUser, isNotNull);
+export const parseError = error => (
+  (dispatch) => {
+    let errorText = '';
+    if (is.string(error)) {
+      errorText = error;
+    }
+    if (is.object(error)) {
+      if (error.mail && error.mail === 102) {
+        errorText = 'Alguien ya tomó este correo';
+        dispatch(validationError('registerFormOne')('mail', errorText));
+      }
+      if (error.rut && error.rut === 101) {
+        errorText = 'Rut inválido';
+        dispatch(validationError('registerFormTwo')('rut', errorText));
+      }
+      if (error.rut && error.rut === 102) {
+        errorText = 'Alguien ya tomó este rut';
+        dispatch(validationError('registerFormTwo')('rut', errorText));
+      }
+    }
+    dispatch(logUserFailure(errorText));
+  }
+);
+
 
 /* THUNKS */
 
@@ -79,13 +101,14 @@ export const registerUser = values => (
       dispatch(wait(300));
       dispatch(logUserSucces(user.data.token));
       dispatch(saveUserToken(user.data.token));
+      dispatch(resetForm('registerFormOne')());
+      dispatch(resetForm('registerFormTwo')());
     } catch (err) {
       if (err.response) {
-        dispatch(logUserFailure(err.response.data.message));
+        dispatch(parseError(err.response.data.errors));
       } else if (err.request) {
         dispatch(logUserFailure('Oops, algo salio mal, vuelve a intentarlo'));
       } else {
-        console.log(err);
         dispatch(logUserFailure('Oops, algo salio mal, vuelve a intentarlo'));
       }
     }
@@ -101,6 +124,7 @@ export const logUser = values => (
       dispatch(wait(300));
       dispatch(logUserSucces(user.data.token));
       dispatch(saveUserToken(user.data.token));
+      dispatch(resetForm('loginForm')());
     } catch (err) {
       if (err.response) {
         dispatch(logUserFailure(err.response.data.message));

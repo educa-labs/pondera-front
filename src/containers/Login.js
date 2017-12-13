@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Page from '../components/Layout/Page';
 import LoginForm from '../components/Login/LoginForm';
-import { logUser } from '../redux/session';
+import { logUser, parseError } from '../redux/session';
 import NavigationBar from '../components/NavigationBar/NavigationBar';
 
 const Login = ({ history, dispatch, ...props }) => (

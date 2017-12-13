@@ -30,7 +30,7 @@ const Field = ({
     const extraProps = {
       ...props,
       onChange,
-      correct: field.correct || undefined,
+      correct: (field.correct && !field.errorText) || undefined,
     };
     if (type === 'text' || type === 'select') {
       extraProps.value = field.value;
