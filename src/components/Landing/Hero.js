@@ -3,7 +3,7 @@ import React from 'react';
 
 const Hero = ({ frame }) => (
   <section id="hero-landing">
-    <div className="from-left mui--text-display4">Pondera.</div>
+    <div className="from-left">Pondera.</div>
     <div
       id="swift"
       className={frame && 'from-right'}
