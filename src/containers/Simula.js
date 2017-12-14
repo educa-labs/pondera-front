@@ -22,7 +22,6 @@ import { calculatePonderation } from '../redux/results';
 import { getSimilarCareers } from '../redux/similar';
 import { UNIVERSITIES, CAREERS } from '../helpers/constants';
 
-
 class Simula extends Component {
   constructor(props) {
     super(props);
@@ -101,12 +100,6 @@ class Simula extends Component {
     dispatch(setFieldValue('ponderaForm')('uId', uId));
   }
 
-  setScreen(index) {
-    if (this.state.currentScreen !== index) {
-      this.setState({ currentScreen: index });
-    }
-  }
-
   onReset() {
     const { dispatch } = this.props;
     const { currentScreen } = this.state;
@@ -114,6 +107,12 @@ class Simula extends Component {
       this.setScreen(0);
     }
     dispatch(resetForm('ponderaForm')());
+  }
+
+  setScreen(index) {
+    if (this.state.currentScreen !== index) {
+      this.setState({ currentScreen: index });
+    }
   }
 
   handleSubmit(values) {

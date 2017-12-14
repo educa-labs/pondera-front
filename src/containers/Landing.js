@@ -5,10 +5,11 @@ import { connect } from 'react-redux';
 import PageTransition from '../components/Layout/PageTransition';
 import StepOne from '../components/Landing/StepOne';
 import StepTwo from '../components/Landing/StepTwo';
-import { registerUser, parseError } from '../redux/session';
+import { registerUser } from '../redux/session';
 import { fetch } from '../redux/fetch';
 import { REGIONS } from '../helpers/constants';
 import { getValues } from '../redux/forms';
+import { formatPhone } from '../helpers';
 
 class Landing extends React.Component {
   constructor(props) {
@@ -42,7 +43,10 @@ class Landing extends React.Component {
 
   onSubmitTwo(values) {
     if (this.state.completed) {
-      const fields = Object.assign({}, this.props.fields, values);
+      const formatValues = Object.assign({}, values, {
+        phone: formatPhone(values.phone),
+      });
+      const fields = Object.assign({}, this.props.fields, formatValues);
       this.props.dispatch(registerUser(fields));
     }
   }

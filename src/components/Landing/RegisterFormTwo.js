@@ -13,7 +13,7 @@ import BubbleWarpper from '../Other/BubbleWrapper';
 import LoadingWrapper from '../Other/LoadingWrapper';
 import Field from '../../hoc/Field';
 import {
-  formatPhone, phoneValidator, formatRut, rutValidator, emptyValidator,
+  phoneValidator, formatRut, rutValidator, emptyValidator,
 } from '../../helpers';
 
 
@@ -44,7 +44,6 @@ const RegisterFormTwo = ({
       <Field
         name="phone"
         validator={phoneValidator}
-        format={formatPhone}
       >
         <TextInput
           label="Celular"

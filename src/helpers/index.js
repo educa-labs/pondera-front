@@ -22,7 +22,7 @@ export const scoreValidator = value => new Promise((resolve, reject) => {
 });
 
 export const phoneValidator = (value) => {
-  const match = value.match(/^(\+569)?(\d{8})/);
+  const match = value.match(/^(\d{8})/);
   if (match) return Promise.resolve();
   return Promise.reject(new Error('Ingresa un número válido, ej, 48454111'));
 };
