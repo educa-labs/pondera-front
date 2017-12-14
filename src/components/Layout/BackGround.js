@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Background = () => (
-  <div className="orange-banner" />
+const Background = ({ landing }) => (
+  <div className={`orange-banner ${landing ? 'orange-banner-big' : ''}`} />
 );
 
 export default Background;

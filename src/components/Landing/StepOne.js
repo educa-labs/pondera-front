@@ -19,7 +19,7 @@ class StepOne extends Component {
 
   render() {
     return (
-      <Page>
+      <Page landing>
         <NavigationBar />
         <Hero frame={this.state.frame} />
         <RegisterForm {...this.props} />

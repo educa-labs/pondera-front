@@ -1,17 +1,18 @@
 #hero-landing {
   color: white;
   text-align: center;
+  margin-bottom: -5rem;
   #swift {
-    height: 35rem;
+    height: 25rem;
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
     transform: translateY(-7rem);
   }
   .hero-title {
-    color: black;
+    color: white;
     position: relative;
-    top: -5rem;
+    top: -7rem;
   }
 }
 

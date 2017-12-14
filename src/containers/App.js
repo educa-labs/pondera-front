@@ -44,7 +44,6 @@ class App extends React.Component {
     if (storageLoading) return <div>Loading ...</div>;
     return (
       <div>
-        <Background />
         <Switch>
           <ProtectedRoute isAuthenticated={token !== null} path="/simula"component={Simula} />
           <Route path="/login" component={Login} />
