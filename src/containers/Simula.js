@@ -7,6 +7,7 @@ import ScrollScreen from '../components/Layout/ScrollScreen';
 import NavigationBar from '../components/NavigationBar/NavigationBar';
 import PonderaDesk from '../components/Pondera/PonderaDesk';
 import PonderaMobile from '../components/Pondera/PonderaMobile';
+import MobileLayout from '../components/Pondera/Layout';
 import PonderaForm from '../components/Pondera/PonderaForm';
 import Page from '../components/Layout/Page';
 import Result from '../components/Result/Result';
@@ -154,28 +155,26 @@ class Simula extends Component {
           index={this.state.currentScreen}
           goBack={() => this.setScreen(0)}
         >
-          <Page>
+          <MobileLayout>
             <NavigationBar pondera logOut={() => dispatch(logoutUser())} />
             <PonderaMobile>
               {pondera}
             </PonderaMobile>
-          </Page>
-          <Page>
-            <Result>
-              <ResultHeader title={this.state.title} />
-              <ResultWeights result={result} />
-              <ResultBody
-                result={result}
-                similar={similar}
-                loading={similarLoading}
-                onSimilarClick={this.onSimilarClick}
-              />
-              <ResultFooter
-                onClick={() => this.setScreen(0)}
-                calculating={this.props.calculating}
-              />
-            </Result>
-          </Page>
+          </MobileLayout>
+          <Result>
+            <ResultHeader title={this.state.title} />
+            <ResultWeights result={result} />
+            <ResultBody
+              result={result}
+              similar={similar}
+              loading={similarLoading}
+              onSimilarClick={this.onSimilarClick}
+            />
+            <ResultFooter
+              onClick={() => this.setScreen(0)}
+              calculating={this.props.calculating}
+            />
+          </Result>
         </ScrollScreen>
       </MediaQuery>,
       <MediaQuery key="1" minDeviceWidth={1224}>
