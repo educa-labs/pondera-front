@@ -6,10 +6,10 @@ import NavigationBar from '../components/NavigationBar/NavigationBar';
 
 export default Content => ({ history, ...props }) => {
   const Card = alignCenter(wrapCard(Content));
-  return ([
-    <NavigationBar key="0" back onBackClick={history.goBack} />,
+  return (
     <Page key="1">
+      <NavigationBar key="0" back onBackClick={history.goBack} />
       <Card {...props} />
-    </Page>,
-  ]);
+    </Page>
+  );
 };

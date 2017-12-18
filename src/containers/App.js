@@ -14,20 +14,21 @@ const Terms = lazyComponent(() => import('../components/Terms/Terms'));
 const Login = lazyComponent(() => import('./Login'));
 const Ready = lazyComponent(() => import('../components/Terms/Ready'));
 const Contacto = lazyComponent(() => import('../components/Terms/Contacto'));
-const Simula = lazyComponent(() => import('./Simula'));
+// const Simula = lazyComponent(() => import('./Simula'));
 
 
 class App extends React.Component {
   componentDidMount() {
     if (this.props.token === null) {
-      this.props.dispatch(loadUserToken());
+      // this.props.dispatch(loadUserToken());
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.delay !== this.props.delay) {
       if (!nextProps.delay && nextProps.token) {
-        nextProps.history.replace('/simula');
+        nextProps.history.push('/ready');
+        // nextProps.history.replace('/simula');
       }
     }
   }
@@ -41,11 +42,11 @@ class App extends React.Component {
 
   render() {
     const { token, storageLoading } = this.props;
-    if (storageLoading) return <div>Loading ...</div>;
+    // if (storageLoading) return <div>Loading ...</div>;
     return (
       <div>
         <Switch>
-          <ProtectedRoute isAuthenticated={token !== null} path="/simula"component={Simula} />
+          {/* <ProtectedRoute isAuthenticated={token !== null} path="/simula"component={Simula} /> */}
           <Route path="/login" component={Login} />
           <Route path="/terms" component={Terms} />
           <Route path="/contacto" component={Contacto} />

@@ -100,7 +100,7 @@ export const registerUser = values => (
       /* Esperamos un tiempo para la animacion */
       dispatch(wait(300));
       dispatch(logUserSucces(user.data.token));
-      dispatch(saveUserToken(user.data.token));
+      // dispatch(saveUserToken(user.data.token));
       dispatch(resetForm('registerFormOne')());
       dispatch(resetForm('registerFormTwo')());
     } catch (err) {
@@ -123,7 +123,7 @@ export const logUser = values => (
       /* Esperamos un tiempo para la animacion */
       dispatch(wait(300));
       dispatch(logUserSucces(user.data.token));
-      dispatch(saveUserToken(user.data.token));
+      // dispatch(saveUserToken(user.data.token));
       dispatch(resetForm('loginForm')());
     } catch (err) {
       if (err.response) {
