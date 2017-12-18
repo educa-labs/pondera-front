@@ -31,6 +31,7 @@ class Landing extends React.Component {
   }
 
   onSubmitSuccessOne() {
+    window.scrollTo(0, 0);
     this.setState({
       completed: true,
       currentPage: 1,
