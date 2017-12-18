@@ -1,37 +1,37 @@
 .page {
-  min-height: 100vh;
+  //height: 100vh;
+  width: 100vw;
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
 }
 
+.page-paddingTop {
+  padding-top: 48px;
+}
+
 .page-content {
-  margin-top: 48px;
+  flex: 1;
+  transform: translateY(-38rem)
+}
+
+.page-content-landing {
+  transform: translateY(-43rem);
 }
 
 .orange-banner {
   background-color: $mui-primary-color;
-  position: absolute;
-  left: 0;
-  right: 0;
   z-index: -1;
-  height: 20rem;
+  height: 38rem;
+  width: 100%;
 }
 
-.orange-banner--large {
-  height: 30rem;
+.orange-banner-big {
+  height: 43rem;
 }
 
 /* SCROLL SCREEN */
 
-
-.overlay-screen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 2;
-}
 
 .screen-wrapper {
   height: 100vh;
@@ -40,4 +40,48 @@
 
 .scroll-screen {
   overflow: hidden;
+}
+
+.loading-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* SIMULa */
+
+.panel-result {
+  padding: 15px 0 0 0;
+}
+
+.big-logo {
+  height: 22rem;
+  display: flex;
+  padding-top: 2rem;
+  justify-content: center;
+  .logo-wrapper {
+    margin: 3rem;
+  }
+  svg {
+    fill: white;
+  }
+}
+
+.justify-center {
+  justify-content: center;
+  display: flex;
+}
+
+.mui-panel {
+  text-align: justify;
+}
+
+.fixed-size-panel {
+  height: 52rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.no-margin {
+  margin-left: 0;
 }

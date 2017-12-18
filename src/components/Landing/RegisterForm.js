@@ -5,49 +5,31 @@ import Button from 'muicss/lib/react/button';
 import { Link } from 'react-router-dom';
 import TextInput from '../Inputs/TextInput';
 import wrapCard from '../../hoc/wrapCard';
+import alignCenter from '../../hoc/alignCenter';
+import Field from '../../hoc/Field';
 import connectForm from '../../hoc/connectForm';
-import { emptyValidator } from '../../helpers';
+import { lengthValidator, nameValidator, emailValidator } from '../../helpers';
 
 
-const RegisterForm = ({
-  logChange,
-  values,
-  errors,
-  submitHandler,
-  onSubmit,
-}) => (
-  <Form onSubmit={submitHandler(onSubmit)}>
+const RegisterForm = ({ onSubmit }) => (
+  <Form onSubmit={onSubmit}>
     <legend>Regístrate</legend>
     <div className="mui--text-subhead">
       <span>o </span>
       <Link to="login">inicia sesión en tu cuenta</Link>
     </div>
     <br />
-    <TextInput
-      label="Nombre y apellido"
-      floatingLabel
-      onChange={logChange('name')}
-      value={values.name}
-      errorText={errors.name}
-    />
-    <TextInput
-      label="Correo electrónico"
-      floatingLabel
-      onChange={logChange('email')}
-      value={values.email}
-      errorText={errors.email}
-    />
-    <TextInput
-      label="Contraseña"
-      floatingLabel
-      onChange={logChange('password')}
-      value={values.password}
-      type="password"
-      errorText={errors.password}
-    />
+    <Field name="name" validator={nameValidator}>
+      <TextInput id="name" label="Nombre y apellido" hint="Sebastián Guiller" />
+    </Field>
+    <Field name="mail" validator={emailValidator}>
+      <TextInput autoCapitalize="none" id="mail" label="Correo electrónico" hint="sebag@gmail.com" />
+    </Field>
+    <Field name="password" validator={lengthValidator(8)}>
+      <TextInput id="password" label="Contraseña" floatingLabel type="password" />
+    </Field>
     <Button
       color="primary"
-      type="submit"
       className="btn--fullwidth"
       variant="raised"
     >
@@ -58,20 +40,11 @@ const RegisterForm = ({
 
 
 RegisterForm.propTypes = {
-  submitHandler: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  logChange: PropTypes.func.isRequired,
 };
 
 
-export default wrapCard(connectForm(
-  RegisterForm,
-  'signupForm',
-  emptyValidator,
-  [
-    'name',
-    'email',
-    'password',
-  ],
-));
+const form = connectForm('registerFormOne')(RegisterForm);
+
+export default alignCenter(wrapCard(form));
 

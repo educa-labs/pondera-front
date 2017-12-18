@@ -1,16 +1,33 @@
 nav {
-  position: absolute;
+  position: relative;
   top: 0;
-  left: 0;
-  right: 0;
   height: 48px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   padding: 0 15px;
   z-index: 1;
+  .nav-left {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+  .nav-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    color: white;
+  }
+  i {
+    color: white;
+  }
+  button {
+    margin: 0;
+    padding: 0;
+  }
+  svg {
+    fill: white;
+  }
 }
 
-svg {
-  fill: white;
-}

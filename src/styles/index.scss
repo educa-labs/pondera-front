@@ -4,7 +4,7 @@ $mui-primary-color:       mui-color('orange', '700');
 $mui-primary-color-dark:  mui-color('orange', '500');
 $mui-primary-color-light: mui-color('orange', '900');
 
-$mui-accent-color:        mui-color('green', 'A200');
+$mui-accent-color:        mui-color('green', 'A700');
 $mui-accent-color-dark:   mui-color('green', 'A100');
 $mui-accent-color-light:  mui-color('green', 'A400');
 
@@ -12,6 +12,20 @@ $white:                   mui-color('white');
 
 @import "node_modules/muicss/lib/sass/mui.scss";
 
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+.padding-col {
+  padding: 0 3rem;
+}
 
 .mui--bg-primary {
   color: $white;
@@ -21,6 +35,19 @@ $white:                   mui-color('white');
   }
 }
 
+.mui-dropdown__menu {
+  top: 0;
+  min-width: auto;
+}
+
+.mui-panel {
+  legend {
+    margin-bottom: 10px;
+    font-size: 21px;
+    color: rgba(0, 0, 0, 0.87);
+    border: 0;
+  }
+}
 
 
 @import "transitions";
@@ -29,3 +56,6 @@ $white:                   mui-color('white');
 @import "layout";
 @import "navbar";
 @import "result";
+@import "menu";
+@import "buttons";
+@import "spinner";

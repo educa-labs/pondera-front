@@ -1,21 +1,38 @@
 import React from 'react';
 import Container from 'muicss/lib/react/container';
-import Row from 'muicss/lib/react/row';
-import Col from 'muicss/lib/react/col';
 
-const subjects = [
-  { value: 'nem', label: 'NEM' },
-  { value: 'ranking', label: 'Rank' },
-  { value: 'language', label: 'Lang' },
-  { value: 'math', label: 'Mate' },
-  { value: 'history', label: 'Hist' },
-];
 
 const ResultWeights = ({ result }) => {
-  const renderWeight = ({ value, label }) => (
-    <div className="result-item">
+  if (result === null) return null;
+  const subjects = [
+    { value: 'NEM', label: 'NEM' },
+    { value: 'ranking', label: 'Rank' },
+    { value: 'language', label: 'Lang' },
+    { value: 'math', label: 'Mate' },
+  ];
+  const { history, science } = result.weights;
+  if (history > 0) {
+    if (science > 0) {
+      subjects.push({
+        value: 'history',
+        label: 'Hist/Cien',
+      });
+    } else {
+      subjects.push({
+        value: 'history',
+        label: 'Hist',
+      });
+    }
+  } else {
+    subjects.push({
+      value: 'science',
+      label: 'Cien',
+    });
+  }
+  const renderWeight = ({ value, label }, index) => (
+    <div className="result-item" key={index}>
       <div className="result-item-label">{label}</div>
-      <div className="result-item-value">{result[value]}%</div>
+      <div className="result-item-value">{result.weights[value]}%</div>
     </div>
   );
   return (

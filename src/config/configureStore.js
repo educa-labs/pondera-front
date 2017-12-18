@@ -5,9 +5,15 @@ import thunkMiddleware from 'redux-thunk';
 import reducer from '../redux';
 
 function configureStore() {
+  const middlewares = [thunkMiddleware];
+  if (process.env.NODE_ENV === 'development') {
+    const { logger } = require('redux-logger');
+    middlewares.push(logger);
+  }
+
   const store = createStore(
     reducer,
-    composeWithDevTools(applyMiddleware(thunkMiddleware)),
+    composeWithDevTools(applyMiddleware(...middlewares)),
   );
   if (module.hot) {
     module.hot.accept('../redux', () => {

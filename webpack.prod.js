@@ -5,16 +5,20 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 const extractPlugin = new ExtractTextPlugin({
   filename: 'main.css',
 });
 
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+    vendor: ['react', 'react-dom', 'muicss', 'localforage'],
+    app: ['babel-polyfill', './src/index.js'],
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: '[name].[chunkhash].js',
   },
   module: {
     rules: [
@@ -77,12 +81,12 @@ module.exports = {
       },
     ],
   },
-  devtool: 'source-map',
   plugins: [
     extractPlugin,
     new HtmlWebpackPlugin({
       hash: true,
       template: './public/index.html',
+      inject: 'body',
     }),
     new webpack.DefinePlugin({
       'process.env': {
@@ -95,6 +99,18 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       './public/manifest.json',
+      {
+        from: './public/icons', to: 'icons',
+      },
+      {
+        from: './public/images', to: 'images',
+      },
     ]),
+    new ServiceWorkerWebpackPlugin({
+      entry: path.join(__dirname, 'public/sw.js'),
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+    }),
   ],
 };
