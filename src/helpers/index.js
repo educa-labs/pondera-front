@@ -28,7 +28,9 @@ export const phoneValidator = (value) => {
 };
 
 export const emailValidator = (value) => {
-  const match = value.match(/^\w+@\w+\.(com|cl)/);
+  const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+  const match = value.match(regex);
   if (match) return Promise.resolve();
   return Promise.reject(new Error('Ingresa un correo válido, ej, pepe@educalabs.com'));
 };
@@ -45,13 +47,13 @@ export const formatPhone = (value) => {
 };
 
 export const rutValidator = (value) => {
-  const match = value.match(/(\d\d?)\.?(\d{3})\.?(\d{3})-?(\d)/);
+  const match = value.match(/(\d\d?)\.?(\d{3})\.?(\d{3})-?(\d|k|K)/);
   if (match) return Promise.resolve();
   return Promise.reject(new Error('Ingresa un rut válido, ej, 189184964'));
 };
 
 export const formatRut = (value) => {
-  const match = value.match(/(\d\d?)\.?(\d{3})\.?(\d{3})-?(\d)/);
+  const match = value.match(/(\d\d?)\.?(\d{3})\.?(\d{3})-?(\d|k|K)/);
   if (match) {
     return `${match[1]}.${match[2]}.${match[3]}-${match[4]}`;
   }
@@ -59,7 +61,7 @@ export const formatRut = (value) => {
 };
 
 export const formatRutBack = (value) => {
-  const match = value.match(/(\d\d?)\.?(\d{3})\.?(\d{3})-?(\d)/);
+  const match = value.match(/(\d\d?)\.?(\d{3})\.?(\d{3})-?(\d|k|K)/);
   return `${match[1]}${match[2]}${match[3]}-${match[4]}`;
 };
 
