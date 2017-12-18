@@ -6,11 +6,9 @@ const content = () => (
     <legend>
       Soporte
     </legend>
-    <p>Si tienes algun problema al momento de crear tu cuenta nos puedes contactar po Facebook o enviar un <a href="mailto:soporte@educalabs.cl">correo electrónico</a></p>
+    <p>Si tienes algun problema al momento de crear tu cuenta nos puedes contactar por Facebook o enviar un <a href="mailto:soporte@educalabs.cl">correo electrónico</a>.</p>
     <br />
-    <p>Si olvidaste tu clave, <a href="#">solicita una nueva</a>.</p>
-    <br />
-    <p>Gracias por usar los porductios de Educalabs.</p>
+    <p>Gracias por usar los productos de Educalabs.</p>
   </div>
 );
 
