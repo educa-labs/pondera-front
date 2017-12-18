@@ -10,7 +10,8 @@
     "test": "jest",
     "build": "webpack -p --config webpack.prod.js",
     "prod": "node production.js",
-    "deploy:beta": "./deploy-beta.sh"
+    "deploy:beta": "source .env && s3cmd sync dist/* s3://beta.pondera.cl --access_key=$educalabs_aws_key --secret_key=$educalabs_aws_secret",
+    "deploy:www": "source .env && s3cmd sync dist/* s3://www.pondera.cl --access_key=$educalabs_aws_key --secret_key=$educalabs_aws_secret"
   },
   "dependencies": {
     "axios": "^0.17.1",
