@@ -85,7 +85,7 @@ module.exports = {
     extractPlugin,
     new HtmlWebpackPlugin({
       hash: true,
-      template: './public/index.html',
+      template: './public/index.prod.html',
       inject: 'body',
     }),
     new webpack.DefinePlugin({
