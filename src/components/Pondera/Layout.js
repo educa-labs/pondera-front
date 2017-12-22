@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const PonderaLayout = styled.div`
   height: 100vh;
+  overflow: scroll;
 `;
 
 const OrangeBg = styled.div`
