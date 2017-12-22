@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import RegisterForm from './RegisterForm';
 import Page from '../Layout/Page';
 import Hero from './Hero';
+import Video from './Video';
 import NavigationBar from '../NavigationBar/NavigationBar';
+
 
 
 class StepOne extends Component {
@@ -23,6 +25,7 @@ class StepOne extends Component {
         <NavigationBar />
         <Hero frame={this.state.frame} />
         <RegisterForm {...this.props} />
+        <Video />
       </Page>
     );
   }
