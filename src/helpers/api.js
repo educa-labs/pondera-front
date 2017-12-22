@@ -3,7 +3,7 @@ import { REGIONS, UNIVERSITIES, CAREERS } from '../helpers/constants';
 import { formatRutBack } from '../helpers';
 
 const request = axios.create({
-  baseURL: 'https://api.pondera.cl/api/v1',
+  baseURL: 'https://testapi.pondera.cl/api/v1',
   // withCredentials: true,
   responseType: 'json',
   timeout: 2000,
