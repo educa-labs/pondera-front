@@ -17,6 +17,10 @@ const content = () => (
     <p>
       Las políticas de privacidad explican el tratamiento de los datos personales y la protección de la privacidad al usar nuestros servicios. Al ingresar contenido dentro de nuestros servicios, sigues siendo el titular de los derechos de propiedad intelectual que tengas sobre ese contenido. Al aceptar estos términos y condiciones, Educalabs puede utilizar de diversas maneras tanto la información personal que proporciones al crear tu cuenta como la información que ingreses una vez dentro de alguno de nuestros servicios. Es decir, que nos concedes una licencia para usar, alojar, almacenar, reproducir, modificar o vender dicha información y contenidos. El uso de esta información será netamente con el fin de mejorar los servicios ya disponibles y hacer de ellos una mejor experiencia.
     </p>
+    <legend>Sorteo</legend>
+    <p>
+      Para que la participación en el sorteo sea válida, el postulante deberá haber rendido la PSU admisión 2017 o 2018 y toda su información ingresada (nombre, RUT, correo electrónico, teléfono, región y puntajes PSU) deberá ser válida y corresponder a la del postulante. De no ser así, la participación en el concurso quedará invalidada por parte de Educalabs.
+    </p>
     <legend>Acerca de estas condiciones</legend>
     <p>
       Educalabs puede modificar estas condiciones en cualquier momento, siempre que notifique a los usuarios de los servicios sobre dichos cambios. Todo lo anterior aplica únicamente en Chile y no a nivel global. Para mayor información contáctanos al +56977170168 o a contacto@educalabs.cl.
