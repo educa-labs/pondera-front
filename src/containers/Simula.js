@@ -62,6 +62,9 @@ class Simula extends Component {
       const {
         careers, univs, cId, uId,
       } = nextProps;
+      if (this.state.currentScreen === 1) {
+        this.setScreen(0);
+      }
 
       const univ = univs.filter(uni => uni.id === uId)[0];
       const career = careers.filter(car => car.id === cId)[0];
