@@ -7,15 +7,10 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 1rem;
   iframe {
     border: none;
   }
-`;
-
-const Title = styled.h1`
-  font-weight: 400;
-  font-size: 14px;
-  margin: 1rem;
 `;
 
 const Video = () => ([
@@ -30,6 +25,14 @@ const Video = () => ([
     </Wrapper>
   </MediaQuery>,
   <MediaQuery key="1" minDeviceWidth={1224}>
+    <Wrapper>
+      <iframe
+        title="Pondera presentation"
+        width="700"
+        height="394"
+        src="https://www.youtube.com/embed/IhtcVMFZy-I?autoplay=1&cc_load_policy=1"
+      />
+    </Wrapper>
   </MediaQuery>,
 ]);
 
