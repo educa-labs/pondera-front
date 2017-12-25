@@ -16,6 +16,11 @@ import { resetField } from '../../redux/forms';
 import { HISTORY, SCIENCE } from '../../helpers/constants';
 import { scoreValidator, emptyValidator } from '../../helpers';
 
+const parseOptions = car => ({
+  title: `${car.title} - ${car.campusTitle}`,
+  id: car.id,
+});
+
 class PonderaForm extends React.Component {
   constructor(props) {
     super(props);
@@ -53,6 +58,7 @@ class PonderaForm extends React.Component {
       onReset,
     } = this.props;
     const { selectedTest } = this.state;
+    console.log(careers);
     return (
       <Form onSubmit={onSubmit}>
         <legend>Ponderar</legend>
@@ -138,7 +144,7 @@ class PonderaForm extends React.Component {
                   <Field name="cId" type="select" validator={emptyValidator}>
                     <SelectInput
                       label="Carrera"
-                      options={careers}
+                      options={careers.map(parseOptions)}
                       placeholder="Elige una carrera"
                     />
                   </Field>
@@ -165,6 +171,7 @@ class PonderaForm extends React.Component {
               type="submit"
               className="btn--fullwidth"
               variant="raised"
+              disabled={calculating}
             >
               <LoadingWrapper loading={calculating} white>
                 {() => 'Calcular'}

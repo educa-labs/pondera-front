@@ -32,6 +32,7 @@ const parseData = data => (
   data.data.map(el => ({
     id: String(el.id),
     title: el.attributes ? el.attributes.title : el.title,
+    campusTitle: el.attributes ? el.attributes.campusTitle : el.campusTitle,
   }))
 );
 
