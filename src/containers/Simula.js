@@ -92,15 +92,19 @@ class Simula extends Component {
 
 
   onSimilarClick(cId, uId) {
-    const { values, dispatch, token } = this.props;
+    const {
+      values, dispatch, token, calculating,
+    } = this.props;
     const finalValues = Object.assign({}, values, {
       cId,
       uId,
     });
-    dispatch(calculatePonderation(finalValues, token));
-    dispatch(fetch(CAREERS, { id: uId, token }));
-    dispatch(setFieldValue('ponderaForm')('cId', cId));
-    dispatch(setFieldValue('ponderaForm')('uId', uId));
+    if (!calculating) {
+      dispatch(calculatePonderation(finalValues, token));
+      dispatch(fetch(CAREERS, { id: uId, token }));
+      dispatch(setFieldValue('ponderaForm')('cId', cId));
+      dispatch(setFieldValue('ponderaForm')('uId', uId));
+    }
   }
 
   onReset() {
