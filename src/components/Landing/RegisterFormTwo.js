@@ -68,6 +68,7 @@ const RegisterFormTwo = ({
           type="submit"
           className="btn--fullwidth"
           variant="raised"
+          disabled={sessionLoading}
         >
           <LoadingWrapper loading={sessionLoading} white>
             {() => 'Finalizar'}

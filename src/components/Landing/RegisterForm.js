@@ -11,7 +11,7 @@ import connectForm from '../../hoc/connectForm';
 import { lengthValidator, nameValidator, emailValidator } from '../../helpers';
 
 
-const RegisterForm = ({ onSubmit }) => (
+const RegisterForm = ({ onSubmit, sessionLoading }) => (
   <Form onSubmit={onSubmit}>
     <legend>Regístrate</legend>
     <div className="mui--text-subhead">
@@ -32,6 +32,7 @@ const RegisterForm = ({ onSubmit }) => (
       color="primary"
       className="btn--fullwidth"
       variant="raised"
+      disabled={sessionLoading}
     >
       Registrarse
     </Button>
