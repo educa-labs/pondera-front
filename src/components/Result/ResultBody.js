@@ -36,7 +36,7 @@ const ResultBody = ({ result, similar, onSimilarClick }) => {
             <Col xs={8}>
               {similar.map(career => (
                 <div key={career.cId} className="similar-title">
-                  <span>{truncateString(`${career.cTitle} ${career.uInitials}`, 50)}</span>
+                  <span>{truncateString(`${career.cTitle} ${career.uInitials}`, 40)}</span>
                 </div>
               ))}
             </Col>
