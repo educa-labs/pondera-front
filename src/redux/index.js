@@ -81,6 +81,11 @@ export const careerNameSelector = createSelector(
   resultTitleSelector,
 );
 
+export const specialUniv = createSelector(
+  uIdSelector,
+  uid => (is.inArray(uid, ['14', '19', '31', '30', '25'])),
+);
+
 
 export default combineReducers({
   session,

@@ -4,7 +4,7 @@ import Row from 'muicss/lib/react/row';
 import Col from 'muicss/lib/react/col';
 import { truncateString } from '../../helpers';
 
-const ResultBody = ({ result, similar, onSimilarClick }) => {
+const ResultBody = ({ result, similar, onSimilarClick, special }) => {
   if (result === null) return null;
   return (
     <div>
@@ -17,7 +17,7 @@ const ResultBody = ({ result, similar, onSimilarClick }) => {
           </Col>
         </Row>
         <Row>
-          <Col xs={7}>Corte 2016</Col>
+          <Col xs={7}>{special ? 'Mínimo de postulación' : 'Corte 2016'}</Col>
           <Col className="result-body-values" xs={5}>
             {result.cut || 'No disponible'}
           </Col>

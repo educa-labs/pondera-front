@@ -20,6 +20,7 @@ import { resetField, getValues, setFieldValue, resetForm } from '../redux/forms'
 import { isLoading, fetch } from '../redux/fetch';
 import { calculatePonderation } from '../redux/results';
 import { getSimilarCareers } from '../redux/similar';
+import { specialUniv } from '../redux';
 import { UNIVERSITIES, CAREERS } from '../helpers/constants';
 
 class Simula extends Component {
@@ -132,7 +133,7 @@ class Simula extends Component {
 
   render() {
     const {
-      result, dispatch, token, similar, similarLoading, univs, careers,
+      result, dispatch, token, similar, similarLoading, univs, careers, special
     } = this.props;
     const pondera = (
       <PonderaForm
@@ -171,6 +172,7 @@ class Simula extends Component {
             <ResultHeader title={this.state.title} />
             <ResultWeights result={result} />
             <ResultBody
+              special={special}
               result={result}
               similar={similar}
               loading={similarLoading}
@@ -189,6 +191,7 @@ class Simula extends Component {
           <PonderaDesk
             index={this.state.currentScreen}
             result={result}
+            special={special}
             resultName={this.state.title}
             similar={similar}
             onSimilarClick={(cId, uId) => {
@@ -237,6 +240,7 @@ export default connect(state => ({
   careers: state.resources.careers.data,
   token: state.session.token,
   isLoading: isLoading(state),
+  special: specialUniv(state),
   calculating: state.results.loading,
   error: state.results.error,
   values: getValues(state.forms.ponderaForm),
