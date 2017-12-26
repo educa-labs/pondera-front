@@ -24,6 +24,7 @@ Login.propTypes = {
 
 export default connect(state => ({
   delay: state.delay,
+  mail: state.forms.loginForm.mail.value,
   sessionLoading: state.session.loading,
   submitError: state.session.error,
 }))(Login);

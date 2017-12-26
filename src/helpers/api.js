@@ -2,12 +2,25 @@ import axios from 'axios';
 import { REGIONS, UNIVERSITIES, CAREERS } from '../helpers/constants';
 import { formatRutBack } from '../helpers';
 
+let baseURL = 'https://testapi.pondera.cl/api/v1';
+if (process.env.NODE_ENV === 'production') {
+  baseURL = 'https://api.pondera.cl/api/v1';
+}
+
 const request = axios.create({
-  baseURL: 'https://testapi.pondera.cl/api/v1',
+  baseURL,
   // withCredentials: true,
   responseType: 'json',
   timeout: 2000,
 });
+
+export const requestPassword = mail => (
+  request.get('/users/lostpassword', {
+    params: {
+      mail,
+    },
+  })
+);
 
 export const createUser = (data) => {
   const finalData = Object.assign({}, data, {

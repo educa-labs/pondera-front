@@ -58,7 +58,6 @@ class PonderaForm extends React.Component {
       onReset,
     } = this.props;
     const { selectedTest } = this.state;
-    console.log(careers);
     return (
       <Form onSubmit={onSubmit}>
         <legend>Ponderar</legend>
