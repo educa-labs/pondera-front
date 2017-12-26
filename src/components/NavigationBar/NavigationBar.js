@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FacebookButton } from 'react-social';
 import Logo from '../../assets/svg/logo-pondera.svg';
 import Menu from '../Menu/Menu';
 import MenuItem from '../Menu/MenuItem';
@@ -35,9 +36,13 @@ const NavigationBar = (props) => {
             </MenuItem>
           </Menu>
         </section>
-      ) : null}
+      ) : (
+        <FacebookButton element="div" url="www.pondera.cl" appId="787262978132234">
+          <i className="fa fa-lg fa-facebook" aria-hidden="true" />
+        </FacebookButton>
+      )}
     </nav>
   );
-}
+};
 
 export default NavigationBar;
