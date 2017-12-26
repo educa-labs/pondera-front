@@ -22,6 +22,20 @@ export const requestPassword = mail => (
   })
 );
 
+export const changePassword = (token, currentPassword, newPassword) => (
+  request({
+    url: '/users/newpassword',
+    method: 'post',
+    headers: {
+      Authorization: token,
+    },
+    data: {
+      currentPassword,
+      newPassword,
+    },
+  })
+);
+
 export const createUser = (data) => {
   const finalData = Object.assign({}, data, {
     rut: formatRutBack(data.rut),

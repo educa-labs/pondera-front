@@ -13,6 +13,7 @@ const Support = lazyComponent(() => import('../components/Terms/Support'))
 const Terms = lazyComponent(() => import('../components/Terms/Terms'));
 const Login = lazyComponent(() => import('./Login'));
 const Ready = lazyComponent(() => import('../components/Terms/Ready'));
+const Recovery = lazyComponent(() => import('../components/Terms/Recovery'));
 const Contacto = lazyComponent(() => import('../components/Terms/Contacto'));
 const Simula = lazyComponent(() => import('./Simula'));
 
@@ -49,7 +50,7 @@ class App extends React.Component {
           <ProtectedRoute isAuthenticated={token !== null} path="/simula"component={Simula} />
           <Route path="/login" component={Login} />
           <Route path="/terms" component={Terms} />
-          <Route path="/contacto" component={Contacto} />
+          <Route path="/recovery" component={Recovery} />
           <Route path="/ready" component={Ready} />
           <Route path="/support" component={Support} />
           <Route path="/" component={Landing} />
