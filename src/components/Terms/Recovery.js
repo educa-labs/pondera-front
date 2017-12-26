@@ -29,11 +29,10 @@ class Recovery extends Component {
       .then(() => {
         this.setState({
           loading: false,
-          message: 'Conraseña cambiada.',
+          message: 'Contraseña cambiada.',
         });
       })
       .catch((err) => {
-        console.log(err.response);
         this.setState({
           error: err.response.data.message,
           loading: false,

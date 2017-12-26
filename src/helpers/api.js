@@ -3,9 +3,9 @@ import { REGIONS, UNIVERSITIES, CAREERS } from '../helpers/constants';
 import { formatRutBack } from '../helpers';
 
 let baseURL = 'https://testapi.pondera.cl/api/v1';
-// if (process.env.NODE_ENV === 'production') {
-//   baseURL = 'https://api.pondera.cl/api/v1';
-// }
+if (process.env.NODE_ENV === 'production') {
+  baseURL = 'https://api.pondera.cl/api/v1';
+}
 
 const request = axios.create({
   baseURL,
