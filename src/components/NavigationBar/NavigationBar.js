@@ -28,8 +28,8 @@ const NavigationBar = (props) => {
       {props.pondera ? (
         <section className="nav-right">
           <Menu>
-            <MenuItem><Link to="/bases">Bases</Link></MenuItem>
-            <MenuItem><Link to="/contacto">Contacto</Link></MenuItem>
+            <MenuItem><Link to="/terms">Bases</Link></MenuItem>
+            <MenuItem><Link to="/recovery">Cambiar contraseña</Link></MenuItem>
             <MenuItem>
               <a onClick={props.logOut}>Cerrar sesión</a>
             </MenuItem>

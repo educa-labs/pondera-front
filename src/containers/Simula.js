@@ -185,7 +185,7 @@ class Simula extends Component {
       </MediaQuery>,
       <MediaQuery key="1" minDeviceWidth={1224}>
         <Page>
-          <NavigationBar pondera desk logOut={this.handleLogOut} />
+          <NavigationBar pondera desk logOut={() => dispatch(logoutUser())} />
           <PonderaDesk
             index={this.state.currentScreen}
             result={result}
