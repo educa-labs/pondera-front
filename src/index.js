@@ -31,6 +31,8 @@ const render = (Component) => {
 
 render(App);
 
+/* HOT MODULE REPLACEMENT */
+
 if (module.hot) {
   module.hot.accept('./containers/App', () => {
     if (process.env.NODE_ENV === 'development') {

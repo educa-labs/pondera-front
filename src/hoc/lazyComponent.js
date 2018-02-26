@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 
+
+/**
+ * HOC for dynamic import
+ * @param {Function} importComponent 
+ */
 export default function lazyComponent(importComponent) {
   class LazyComponent extends Component {
     constructor(props) {

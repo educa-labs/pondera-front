@@ -8,31 +8,34 @@ import lazyComponent from '../hoc/lazyComponent';
 import Background from '../components/Layout/BackGround';
 import Landing from './Landing';
 
-
+/* Code splitting, reduces the main bundle size */
 const Support = lazyComponent(() => import('../components/Terms/Support'))
 const Terms = lazyComponent(() => import('../components/Terms/Terms'));
 const Login = lazyComponent(() => import('./Login'));
 const Ready = lazyComponent(() => import('../components/Terms/Ready'));
 const Contacto = lazyComponent(() => import('../components/Terms/Contacto'));
-// const Simula = lazyComponent(() => import('./Simula'));
+const Simula = lazyComponent(() => import('./Simula'));
 
 
 class App extends React.Component {
   componentDidMount() {
+    /* We try to restore the sesion from localstorage */
     if (this.props.token === null) {
-      // this.props.dispatch(loadUserToken());
+      this.props.dispatch(loadUserToken());
     }
   }
 
   componentWillReceiveProps(nextProps) {
+    /* We have to wait the submit animation in order to redirect to Simula screen */
     if (nextProps.delay !== this.props.delay) {
       if (!nextProps.delay && nextProps.token) {
-        nextProps.history.push('/ready');
-        // nextProps.history.replace('/simula');
+        // nextProps.history.push('/ready'); // Push to Ready Screen
+        nextProps.history.replace('/simula'); // Redirect to Simula Screen
       }
     }
   }
 
+  /* Prevent unnecesary re-renders */
   shouldComponentUpdate(nextProps) {
     if (this.props.delay !== nextProps.delay) {
       return false;
@@ -42,11 +45,10 @@ class App extends React.Component {
 
   render() {
     const { token, storageLoading } = this.props;
-    // if (storageLoading) return <div>Loading ...</div>;
     return (
       <div>
         <Switch>
-          {/* <ProtectedRoute isAuthenticated={token !== null} path="/simula"component={Simula} /> */}
+          <ProtectedRoute isAuthenticated={token !== null} path="/simula"component={Simula} />
           <Route path="/login" component={Login} />
           <Route path="/terms" component={Terms} />
           <Route path="/contacto" component={Contacto} />
