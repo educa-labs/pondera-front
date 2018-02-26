@@ -25,6 +25,15 @@ import { UNIVERSITIES, CAREERS } from '../helpers/constants';
 class Simula extends Component {
   constructor(props) {
     super(props);
+    /*
+      currentScreen indicates what we are showing
+      for mobile:
+        0: Form
+        1: Results
+      for desktop:
+        0: Form
+        1: Form and Result
+    */
     this.state = {
       currentScreen: 0,
       title: '',
@@ -96,8 +105,8 @@ class Simula extends Component {
     });
     dispatch(calculatePonderation(finalValues, token));
     dispatch(fetch(CAREERS, { id: uId, token }));
-    dispatch(setFieldValue('ponderaForm')('cId', cId));
-    dispatch(setFieldValue('ponderaForm')('uId', uId));
+    dispatch(setFieldValue('ponderaForm')('cId', cId.toString()));
+    dispatch(setFieldValue('ponderaForm')('uId', uId.toString()));
   }
 
   onReset() {
