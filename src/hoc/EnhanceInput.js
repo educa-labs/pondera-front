@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-
+/* Add errror text label */
 const Input = (Component) => {
   class InputWrapper extends React.Component {
     render() {

@@ -109,6 +109,7 @@ class Simula extends Component {
     dispatch(setFieldValue('ponderaForm')('uId', uId.toString()));
   }
 
+  /* Handle reset form button */
   onReset() {
     const { dispatch } = this.props;
     const { currentScreen } = this.state;

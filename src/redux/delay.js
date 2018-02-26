@@ -1,3 +1,6 @@
+/*
+  This duck manages the delay flag used to coordinate the bubble animation after create User form
+*/
 const sleep = time => (
   new Promise((resolve) => {
     setTimeout(() => {

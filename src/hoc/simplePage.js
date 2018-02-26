@@ -4,6 +4,8 @@ import wrapCard from './wrapCard';
 import alignCenter from './alignCenter';
 import NavigationBar from '../components/NavigationBar/NavigationBar';
 
+
+/* Wrap a componnet with simple page styles, eg. Terms, Ready */
 export default Content => ({ history, ...props }) => {
   const Card = alignCenter(wrapCard(Content));
   return (
